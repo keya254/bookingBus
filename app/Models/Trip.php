@@ -15,7 +15,7 @@ class Trip extends Model
 
     protected $appends=[];
 
-    protected $casts=['day'=>'date:Y-m-d','start_time'=>'date:H:i A','status'=>'boolean','from'=>'string','to'=>'string','min_time'=>'integer','max_time'=>'integer','price'=>'float'];
+    protected $casts=['day'=>'date:Y-m-d','start_time'=>'date:h:i','status'=>'boolean','from'=>'string','to'=>'string','min_time'=>'integer','max_time'=>'integer','price'=>'float'];
 
     /**
      * Get the driver that owns the Trip

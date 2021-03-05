@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Trip\TripRequest;
+use App\Models\Car;
 use App\Models\Trip;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -48,8 +50,9 @@ class TripController extends Controller
                     ->rawColumns(['action','status'])
                     ->make(true);
         }
-
-        return view('backend.trip.index');
+        $cars=Car::all();
+        $drivers=User::all();
+        return view('backend.trip.index',compact('cars','drivers'));
     }
 
      /**
@@ -70,7 +73,8 @@ class TripController extends Controller
      */
     public function store(TripRequest $request)
     {
-        auth()->user()->cars->trips()->create($request->validated());
+        Trip::create($request->validated());
+        return response()->json(['message'=>'success created'],200);
     }
 
     /**

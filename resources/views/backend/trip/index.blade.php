@@ -45,10 +45,10 @@
   </div>
 </div>
 @can('create-trip')
-  <x-Trip.Create/>
+  <x-Trip.Create :cars="$cars" :drivers="$drivers"/>
 @endcan
 @can('edit-trip')
-  <x-Trip.Edit />
+  <x-Trip.Edit :cars="$cars" :drivers="$drivers"/>
 @endcan
 
 @endsection
@@ -136,8 +136,14 @@
            url: "{{route('trip.index')}}/"+$(this).attr('data-id'),
            dataType: "json",
            success: function (response) {
-            $('#ename').val(response.data.name);
-            $('#eid').val(response.data.id);
+            $('input[name=from]').val(response.trip.from);
+            $('input[name=to]').val(response.trip.to);
+            $('input[name=start_time]').val(response.trip.start_time);
+            $('input[name=day]').val(response.trip.day);
+            $('input[name=max_time]').val(response.trip.max_time);
+            $('input[name=min_time]').val(response.trip.min_time);
+            $('input[name=price]').val(response.trip.price);
+            $('input[name=id]').val(response.trip.id);
             $('#edittrip').modal('toggle');
 
            }

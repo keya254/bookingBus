@@ -28,7 +28,7 @@ class TripRequest extends FormRequest
             'to'=>'required',
             'day'=>'required|date|after_or_equal:'.now(),
             'start_time'=>'required',
-            'min_time'=>'required|integer',
+            'min_time'=>'required|integer|lt:max_time',
             'max_time'=>'required|integer',
             'status'=>'nullable|in:0,1',
             'car_id'=>'required|integer',
