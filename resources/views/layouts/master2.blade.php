@@ -15,7 +15,7 @@
           }
       </style>
   </head>
-  <body dir="rtl">
+  <body dir="rtl" class="bg-gray-800">
       <div class="text-gray-700 bg-white border-t border-b body-font top-0 fixed z-50 w-full navbar-expand-lg shadow">
             <div class="flex flex-col flex-wrap p-5 mx-auto md:items-center md:flex-row">
                 <a href="/" class="pr-2 lg:pr-8 lg:px-6 focus:outline-none">

@@ -1,7 +1,7 @@
 @extends('layouts.master2')
 @section('content')
 <section class="text-gray-700 body-font">
-    <div class="container flex flex-col items-center px-5 py-16 mx-auto lg:px-20 lg:pt-24 md:flex-row">
+    <div class="container flex flex-col items-center px-5 py-16 mx-auto lg:px-20 lg:pt-24 md:flex-row ">
         <div class="flex flex-col items-center w-full pt-0 mb-16 text-right lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 md:items-start md:text-left md:mb-0 lg:text-center">
             <h1 class="mb-8 text-2xl font-bold tracking-tighter text-center text-black lg:text-right lg:text-5xl title-font">
                احجز الان رحلتك عن طريق الانترنت
@@ -38,6 +38,28 @@
                 <h2 class="mb-3 text-lg font-semibold text-gray-700 lg:text-2xl title-font"> اكتمال الحجز</h2>
             </div>
         </div>
+    </div>
+</section>
+<section class="text-gray-700 body-font">
+    <div class="container px-8 mx-auto pb-36 lg:px-4">
+        <form method="POST" action="/search" class="flex flex-wrap text-center bg-white rounded-md shadow-md">
+            @csrf
+            <div class="px-8 py-6 lg:w-1/3 md:w-1/3 sm:w-full w-full">
+                <h2 class="mb-3 text-lg font-semibold text-gray-700 lg:text-2xl title-font">الرحلة من</h2>
+                <input type="text" name="from" class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150" autocomplete="off" required>
+            </div>
+            <div class="px-8 py-6 lg:w-1/3 md:w-1/3 sm:w-full w-full">
+                <h2 class="mb-3 text-lg font-semibold text-gray-700 lg:text-2xl title-font">الرحلة الي</h2>
+                <input type="text" name="to" class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150" autocomplete="off" required>
+            </div>
+            <div class="px-8 py-6 lg:w-1/3 md:w-1/3 sm:w-full w-full">
+                <h2 class="mb-3 text-lg font-semibold text-gray-700 lg:text-2xl title-font">يوم الرحلة</h2>
+                <input type="date" name="day" min="now()" class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150" autocomplete="off" required>
+            </div>
+            <div class="px-8 py-6 lg:w-full md:w-full sm:w-full w-full">
+                <input type="submit" value="بحث" class="bg-gray-900 text-white  cursor-pointer active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150 focus:ring">
+            </div>
+        </form>
     </div>
 </section>
 @endsection
