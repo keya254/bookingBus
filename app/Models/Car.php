@@ -129,9 +129,9 @@ class Car extends Model
         parent::boot();
         static::creating(function ($model) {
             if(is_file($model->image)){
-            $name='images/cars/'.time().rand(11111,99999).'.png';
-            Image::make($model->image)->resize(500, 500)->save($name);
-            $model->image =$name;
+                $name='images/cars/'.time().rand(11111,99999).'.png';
+                Image::make($model->image)->resize(500, 500)->save($name);
+                $model->image =$name;
             }
         });
         static::updating(function ($model) {

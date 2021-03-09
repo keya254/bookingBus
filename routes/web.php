@@ -14,49 +14,52 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Auth::routes();
-Route::prefix('backend')->middleware('auth')->group(function () {
+Route::group(['prefix'=>'backend','namespace'=>'Backend','middleware'=>'auth'],function () {
     //Car
-    Route::resource('car', 'Backend\CarController')->except(['edit','create']);
-    Route::post('/car/changestatus', 'Backend\CarController@changestatus')->name('car.changestatus');
-    Route::post('/car/changepublic', 'Backend\CarController@changepublic')->name('car.changepublic');
-    Route::post('/car/changeprivate', 'Backend\CarController@changeprivate')->name('car.changeprivate');
-    Route::post('/car/{car}', 'Backend\CarController@update'); // because  new FormData(this)  not working with put method
+    Route::resource('car', 'CarController')->except(['edit','create']);
+    Route::post('/car/changestatus', 'CarController@changestatus')->name('car.changestatus');
+    Route::post('/car/changepublic', 'CarController@changepublic')->name('car.changepublic');
+    Route::post('/car/changeprivate', 'CarController@changeprivate')->name('car.changeprivate');
+    Route::post('/car/{car}', 'CarController@update'); // because  new FormData(this)  not working with put method
 
     //Trip
-    Route::resource('trip', 'Backend\TripController')->except(['edit','create']);
-    Route::post('/trip/changestatus', 'Backend\TripController@changestatus')->name('trip.changestatus');
+    Route::resource('trip', 'TripController')->except(['edit','create']);
+    Route::post('/trip/changestatus', 'TripController@changestatus')->name('trip.changestatus');
 
     //TypeCar
-    Route::resource('typecar', 'Backend\TypeCarController')->except(['edit','create']);
-    Route::post('/typecar/changestatus', 'Backend\TypeCarController@changestatus')->name('typecar.changestatus');
+    Route::resource('typecar', 'TypeCarController')->except(['edit','create']);
+    Route::post('/typecar/changestatus', 'TypeCarController@changestatus')->name('typecar.changestatus');
 
     //Change Website Setting
-    Route::resource('setting', 'Backend\SettingController')->only(['index','store']);
+    Route::resource('setting', 'SettingController')->only(['index','store']);
 
     //Change Profile Setting
-    Route::resource('profile-setting', 'Backend\ProfileSettingController')->only(['index','store']);
+    Route::resource('profile-setting', 'ProfileSettingController')->only(['index','store']);
 
     //Change Password
-    Route::resource('change-password', 'Backend\ChangePasswordController')->only(['index','store']);
+    Route::resource('change-password', 'ChangePasswordController')->only(['index','store']);
 
     //Dashboard
-    Route::resource('dashboard', 'Backend\DashboardController')->only(['index','store']);
+    Route::resource('dashboard', 'DashboardController')->only(['index','store']);
 
     //Permissions
-    Route::resource('permissions', 'Backend\PermissionsController')->except(['edit','create']);
+    Route::resource('permissions', 'PermissionsController')->except(['edit','create']);
 
     //Roles
-    Route::resource('roles', 'Backend\RolesController')->except(['edit','create']);
-    Route::post('roles/role_permissions', 'Backend\RolesController@role_permissions')->name('role_permissions');
-    Route::get('roles/role_permissions/{id}', 'Backend\RolesController@getrolepermissions')->name('getrolepermissions');
+    Route::resource('roles', 'RolesController')->except(['edit','create']);
+    Route::post('roles/role_permissions', 'RolesController@role_permissions')->name('role_permissions');
+    Route::get('roles/role_permissions/{id}', 'RolesController@getrolepermissions')->name('getrolepermissions');
 
     //Notifications
-    Route::resource('notifications', 'Backend\NotificationController')->only(['index','store','destory']);
+    Route::resource('notifications', 'NotificationController')->only(['index','store','destory']);
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::prefix('')->group(function () {
+    Route::get('/','Frontend\HomeController@index');
+});
+Route::get('/home','HomeController@index');
