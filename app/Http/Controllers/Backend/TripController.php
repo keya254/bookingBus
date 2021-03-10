@@ -28,7 +28,7 @@ class TripController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Trip::with(['driver:id,name','car:id,name'])->select('*');
+            $data = Trip::with(['driver:id,name','car:id,name','to:id,name','from:id,name'])->select('*');
             return DataTables::of($data)
                     ->addIndexColumn()
                      ->addColumn('status',function($row){

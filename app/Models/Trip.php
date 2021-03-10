@@ -15,7 +15,28 @@ class Trip extends Model
 
     protected $appends=[];
 
-    protected $casts=['day'=>'date:Y-m-d','start_time'=>'date:h:i','status'=>'boolean','from'=>'string','to'=>'string','min_time'=>'integer','max_time'=>'integer','price'=>'float'];
+    protected $casts=['day'=>'date:Y-m-d','start_time'=>'date:h:i','status'=>'boolean','min_time'=>'integer','max_time'=>'integer','price'=>'float'];
+
+
+    /**
+     * Get the to that owns the Trip
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function to()
+    {
+        return $this->belongsTo(City::class, 'to');
+    }
+
+    /**
+     * Get the from that owns the Trip
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function from()
+    {
+        return $this->belongsTo(City::class, 'from');
+    }
 
     /**
      * Get the driver that owns the Trip

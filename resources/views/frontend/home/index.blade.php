@@ -12,9 +12,7 @@
             </p>
         </div>
         <div class="w-5/6 lg:max-w-lg lg:w-full md:w-1/2 h-full">
-            <img class="object-cover object-center rounded-lg "
-                 alt="hero"
-                 src="{{asset('assets/img/undraw_Bus_stop_8ib0.png')}}">
+            <img class="object-cover object-center rounded-lg " alt="hero" src="{{asset('assets/img/undraw_Bus_stop_8ib0.png')}}">
         </div>
     </div>
 </section>

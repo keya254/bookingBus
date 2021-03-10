@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Car;
+use App\Models\City;
 use App\Models\Trip;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -24,8 +25,8 @@ class TripFactory extends Factory
     public function definition()
     {
         return [
-            'from'=>$this->faker->city,
-            'to'=>$this->faker->city,
+            'from'=>City::all()->random()->id,
+            'to'=>City::all()->random()->id,
             'day'=>now(),
             'start_time'=>now(),
             'min_time'=>rand(10,500),

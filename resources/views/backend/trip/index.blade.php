@@ -68,8 +68,8 @@
           ajax: "{{ route('trip.index') }}",
           columns: [
               {data: 'id', name: 'id'},
-              {data: 'from', name: 'from'},
-              {data: 'to', name: 'to'},
+              {data: 'from.name', name: 'from.name'},
+              {data: 'to.name', name: 'to.name'},
               {data: 'day', name: 'day'},
               {data: 'start_time', name: 'start_time'},
               {data: 'status', name: 'status',orderable: false, searchable: false},
