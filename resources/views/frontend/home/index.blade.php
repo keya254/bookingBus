@@ -44,11 +44,11 @@
             @csrf
             <div class="px-8 py-6 lg:w-1/3 md:w-1/3 sm:w-full w-full">
                 <h2 class="mb-3 text-lg font-semibold text-gray-700 lg:text-2xl title-font">الرحلة من</h2>
-                <input type="text" name="from" class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150" autocomplete="off" required>
+                <input type="text" name="from" id="from" class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150" autocomplete="off" required>
             </div>
             <div class="px-8 py-6 lg:w-1/3 md:w-1/3 sm:w-full w-full">
                 <h2 class="mb-3 text-lg font-semibold text-gray-700 lg:text-2xl title-font">الرحلة الي</h2>
-                <input type="text" name="to" class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150" autocomplete="off" required>
+                <input type="text" name="to" id="to" class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150" autocomplete="off" required>
             </div>
             <div class="px-8 py-6 lg:w-1/3 md:w-1/3 sm:w-full w-full">
                 <h2 class="mb-3 text-lg font-semibold text-gray-700 lg:text-2xl title-font">يوم الرحلة</h2>
@@ -60,4 +60,18 @@
         </form>
     </div>
 </section>
+@endsection
+@section('js')
+    <script>
+        $('#to').keyup(function(){
+          var to =$(this).val();
+          var from =$('#from').val();
+          console.log(' من '+from+' الي '+to);
+        });
+        $('#from').keyup(function(){
+          var from =$(this).val();
+          var to =$('#to').val();
+          console.log(' من '+from+' الي '+to);
+        });
+    </script>
 @endsection

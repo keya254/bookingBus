@@ -46,4 +46,6 @@
       </div>
       @yield('content')
   </body>
+  <script src="{{URL::asset('assets/plugins/jquery/jquery.min.js')}}"></script>
+  @yield('js')
 </html>

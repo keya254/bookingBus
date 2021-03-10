@@ -7,5 +7,13 @@ use Illuminate\Http\Request;
 
 class BookingController extends Controller
 {
-    //
+    public function index()
+    {
+        # code...
+    }
+
+    public function store(Request $request)
+    {
+        # code...
+    }
 }

@@ -14,9 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
 Auth::routes();
 Route::group(['prefix'=>'backend','namespace'=>'Backend','middleware'=>'auth'],function () {
@@ -67,5 +64,8 @@ Route::group(['prefix'=>'backend','namespace'=>'Backend','middleware'=>'auth'],f
 
 Route::prefix('')->group(function () {
     Route::get('/','Frontend\HomeController@index');
+    Route::resource('/search','Frontend\SearchController');
+    Route::resource('/booking','Frontend\bookingController');
+
 });
 Route::get('/home','HomeController@index');
