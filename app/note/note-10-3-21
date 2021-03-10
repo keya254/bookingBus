@@ -1,8 +1,8 @@
 a-backend
    1-complete dashboard
    2-complete notification
-   3-complete governorate
-   4-complete city
+   //3-completed governorate
+   //4-completed city
    5-complete owner role
    6-complete driver role
 b-frontend

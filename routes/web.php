@@ -35,6 +35,12 @@ Route::group(['prefix'=>'backend','namespace'=>'Backend','middleware'=>'auth'],f
     Route::resource('typecar', 'TypeCarController')->except(['edit','create']);
     Route::post('/typecar/changestatus', 'TypeCarController@changestatus')->name('typecar.changestatus');
 
+    //Governorate
+    Route::resource('governorate', 'GovernorateController')->except(['edit','create']);
+
+    //City
+    Route::resource('city', 'CityController')->except(['edit','create']);
+
     //Change Website Setting
     Route::resource('setting', 'SettingController')->only(['index','store']);
 

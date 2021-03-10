@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\City\CreateCityRequest;
+use App\Http\Requests\City\EditCityRequest;
 use App\Models\City;
+use App\Models\Governorate;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class CityController extends Controller
 {
@@ -16,9 +20,22 @@ class CityController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            # code...
+            $data = City::with('governorate:id,name')->select('*');
+            return DataTables::of($data)
+                    ->addIndexColumn()
+                    ->addColumn('action', function($row){
+                           $btn='';
+                           if(auth()->user()->can('edit-city'))
+                           $btn.= '<a href="javascript:void(0);" class="edit btn btn-primary m-1 btn-sm editcity"  data-id="'.$row->id.'"><i class="fa fa-edit"></i></a>';
+                           if(auth()->user()->can('delete-city'))
+                           $btn.= '<a href="javascript:void(0);" class="delete btn btn-danger m-1 btn-sm" data-id="'.$row->id.'"><i class="fa fa-trash"></i></a>';
+                            return $btn;
+                    })
+                    ->rawColumns(['action'])
+                    ->make(true);
         }
-        return view('backend.city.index');
+        $governorates=Governorate::all();
+        return view('backend.city.index',compact('governorates'));
     }
 
     /**
@@ -27,7 +44,7 @@ class CityController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateCityRequest $request)
     {
         City::create($request->validated());
         return response()->json(['message'=>'success created']);
@@ -51,7 +68,7 @@ class CityController extends Controller
      * @param  \App\Models\City  $city
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, City $city)
+    public function update(EditCityRequest $request, City $city)
     {
        $city->update($request->validated());
        return response()->json(['message'=>'success updated']);

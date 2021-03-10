@@ -37,6 +37,21 @@
 					    <a class="side-menu__item" href="{{ route('permissions.index') }}"><span class="side-menu__label">الصلاحيات</a>
                     </li>
                     @endcan
+                    @can('governorates')
+                    <li class="slide">
+					    <a class="side-menu__item" href="{{ route('governorate.index') }}"><span class="side-menu__label">المحافظات</a>
+                    </li>
+                    @endcan
+                    @can('citys')
+                    <li class="slide">
+					    <a class="side-menu__item" href="{{ route('city.index') }}"><span class="side-menu__label">المدن</a>
+                    </li>
+                    @endcan
+                    @can('typecars')
+                    <li class="slide">
+					    <a class="side-menu__item" href="{{ route('typecar.index') }}"><span class="side-menu__label">انواع السيارات</a>
+                    </li>
+                    @endcan
                     @can('typecars')
                     <li class="slide">
 					    <a class="side-menu__item" href="{{ route('typecar.index') }}"><span class="side-menu__label">انواع السيارات</a>
