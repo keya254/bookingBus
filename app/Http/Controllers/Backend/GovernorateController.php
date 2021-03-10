@@ -11,6 +11,15 @@ use Yajra\DataTables\Facades\DataTables;
 
 class GovernorateController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['auth','permission:governorates'])->only('index');
+        $this->middleware(['auth','permission:create-governorate'])->only('store');
+        $this->middleware(['auth','permission:edit-governorate'])->only(['show','update']);
+        $this->middleware(['auth','permission:delete-governorate'])->only('destroy');
+    }
+
     /**
      * Display a listing of the resource.
      *

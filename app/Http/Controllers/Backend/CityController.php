@@ -12,6 +12,14 @@ use Yajra\DataTables\Facades\DataTables;
 
 class CityController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth','permission:citys'])->only('index');
+        $this->middleware(['auth','permission:create-city'])->only('store');
+        $this->middleware(['auth','permission:edit-city'])->only(['show','update']);
+        $this->middleware(['auth','permission:delete-city'])->only('destroy');
+    }
+
     /**
      * Display a listing of the resource.
      *
