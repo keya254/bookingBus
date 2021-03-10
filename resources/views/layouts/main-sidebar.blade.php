@@ -67,6 +67,11 @@
 					    <a class="side-menu__item" href="{{ route('trip.index') }}"><span class="side-menu__label">الرحلات</a>
                     </li>
                     @endcan
+					@can('notifications')
+					<li class="slide">
+						<a class="side-menu__item" href="{{ route('notifications.index' ) }}"><span class="side-menu__label">الاشعارات</a>
+					</li>
+					@endcan
 					@can('website-setting')
 					<li class="slide">
 						<a class="side-menu__item" href="{{ route('setting.index' ) }}"><span class="side-menu__label">الاعدادات</a>

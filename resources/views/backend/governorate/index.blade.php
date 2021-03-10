@@ -26,7 +26,7 @@
               <tr>
                   <th>#</th>
                   <th>اسم المحافظة</th>
-                  <th>المحافظات</th>
+                  <th>الصلاحيات</th>
               </tr>
           </thead>
           <tbody></tbody>
