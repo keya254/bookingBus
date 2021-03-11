@@ -63,13 +63,14 @@
             <div class="w-1/6 py-3 mb-2 ">{{$trip->price}} جنية</div>
           </div>
         @empty
-          <div class="w-full rounded-lg shadow-md py-6 text-center">
+          <div class="w-full rounded-lg py-6 text-center">
              <img src="{{asset('assets/img/nc.jpg')}}" class="px-6 w-100 h-full object-center rounded-lg m-auto" alt="">
              <h1 class="font-bold text-2xl py-3">لا يوجد رحلات من هذا الطريق</h1>
           </div>
         @endforelse
         {{$trips->appends(request()->query())->links()}}
       </div>
+      <div id="recaptcha-container"></div>
     </div>
 </div>
 @endsection
