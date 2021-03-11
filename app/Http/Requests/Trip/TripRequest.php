@@ -24,8 +24,8 @@ class TripRequest extends FormRequest
     public function rules()
     {
         return [
-            'from'=>'required',
-            'to'=>'required',
+            'from_id'=>'required|exists:cities,id',
+            'to_id'=>'required|exists:cities,id',
             'day'=>'required|date|after_or_equal:'.now(),
             'start_time'=>'required',
             'min_time'=>'required|integer|lt:max_time',

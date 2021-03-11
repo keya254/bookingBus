@@ -24,4 +24,14 @@ class City extends Model
     {
         return $this->belongsTo(Governorate::class);
     }
+
+    /**
+     * Get all of the trips for the City
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function trips()
+    {
+        return $this->hasMany(Trip::class);
+    }
 }

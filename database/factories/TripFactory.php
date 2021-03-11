@@ -25,8 +25,8 @@ class TripFactory extends Factory
     public function definition()
     {
         return [
-            'from'=>City::all()->random()->id,
-            'to'=>City::all()->random()->id,
+            'from_id'=>City::all()->random()->id,
+            'to_id'=>City::all()->random()->id,
             'day'=>now(),
             'start_time'=>now(),
             'min_time'=>rand(10,500),

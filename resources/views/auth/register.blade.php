@@ -15,18 +15,8 @@
                   انشاء حساب
                 </h6>
               </div>
-              <div class="btn-wrapper text-center">
-                <button class="bg-white active:bg-gray-100 text-gray-800  px-4 py-2 rounded outline-none focus:outline-none mr-2 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150" type="button">
-                  <img alt="Github" class="w-5 mr-1" src="{{asset('assets/img/github.svg')}}"></button><button class="bg-white active:bg-gray-100 text-gray-800  px-4 py-2 rounded outline-none focus:outline-none mr-1 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150" type="button">
-                  <img alt="Google" class="w-5 mr-1" src="{{asset('assets/img/google.svg')}}">
-                </button>
-              </div>
-              <hr class="mt-6 border-b-1 border-gray-400">
             </div>
             <div class="flex-auto px-4 lg:px-10 py-10 pt-0">
-              <div class="text-gray-500 text-center mb-3 font-bold">
-                <small>او</small>
-              </div>
               <form method="POST" action="{{ route('register') }}">
                 @csrf
                 <div class="relative w-full mb-3">

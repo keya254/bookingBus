@@ -11,9 +11,9 @@ class Trip extends Model
 
     protected $table='trips';
 
-    protected $fillable=['from','to','day','start_time','min_time','max_time','price','status','car_id','driver_id'];
+    protected $fillable=['from_id','to_id','day','start_time','min_time','max_time','price','status','car_id','driver_id'];
 
-    protected $appends=[];
+    protected $appends=['dayformat','timeformat'];
 
     protected $casts=['day'=>'date:Y-m-d','start_time'=>'date:h:i','status'=>'boolean','min_time'=>'integer','max_time'=>'integer','price'=>'float'];
 
@@ -25,7 +25,7 @@ class Trip extends Model
      */
     public function to()
     {
-        return $this->belongsTo(City::class, 'to');
+        return $this->belongsTo(City::class,'to_id','id');
     }
 
     /**
@@ -35,7 +35,7 @@ class Trip extends Model
      */
     public function from()
     {
-        return $this->belongsTo(City::class, 'from');
+        return $this->belongsTo(City::class,'from_id','id');
     }
 
     /**
@@ -82,5 +82,15 @@ class Trip extends Model
     public function ScopeInactive($q)
     {
         return  $q->where('status',0);
+    }
+
+    public function getDayformatAttribute()
+    {
+       return $this->day->format('Y-m-d');
+    }
+
+    public function getTimeformatAttribute()
+    {
+       return $this->start_time->format('h:i A');
     }
 }

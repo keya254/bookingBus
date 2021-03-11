@@ -15,8 +15,8 @@ class CreateTripsTable extends Migration
     {
         Schema::create('trips', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('from')->nullable();
-            $table->foreignId('to')->nullable();
+            $table->foreignId('from_id')->nullable();
+            $table->foreignId('to_id')->nullable();
             $table->date('day');
             $table->time('start_time');
             $table->integer('min_time');
@@ -28,8 +28,8 @@ class CreateTripsTable extends Migration
             $table->timestamps();
             $table->foreign('car_id')->references('id')->on('cars')->onDelete('set null')->onUpdate('cascade');
             $table->foreign('driver_id')->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
-            $table->foreign('from')->references('id')->on('cities')->onDelete('set null')->onUpdate('cascade');
-            $table->foreign('to')->references('id')->on('cities')->onDelete('set null')->onUpdate('cascade');
+            $table->foreign('from_id')->references('id')->on('cities')->onDelete('set null')->onUpdate('cascade');
+            $table->foreign('to_id')->references('id')->on('cities')->onDelete('set null')->onUpdate('cascade');
         });
     }
 
