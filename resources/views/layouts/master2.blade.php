@@ -17,35 +17,7 @@
       </style>
   </head>
   <body dir="rtl">
-      {{--  <div class="text-gray-700 bg-white border-t border-b body-font top-0 fixed z-50 w-full navbar-expand-lg shadow">
-            <div class="flex flex-col flex-wrap p-5 mx-auto md:items-center md:flex-row">
-                <a href="/" class="pr-2 lg:pr-8 lg:px-6 focus:outline-none">
-                    <div class="inline-flex items-center">
-                        <div class="w-2 h-2 p-2 mr-2 rounded-full bg-gradient-to-tr from-cyan-400 to-lightBlue-500">
-                        </div>
-                        <h2
-                            class="font-semibold tracking-tighter transition duration-1000 ease-in-out transform text-blueGray-500 dark:text-blueGray-200 lg:text-md text-bold lg:mr-8">
-                            رحلتي
-                        </h2>
-                    </div>
-                </a>
-                <nav class="flex flex-wrap items-center justify-center text-base ">
-                    <a href="#" class="ml-5 text-sm font-semibold text-gray-600 lg:mr-24 hover:text-gray-800">الرحلات المتاحة</a>
-                    <a href="#" class="ml-5 text-sm font-semibold text-gray-600 hover:text-gray-800">تواصل معنا</a>
-                    <a href="#" class="ml-5 text-sm font-semibold text-gray-600 hover:text-gray-800">الخدمات</a>
-                    <a href="#" class="ml-5 text-sm font-semibold text-gray-600 hover:text-gray-800">عن الموقع</a>
-                </nav>
-                <div class="flex mr-auto">
-                    <a  href="{{route('login')}}"
-                        class="items-center  px-8 py-2 mr-auto font-semibold text-white transition duration-500 ease-in-out transform bg-black rounded-lg hover:bg-blueGray-900 focus:ring focus:outline-none">تسجيل دخول</a>
-                    <a  href="{{route('register')}}"
-                        class="items-center px-8 py-2 mr-5 font-semibold text-white transition duration-500 ease-in-out transform bg-black rounded-lg hover:bg-blueGray-900 focus:ring focus:outline-none">
-                        انشاء حساب
-                    </a>
-                </div>
-            </div>
-      </div>  --}}
-      <nav class="relative px-6 py-6 flex justify-between items-center bg-purple-600">
+      <nav class="fixed w-full z-50 px-6 py-6 flex justify-between items-center bg-purple-600">
         <a class="text-white text-3xl font-bold leading-none" href="/">
             {{--  <img class="h-12" src="{{asset('assets/img/undraw_Bus_stop_8ib0.png')}}" alt="" width="auto">  --}}
             رحلتي

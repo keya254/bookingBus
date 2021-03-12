@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Auth::routes();
+Auth::routes([]);
 Route::group(['prefix'=>'backend','namespace'=>'Backend','middleware'=>'auth'],function () {
     //Car
     Route::resource('car', 'CarController')->except(['edit','create']);

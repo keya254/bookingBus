@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="{{URL::asset('assets/plugins/sumoselect/sumoselect-rtl.css')}}">
 @endsection
 @section('content')
-<section class="skewed-bottom-right">
+<section class="skewed-bottom-right pt-20">
     <div class="bg-purple-600 pt-12 lg:pt-20 pb-20 radius-for-skewed">
       <div class="container mx-auto px-4">
         <div class="flex flex-wrap -mx-4">
@@ -27,6 +27,7 @@
         </div>
       </div>
     </div>
+
     <div class="mr-for-radius">
         <svg class="h-8 md:h-12 lg:h-20 w-full text-purple-600" viewBox="0 0 10 10" preserveAspectRatio="none">
           <polygon fill="currentColor" points="0 0 10 0 0 10"></polygon>
@@ -54,13 +55,13 @@
             </div>
         </div>
     </div>
-    <div class="mr-for-radius">
+    <div class="mr-for-radius ">
         <svg class="h-8 md:h-12 lg:h-20 w-full text-purple-600" viewBox="0 0 10 10" preserveAspectRatio="none">
-          <polygon fill="currentColor" points="0 0 10 0 0 10"></polygon>
+          <polygon fill="currentColor" points="10 10 0 0 0 10"></polygon>
         </svg>
     </div>
 </section>
-<section class="text-gray-700 body-font">
+<section class="text-gray-700 body-font bg-purple-600">
     <div class="container px-8 mx-auto pb-36 lg:px-4">
         <form method="get" action="/search" class="flex flex-wrap text-center bg-white rounded-md shadow-md">
 
@@ -92,7 +93,7 @@
             </div>
             <div class="px-8 py-6 lg:w-1/3 md:w-1/3 sm:w-full w-full">
                 <h2 class="mb-3 text-lg font-semibold text-gray-700 lg:text-2xl title-font">يوم الرحلة</h2>
-                <input type="date" name="day" min="{{today()->format('Y-m-d')}}" class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150" autocomplete="off" required>
+                <input type="date" name="day" min="{{today()->format('Y-m-d')}}" class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150" autocomplete="off">
             </div>
             <div class="px-8 py-6 lg:w-full md:w-full sm:w-full w-full">
                 <input type="submit" value="بحث" class="bg-gray-900 text-white  cursor-pointer active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 w-full ease-linear transition-all duration-150 focus:ring">

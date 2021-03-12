@@ -7,8 +7,8 @@
   <link rel="stylesheet" href="{{URL::asset('assets/plugins/sumoselect/sumoselect-rtl.css')}}">
 @endsection
 @section('content')
-<div class="container px-5 py-16 mx-auto lg:px-20 lg:pt-24">
-    <div class="flex flex-wrap text-center">
+<div class="container px-5 py-16 mx-auto lg:px-20 lg:pt-24 pt-20">
+    <div class="flex flex-wrap text-center ">
       <div class="lg:w-1/4 md:w-1/4 sm:w-full w-full shadow-md px-8 rounded-lg">
         <form method="get" action="/search" class="flex flex-wrap text-center bg-white rounded-md">
             <div class=" py-6 w-full">
@@ -48,18 +48,18 @@
       </div>
       <div class="lg:w-3/4 md:w-3/4 sm:w-full w-full p-3 rounded-lg">
         @forelse ($trips as $trip)
-          <div class="w-full rounded-lg shadow-md px-6 py-6 flex flex-wrap text-center bg-blue-500 mb-3">
+          <div class="w-full rounded-lg shadow-md px-6 py-6 flex flex-wrap text-center bg-purple-600 mb-3">
             <div class="w-1/6 py-3 mb-2 shadow-lg bg-white rounded-lg">الرحلة من</div>
             <div class="w-1/6 py-3 mb-2">{{$trip->from->name}}</div>
             <div class="w-1/6 py-3 mb-2 shadow-lg bg-white rounded-lg">الي</div>
             <div class="w-1/6 py-3 mb-2 ">{{$trip->to->name}}</div>
             <div class="w-1/6 py-3 mb-2 shadow-lg bg-white rounded-lg">مدة الرحلة</div>
             <div class="w-1/6 py-3 mb-2 ">{{$trip->min_time}} - {{$trip->max_time}} دقيقة</div>
-            <div class="w-1/6 py-3 mb-2 shadow-lg bg-yellow-400 rounded-lg">يوم الرحلة</div>
+            <div class="w-1/6 py-3 mb-2 shadow-lg bg-yellow-200 rounded-lg">يوم الرحلة</div>
             <div class="w-1/6 py-3 mb-2">{{$trip->dayformat}}</div>
-            <div class="w-1/6 py-3 mb-2 shadow-lg bg-yellow-400 rounded-lg">ساعة الانطلاق</div>
+            <div class="w-1/6 py-3 mb-2 shadow-lg bg-yellow-200 rounded-lg">ساعة الانطلاق</div>
             <div class="w-1/6 py-3 mb-2 ">{{$trip->timeformat}}</div>
-            <div class="w-1/6 py-3 mb-2 shadow-lg bg-yellow-400 rounded-lg">سعر التذكرة</div>
+            <div class="w-1/6 py-3 mb-2 shadow-lg bg-yellow-200 rounded-lg">سعر التذكرة</div>
             <div class="w-1/6 py-3 mb-2 ">{{$trip->price}} جنية</div>
           </div>
         @empty
