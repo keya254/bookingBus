@@ -7,22 +7,32 @@
   <link rel="stylesheet" href="{{URL::asset('assets/plugins/sumoselect/sumoselect-rtl.css')}}">
 @endsection
 @section('content')
-<section class="text-gray-700 body-font">
-    <div class="container flex flex-col items-center px-5 py-16 mx-auto lg:px-20 lg:pt-24 md:flex-row ">
-        <div class="flex flex-col items-center w-full pt-0 mb-16 text-right lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 md:items-start md:text-left md:mb-0 lg:text-center">
-            <h1 class="mb-8 text-2xl font-bold tracking-tighter text-center text-black lg:text-right lg:text-5xl title-font">
-               احجز الان رحلتك عن طريق الانترنت
-            </h1>
-            <p class="mb-8 text-base leading-relaxed text-center text-gray-700 lg:text-right lg:text-1xl">
-                {{--  Deploy your mvp in minutes, not days. WT offers you a a wide selection swapable sections for
-                your landing page.  --}}
-            </p>
+<section class="skewed-bottom-right">
+    <div class="bg-purple-600 pt-12 lg:pt-20 pb-20 radius-for-skewed">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-wrap -mx-4">
+          <div class="w-full lg:w-1/2 px-4 mb-12 md:mb-20 lg:mb-0 flex items-center">
+            <div class="w-full text-center lg:text-right">
+              <div class="max-w-md mx-auto lg:mx-0">
+                <h2 class="mb-3 text-4xl lg:text-5xl text-white font-bold">
+                  <span>احجز الان رحلتك </span>
+                  <span class="text-yellow-200">عن طريق الانترنت</span>
+                </h2>
+              </div>
+            </div>
+          </div>
+          <div class="w-full lg:w-1/2 px-4 flex items-center justify-center">
+            <div class="relative" style="z-index: 0;"><img class="h-128 w-full max-w-lg object-cover rounded-3xl md:rounded-br-none" src="{{asset('assets/img/undraw_Bus_stop_8ib0.png')}}" alt=""></div>
+          </div>
         </div>
-        <div class="w-5/6 lg:max-w-lg lg:w-full md:w-1/2 h-full">
-            <img class="object-cover object-center rounded-lg " alt="hero" src="{{asset('assets/img/undraw_Bus_stop_8ib0.png')}}">
-        </div>
+      </div>
     </div>
-</section>
+    <div class="mr-for-radius">
+        <svg class="h-8 md:h-12 lg:h-20 w-full text-purple-600" viewBox="0 0 10 10" preserveAspectRatio="none">
+          <polygon fill="currentColor" points="0 0 10 0 0 10"></polygon>
+        </svg>
+    </div>
+  </section>
 <section class="text-gray-700 body-font">
     <div class="container px-8 mx-auto pb-36 lg:px-4">
         <div class="flex flex-wrap text-center">
@@ -43,6 +53,11 @@
                 <h2 class="mb-3 text-lg font-semibold text-gray-700 lg:text-2xl title-font"> اكتمال الحجز</h2>
             </div>
         </div>
+    </div>
+    <div class="mr-for-radius">
+        <svg class="h-8 md:h-12 lg:h-20 w-full text-purple-600" viewBox="0 0 10 10" preserveAspectRatio="none">
+          <polygon fill="currentColor" points="0 0 10 0 0 10"></polygon>
+        </svg>
     </div>
 </section>
 <section class="text-gray-700 body-font">

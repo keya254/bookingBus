@@ -22,7 +22,7 @@ class SearchController extends Controller
         if ($request->day) {
             $trip->where('day',$request->day);
         }
-        $trips=$trip->active()->paginate(3);
+        $trips=$trip->with(['to:id,name','from:id,name'])->active()->paginate(3);
         $governorates=Governorate::with('cities')->get();
         return view('frontend.search.index',compact('governorates','trips'));
     }
