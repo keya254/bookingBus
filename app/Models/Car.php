@@ -11,7 +11,7 @@ class Car extends Model
 
     protected $table='cars';
 
-    protected $fillable=['image','name','status','owner_id','typecar_id','private','public'];
+    protected $fillable=['image','name','status','owner_id','typecar_id','private','public','phone_number'];
 
     protected $appends=['image_path'];
 

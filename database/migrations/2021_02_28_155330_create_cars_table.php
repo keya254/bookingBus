@@ -17,6 +17,7 @@ class CreateCarsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('image')->default('images/cars/1.png');
+            $table->string('phone_number');
             $table->boolean('status')->default(0);
             $table->boolean('private')->default(0);
             $table->boolean('public')->default(0);

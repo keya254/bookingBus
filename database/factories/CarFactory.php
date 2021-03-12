@@ -29,6 +29,7 @@ class CarFactory extends Factory
             'status'=>$this->faker->randomElement([0,1]),
             'owner_id'=>User::all()->random()->id,
             'typecar_id'=>TypeCar::all()->random()->id,
+            'phone_number'=>$this->faker->randomElement(['010','011','012','015']).rand(00000000,99999999),
             'private'=>$this->faker->randomElement([0,1]),
             'public'=>$this->faker->randomElement([0,1])
         ];

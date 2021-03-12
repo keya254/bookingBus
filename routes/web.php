@@ -64,6 +64,7 @@ Route::group(['prefix'=>'backend','namespace'=>'Backend','middleware'=>'auth'],f
 
 Route::prefix('')->group(function () {
     Route::get('/','Frontend\HomeController@index');
+    Route::get('/private','Frontend\HomeController@private');
     Route::resource('/search','Frontend\SearchController');
     Route::resource('/booking','Frontend\bookingController');
 

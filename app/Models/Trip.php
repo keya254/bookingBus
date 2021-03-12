@@ -11,7 +11,7 @@ class Trip extends Model
 
     protected $table='trips';
 
-    protected $fillable=['from_id','to_id','day','start_time','min_time','max_time','price','status','car_id','driver_id'];
+    protected $fillable=['from_id','to_id','day','start_time','min_time','max_time','price','status','car_id','driver_id','max_seats'];
 
     protected $appends=['dayformat','timeformat'];
 
