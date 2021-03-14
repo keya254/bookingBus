@@ -66,6 +66,7 @@ Route::prefix('')->group(function () {
     Route::get('/','Frontend\HomeController@index');
     Route::get('/private','Frontend\HomeController@private');
     Route::resource('/search','Frontend\SearchController');
+    Route::post('/seats','Frontend\SearchController@seats')->name('seats');
     Route::resource('/booking','Frontend\bookingController');
 
 });

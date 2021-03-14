@@ -15,6 +15,8 @@ class Car extends Model
 
     protected $appends=['image_path'];
 
+    protected $with=['owner','typecar','trips','cities'];
+
     /**
      * Get the owner that owns the Car
      *
@@ -44,6 +46,17 @@ class Car extends Model
     {
         return $this->hasMany(Trip::class,'car_id');
     }
+
+    /**
+     * Get all of the cities for the Car
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     */
+    public function cities()
+    {
+        return $this->belongsToMany(City::class,'car_city');
+    }
+
     /**
     * Check Activation for the Car
     */

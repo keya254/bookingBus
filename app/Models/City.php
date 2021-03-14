@@ -34,4 +34,14 @@ class City extends Model
     {
         return $this->hasMany(Trip::class);
     }
+
+    /**
+     * Get all of the Privatecars for the City
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     */
+    public function privatecars()
+    {
+        return $this->belongsToMany(Car::class,'car_city');
+    }
 }

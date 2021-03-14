@@ -18,6 +18,15 @@ class Trip extends Model
     protected $casts=['day'=>'date:Y-m-d','start_time'=>'date:h:i','status'=>'boolean','min_time'=>'integer','max_time'=>'integer','price'=>'float'];
 
 
+    public static function boot()
+    {
+        parent::boot();
+        static::created(function ($model) {
+            for ($i=1; $i <= $model->car->typecar->number_seats; $i++) {
+                $model->seats()->create(['name'=>$i]);
+            }
+        });
+    }
     /**
      * Get the to that owns the Trip
      *

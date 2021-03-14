@@ -46,21 +46,28 @@
             </div>
         </form>
       </div>
-      <div class="lg:w-3/4 md:w-3/4 sm:w-full w-full p-3 rounded-lg">
+      <div class="lg:w-3/4 md:w-3/4 sm:w-full w-full p-3 rounded-lg text-center">
         @forelse ($trips as $trip)
           <div class="w-full rounded-lg shadow-md px-6 py-6 flex flex-wrap text-center bg-purple-600 mb-3">
-            <div class="w-1/6 py-3 mb-2 shadow-lg bg-white rounded-lg">الرحلة من</div>
-            <div class="w-1/6 py-3 mb-2">{{$trip->from->name}}</div>
-            <div class="w-1/6 py-3 mb-2 shadow-lg bg-white rounded-lg">الي</div>
-            <div class="w-1/6 py-3 mb-2 ">{{$trip->to->name}}</div>
-            <div class="w-1/6 py-3 mb-2 shadow-lg bg-white rounded-lg">مدة الرحلة</div>
-            <div class="w-1/6 py-3 mb-2 ">{{$trip->min_time}} - {{$trip->max_time}} دقيقة</div>
-            <div class="w-1/6 py-3 mb-2 shadow-lg bg-yellow-200 rounded-lg">يوم الرحلة</div>
-            <div class="w-1/6 py-3 mb-2">{{$trip->dayformat}}</div>
-            <div class="w-1/6 py-3 mb-2 shadow-lg bg-yellow-200 rounded-lg">ساعة الانطلاق</div>
-            <div class="w-1/6 py-3 mb-2 ">{{$trip->timeformat}}</div>
-            <div class="w-1/6 py-3 mb-2 shadow-lg bg-yellow-200 rounded-lg">سعر التذكرة</div>
-            <div class="w-1/6 py-3 mb-2 ">{{$trip->price}} جنية</div>
+            <div class="lg:w-1/6 md:w-1/2 sm:w-1/2 w-1/2 py-1 mb-2 shadow-lg bg-white rounded-lg">الرحلة من</div>
+            <div class="lg:w-1/6 md:w-1/2 sm:w-1/2 w-1/2 py-1 mb-2">{{$trip->from->name}}</div>
+            <div class="lg:w-1/6 md:w-1/2 sm:w-1/2 w-1/2 py-1 mb-2 shadow-lg bg-white rounded-lg">الي</div>
+            <div class="lg:w-1/6 md:w-1/2 sm:w-1/2 w-1/2 py-1 mb-2 ">{{$trip->to->name}}</div>
+            <div class="lg:w-1/6 md:w-1/2 sm:w-1/2 w-1/2 py-1 mb-2 shadow-lg bg-white rounded-lg">مدة الرحلة</div>
+            <div class="lg:w-1/6 md:w-1/2 sm:w-1/2 w-1/2 py-1 mb-2 ">{{$trip->min_time}} - {{$trip->max_time}} دقيقة</div>
+            <div class="lg:w-1/6 md:w-1/2 sm:w-1/2 w-1/2 py-1 mb-2 shadow-lg bg-yellow-200 rounded-lg">يوم الرحلة</div>
+            <div class="lg:w-1/6 md:w-1/2 sm:w-1/2 w-1/2 py-1 mb-2">{{$trip->dayformat}}</div>
+            <div class="lg:w-1/6 md:w-1/2 sm:w-1/2 w-1/2 py-1 mb-2 shadow-lg bg-yellow-200 rounded-lg">ساعة الانطلاق</div>
+            <div class="lg:w-1/6 md:w-1/2 sm:w-1/2 w-1/2 py-1 mb-2 ">{{$trip->timeformat}}</div>
+            <div class="lg:w-1/6 md:w-1/2 sm:w-1/2 w-1/2 py-1 mb-2 shadow-lg bg-yellow-200 rounded-lg">سعر التذكرة</div>
+            <div class="lg:w-1/6 md:w-1/2 sm:w-1/2 w-1/2 py-1 mb-2 ">{{$trip->price}} جنية</div>
+            <div class="lg:w-1/4 md:w-1/2 sm:w-1/2 w-1/2 py-2 mb-2 shadow-lg bg-blue-200 rounded-lg">مالك السيارة</div>
+            <div class="lg:w-1/4 md:w-1/2 sm:w-1/2 w-1/2 py-2 mb-2 ">{{$trip->car->owner->name}}</div>
+            <div class="lg:w-2/4 md:w-full sm:w-full w-full py-2 mb-2">
+                <a class="bg-red-500 shadow-lg py-2 px-8 rounded-lg w-full cursor-pointer booking" href="javascript:void(0)" data-id="{{$trip->id}}">احجز الان</a>
+            </div>
+          </div>
+          <div class="w-full rounded-lg shadow-md px-6 py-6 text-center hidden bg-pink-600 mb-3" id="trip-{{$trip->id}}">
           </div>
         @empty
           <div class="w-full rounded-lg py-6 text-center">
@@ -70,7 +77,6 @@
         @endforelse
         {{$trips->appends(request()->query())->links()}}
       </div>
-      <div id="recaptcha-container"></div>
     </div>
 </div>
 @endsection
@@ -79,4 +85,36 @@
   <script src="{{URL::asset('assets/js/select2.js')}}"></script>
 <!--Internal Sumoselect js-->
 <script src="{{URL::asset('assets/plugins/sumoselect/jquery.sumoselect.js')}}"></script>
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    $('.booking').click(function (e) {
+        e.preventDefault();
+        var id=$(this).attr('data-id');
+        $(this).toggleClass('text-white');
+        seat(id);
+    });
+    function seat(id)
+    {
+      $.ajax({
+          type: "post",
+          url: "{{route('seats')}}",
+          data: {id:id},
+          dataType: "json",
+          success: function (response) {
+            $('#trip-'+id).toggleClass('hidden');
+            seats='';
+            seats+='<ul>';
+            response.seats.forEach(element => {
+             seats+='<li class="bg-green-800 p-4 m-2 rounded-md shadow-md">'+element.name+'</li>';
+            });
+            seats+='</ul>';
+            $('#trip-'+id).html(seats);
+          }
+      });
+    }
+</script>
 @endsection
