@@ -86,7 +86,7 @@
                 <a class="bg-red-500 shadow-lg py-2 px-8 rounded-lg w-full cursor-pointer booking" href="javascript:void(0)" data-id="{{$trip->id}}">احجز الان</a>
             </div>
           </div>
-          <div class="w-full rounded-lg shadow-md px-6 py-6 text-center hidden bg-pink-600 mb-3" id="trip-{{$trip->id}}">
+          <div class="w-full rounded-lg shadow-md px-6 py-6 text-center hidden bg-pink-600 mb-3 trip" id="trip-{{$trip->id}}">
           </div>
         @empty
           <div class="w-full rounded-lg py-6 text-center">
@@ -114,8 +114,19 @@
     $('.booking').click(function (e) {
         e.preventDefault();
         var id=$(this).attr('data-id');
-        $(this).toggleClass('bg-red-500 bg-yellow-500');
-        seat(id);
+        if($(this).hasClass('bg-red-500')){
+          $('.booking').removeClass('bg-yellow-500');
+          $(this).removeClass('bg-red-500');
+          $(this).addClass('bg-yellow-500');
+          seat(id);
+        }
+        else
+        {
+          $('.trip').addClass('hidden');
+          $('#trip-'+id).addClass('hidden');
+          $('.booking').removeClass('bg-yellow-500');
+          $(this).addClass('bg-red-500');
+        }
     });
     function seat(id)
     {
@@ -125,7 +136,8 @@
           data: {id:id},
           dataType: "json",
           success: function (response) {
-            $('#trip-'+id).toggleClass('hidden');
+             $('.trip').addClass('hidden');
+             $('#trip-'+id).toggleClass('hidden');
             set=new seats(response.trip.id,response.trip.max_seats,response.seats);
             $('#trip-'+id).html(set.getall());
           }

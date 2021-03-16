@@ -22,7 +22,7 @@ class seats
          set=new elevenseats(this.trip,this.max_seats,this.Gseat);
          return set.getall();
       }
-       if (this.Gseat.length==43) {
+      if (this.Gseat.length==43) {
          set=new fortythreeseats(this.trip,this.max_seats,this.Gseat);
          return set.getall();
       }
