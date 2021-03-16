@@ -114,7 +114,7 @@
     $('.booking').click(function (e) {
         e.preventDefault();
         var id=$(this).attr('data-id');
-        $(this).toggleClass('text-white');
+        $(this).toggleClass('bg-red-500 bg-yellow-500');
         seat(id);
     });
     function seat(id)
@@ -126,7 +126,7 @@
           dataType: "json",
           success: function (response) {
             $('#trip-'+id).toggleClass('hidden');
-            set=new seats(response.trip.id,response.trip.max_seats,response.seats)
+            set=new seats(response.trip.id,response.trip.max_seats,response.seats);
             $('#trip-'+id).html(set.getall());
           }
       });

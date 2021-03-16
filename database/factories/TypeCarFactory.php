@@ -23,7 +23,7 @@ class TypeCarFactory extends Factory
     {
         return [
             'name'=>$this->faker->name,
-            'number_seats'=>$this->faker->randomElement([10,14,21,30]),
+            'number_seats'=>$this->faker->randomElement([7,11,43]),
             'status'=>$this->faker->randomElement([0,1])
         ];
     }
