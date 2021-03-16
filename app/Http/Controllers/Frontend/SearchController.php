@@ -33,8 +33,9 @@ class SearchController extends Controller
         //check the trip is found
         $this->validate($request,['id'=>'required|exists:trips,id']);
         // get all seats to trip
-        $seats=Seat::where('trip_id',$request->id)->select(['id','name','status'])->get();
-
-        return response()->json(['seats'=>$seats]);
+        $seats=Seat::where('trip_id',$request->id)->select(['id','name','status'])->orderby('id')->get();
+        $trip=Trip::where('id',$request->id)->select(['id','max_seats'])->first();
+        $trip->setAppends([]);
+        return response()->json(['trip'=>$trip,'seats'=>$seats]);
     }
 }

@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .available {
+        @apply bg-yellow-400 p-3 cursor-pointer m-2 rounded-md shadow-md;
+     }
+     .booked {
+        @apply bg-green-800 p-3 cursor-pointer m-2 rounded-md shadow-md;
+     }
+     .selected {
+        @apply bg-red-800 p-3 cursor-pointer m-2 rounded-md shadow-md;
+     }
+     .notfound {
+        @apply bg-red-300 p-3 cursor-pointer m-2 rounded-md shadow-md;
+     }
+
+     .driver {
+        @apply bg-white p-3 m-2 rounded-md shadow-md;
+     }
+
+  }

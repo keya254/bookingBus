@@ -5,13 +5,32 @@
 @section('css')
   <link href="{{URL::asset('assets/plugins/select2/css/select2.min.css')}}" rel="stylesheet">
   <link rel="stylesheet" href="{{URL::asset('assets/plugins/sumoselect/sumoselect-rtl.css')}}">
+  <style>
+    .img-hor-vert {
+
+      -moz-transform: scale(-1, 1);
+      -o-transform: scale(-1, 1);
+      -webkit-transform: scale(-1, 1);
+      transform: scale(-1, 1);
+    }
+
+    .numberseat
+    {
+      margin-top: -0.5rem;
+      margin-right: 0.0rem;
+      position: absolute;
+      text-align: left;
+      z-index: 20;
+    }
+
+  </style>
 @endsection
 @section('content')
 <div class="container px-5 py-16 mx-auto lg:px-20 lg:pt-24 pt-20">
     <div class="flex flex-wrap text-center ">
       <div class="lg:w-1/4 md:w-1/4 sm:w-full w-full shadow-md px-8 rounded-lg">
         <form method="get" action="/search" class="flex flex-wrap text-center bg-white rounded-md">
-            <div class=" py-6 w-full">
+            <div class="py-6 w-full">
                 <h2 class="mb-3 text-lg font-semibold text-gray-700 lg:text-2xl title-font">الرحلة من</h2>
                 <select name="from_id" class="select2" class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150">
                     <option value="">من</option>
@@ -85,6 +104,7 @@
   <script src="{{URL::asset('assets/js/select2.js')}}"></script>
 <!--Internal Sumoselect js-->
 <script src="{{URL::asset('assets/plugins/sumoselect/jquery.sumoselect.js')}}"></script>
+<script src="{{URL::asset('assets/js/seats.js')}}"></script>
 <script>
     $.ajaxSetup({
         headers: {
@@ -106,15 +126,11 @@
           dataType: "json",
           success: function (response) {
             $('#trip-'+id).toggleClass('hidden');
-            seats='';
-            seats+='<ul>';
-            response.seats.forEach(element => {
-             seats+='<li class="bg-green-800 p-4 m-2 rounded-md shadow-md">'+element.name+'</li>';
-            });
-            seats+='</ul>';
-            $('#trip-'+id).html(seats);
+            set=new seats(response.trip.id,response.trip.max_seats,response.seats)
+            $('#trip-'+id).html(set.getall());
           }
       });
     }
+    $(document).on('click','.seat',function(){set.storeselected(this,$(this).attr('data-id'))});
 </script>
 @endsection
