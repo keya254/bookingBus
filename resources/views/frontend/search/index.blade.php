@@ -83,7 +83,7 @@
             <div class="lg:w-1/4 md:w-1/2 sm:w-1/2 w-1/2 py-2 mb-2 shadow-lg bg-blue-200 rounded-lg">مالك السيارة</div>
             <div class="lg:w-1/4 md:w-1/2 sm:w-1/2 w-1/2 py-2 mb-2 ">{{$trip->car->owner->name}}</div>
             <div class="lg:w-2/4 md:w-full sm:w-full w-full py-2 mb-2">
-                <a class="bg-red-500 shadow-lg py-2 px-8 rounded-lg w-full cursor-pointer booking" href="javascript:void(0)" data-id="{{$trip->id}}">احجز الان</a>
+                <a class="bg-red-500 shadow-lg py-2 px-8 rounded-lg w-full cursor-pointer booking" href="javascript:void(0)" data-id="{{$trip->id}}">اختر المقاعد</a>
             </div>
           </div>
           <div class="w-full rounded-lg shadow-md px-6 py-6 text-center hidden bg-pink-600 mb-3 trip" id="trip-{{$trip->id}}">
@@ -97,6 +97,7 @@
         {{$trips->appends(request()->query())->links()}}
       </div>
     </div>
+    <div id="recaptcha-container"></div>
 </div>
 @endsection
 @section('js')
@@ -105,6 +106,14 @@
 <!--Internal Sumoselect js-->
 <script src="{{URL::asset('assets/plugins/sumoselect/jquery.sumoselect.js')}}"></script>
 <script src="{{URL::asset('assets/js/seats.js')}}"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-app.js"></script>
+  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
+  <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-analytics.js"></script>
+
+  <!-- Add Firebase products that you want to use -->
+  <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.10/firebase-firestore.js"></script>
+  <script src="{{URL::asset('assets/js/firebase.js')}}"></script>
 <script>
     $.ajaxSetup({
         headers: {
@@ -116,6 +125,7 @@
         var id=$(this).attr('data-id');
         if($(this).hasClass('bg-red-500')){
           $('.booking').removeClass('bg-yellow-500');
+          $('.booking').addClass('bg-red-500');
           $(this).removeClass('bg-red-500');
           $(this).addClass('bg-yellow-500');
           seat(id);
@@ -143,6 +153,53 @@
           }
       });
     }
-    $(document).on('click','.seat',function(){set.storeselected(this,$(this).attr('data-id'))});
+    $(document).on('click','.seat',function(){
+        set.storeselected(this,$(this).attr('data-id'));
+        $('#trip-'+set.trip).html(set.getall());
+    });
+    $(document).on('click','.bookingnow',function(){
+        form=
+        '<div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">'+
+          '<form id="formbooking">'+
+          '<div class="-mx-3 md:flex mb-6">'+
+            '<div class="md:w-1/2 px-3 mb-6 md:mb-0">'+
+              '<label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-first-name">الاسم</label>'+
+              '<input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3" id="name" type="text" placeholder="الاسم" required>'+
+            '</div>'+
+            '<div class="md:w-1/2 px-3">'+
+              '<label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-last-name">رقم الهاتف</label>'+
+              '<input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-grey-lighter rounded py-3 px-4" id="phone_number" type="text" placeholder="رقم الهاتف" required>'+
+            '</div>'+
+          '</div>'+
+          '<div class="-mx-3 md:flex mb-6">'+
+            '<div class="md:w-full px-3 mb-6 md:mb-0">'+
+               '<input type="submit" class="bg-red-700 p-3 cursor-pointer m-2 rounded-md shadow-md" value="حفظ">'+
+            '</div>'+
+          '</div>'+
+          '</form>'+
+        '</div>';
+        $('#trip-'+$(this).attr('data-id')).html(form);
+    });
+    $(document).on('submit','#formbooking',function(e){
+        e.preventDefault();
+        var name=$('#name').val();
+        var phone_number=$('#phone_number').val();
+        if(name =='' || name.length < 5)
+        {
+           alert('خطئ ما حدث في حقل الاسم');
+           return false;
+        }
+        myarray=[0,1,2,5];
+         if(phone_number =='' || phone_number.length != 11 || jQuery.inArray(phone_number.indexOf(2), myarray) === -1 || phone_number.indexOf(1) !=1 || phone_number.indexOf(0) !=0)
+        {
+           alert('خطئ ما حدث في حقل رقم الهاتف');
+           return false;
+        }
+        fire =new MyFirebase();
+        fire.initialize();
+        fire.refreshrecaptch();
+        fire.getphonenumber(phone_number);
+        //fire.verifycode(324432);
+     });
 </script>
 @endsection

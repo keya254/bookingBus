@@ -11,7 +11,7 @@ class seats
     this.Gseat=Gseat;
     this.max_seats=max_seats;
   }
-  
+
   getall()
   {
       if (this.Gseat.length==7) {
@@ -52,8 +52,8 @@ class seats
     if (! localStorage.getItem('trip')) {
        localStorage.setItem('trip',this.trip)
     }
-    if (localStorage.getItem('trip')==this.trip) 
-    {        
+    if (localStorage.getItem('trip')==this.trip)
+    {
         existing = existing ? existing.split(',') : [];
         if (existing.find(element => element == id)) {
             var ind=existing.indexOf(id);
@@ -66,19 +66,24 @@ class seats
               $(el).toggleClass('selected available');
            }
            else{
-           console.log('Sorry Max Seats is '+this.max_seats+' You Book '+existing.length);
+           alert('العدد الاقصي لحجز المقاعد'+this.max_seats+' وانت حجز  '+existing.length);
            }
         }
         localStorage.setItem('seats_'+this.trip+'', existing.toString());
     }
     else
     {
-        if (confirm('للحجز سيتم حذف الرحلة الأخري')) {
+        if (confirm('للحجز سيتم حذف المقاعد الرحلة الأخري ؟')) {
             localStorage.clear();
         }
     }
   }
-  
+   addcard() {
+    if (localStorage.getItem('trip')==this.trip && localStorage.getItem('seats_'+this.trip+'').split(',').length != 0 && localStorage.getItem('seats_'+this.trip+'').split(',')[0] != "") {
+       return this.Sseat+='<hr class="my-4"><a class="bookingnow my-3" data-id="'+this.trip+'">احجز الان</a>';
+     }
+  }
+
 }
 
 class sevenseats extends seats
@@ -107,6 +112,7 @@ class sevenseats extends seats
         }
         this.Sseat+='</ul>';
      }
+    this.addcard();
     return this.Sseat;
    }
 }
@@ -134,6 +140,7 @@ class elevenseats extends seats
         }
         this.Sseat+='</ul>';
      }
+     this.addcard();
     return this.Sseat;
    }
 }
@@ -167,6 +174,7 @@ class fortythreeseats extends seats
         }
         this.Sseat+='</ul>';
      }
+    this.addcard();
     return this.Sseat;
   }
 }
