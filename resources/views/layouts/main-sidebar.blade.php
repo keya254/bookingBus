@@ -62,6 +62,21 @@
 					    <a class="side-menu__item" href="{{ route('trip.index') }}"><span class="side-menu__label">الرحلات</a>
                     </li>
                     @endcan
+                    @can('passengers')
+                    <li class="slide">
+					    <a class="side-menu__item" href="{{ route('passenger.index') }}"><span class="side-menu__label">العملاء</a>
+                    </li>
+                    @endcan
+                    @can('owners')
+                    <li class="slide">
+					    <a class="side-menu__item" href="{{ route('owner.index') }}"><span class="side-menu__label">اصحاب السيارات</a>
+                    </li>
+                    @endcan
+                    @can('drivers')
+                    <li class="slide">
+					    <a class="side-menu__item" href="{{ route('driver.index') }}"><span class="side-menu__label">السائقين</a>
+                    </li>
+                    @endcan
 					@can('notifications')
 					<li class="slide">
 						<a class="side-menu__item" href="{{ route('notifications.index' ) }}"><span class="side-menu__label">الاشعارات</a>

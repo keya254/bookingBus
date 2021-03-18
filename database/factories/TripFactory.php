@@ -27,8 +27,8 @@ class TripFactory extends Factory
         return [
             'from_id'=>City::all()->random()->id,
             'to_id'=>City::all()->random()->id,
-            'day'=>now(),
-            'start_time'=>now()->addDay(rand(0,9)),
+            'day'=>now()->addDay(rand(0,9)),
+            'start_time'=>now()->addMinutes(rand(0,300)),
             'min_time'=>rand(10,500),
             'max_time'=>rand(10,500),
             'max_seats'=>rand(1,6),

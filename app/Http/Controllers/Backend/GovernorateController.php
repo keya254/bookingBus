@@ -29,8 +29,8 @@ class GovernorateController extends Controller
     {
         if ($request->ajax())
         {
-        $data = Governorate::select('*');
-        return DataTables::of($data)
+             $data = Governorate::select('*');
+             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
                        $btn='';

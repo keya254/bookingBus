@@ -74,6 +74,26 @@ class User extends Authenticatable
         return $this->hasMany(Trip::class, 'driver_id');
     }
 
+    /**
+     * Get all of the drivers for the Owner
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function drivers()
+    {
+        return $this->hasMany(OwnerDriver::class,'owner_id');
+    }
+
+    /**
+     * Get the owner that owns the driver
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function owner()
+    {
+        return $this->belongsTo(OwnerDriver::class,'driver_id');
+    }
+
     public static function boot()
     {
         parent::boot();

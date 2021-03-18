@@ -1,15 +1,15 @@
 $(document).ready(function() {
 	$('.select2').select2({
-		placeholder: 'Choose one',
+		placeholder: 'اختار المدينة',
 		searchInputPlaceholder: 'Search',
 		 width: '100%'
 	});
 	$('.select2-no-search').select2({
 		minimumResultsForSearch: Infinity,
-		placeholder: 'Choose one',
+		placeholder: 'اختار المدينة',
 		 width: '100%'
 	});
-	
+
 	function formatState (state) {
 	  if (!state.id) { return state.text; }
 	  var $state = $(
@@ -25,5 +25,5 @@ $(document).ready(function() {
 	  templateSelection: formatState,
 	   escapeMarkup: function(m) { return m; }
 	});
-	
+
 });

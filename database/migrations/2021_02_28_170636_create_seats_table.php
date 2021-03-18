@@ -22,7 +22,7 @@ class CreateSeatsTable extends Migration
             $table->dateTime('booking_time')->nullable();
             $table->timestamps();
             $table->foreign('trip_id')->references('id')->on('trips')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('passenger_id')->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
+            $table->foreign('passenger_id')->references('id')->on('passengers')->onDelete('set null')->onUpdate('cascade');
             $table->unique(['trip_id','name']);
         });
     }

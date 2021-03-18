@@ -82,7 +82,7 @@ class Trip extends Model
     */
     public function ScopeActive($q)
     {
-        return $q->where('status',1);
+        return $q->where('status',1)->whereDate('day','>=',now());
     }
 
     /**

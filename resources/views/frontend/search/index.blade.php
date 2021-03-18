@@ -6,20 +6,20 @@
   <link href="{{URL::asset('assets/plugins/select2/css/select2.min.css')}}" rel="stylesheet">
   <link rel="stylesheet" href="{{URL::asset('assets/plugins/sumoselect/sumoselect-rtl.css')}}">
   <style>
-    .img-hor-vert {
+    /* .img-hor-vert {
 
       -moz-transform: scale(-1, 1);
       -o-transform: scale(-1, 1);
       -webkit-transform: scale(-1, 1);
       transform: scale(-1, 1);
-    }
+    } */
 
     .numberseat
     {
       margin-top: -0.5rem;
-      margin-right: 0.0rem;
+      margin-right: -15px;
       position: absolute;
-      text-align: left;
+      text-align: right;
       z-index: 20;
     }
 
@@ -189,17 +189,47 @@
            alert('خطئ ما حدث في حقل الاسم');
            return false;
         }
-        myarray=[0,1,2,5];
-         if(phone_number =='' || phone_number.length != 11 || jQuery.inArray(phone_number.indexOf(2), myarray) === -1 || phone_number.indexOf(1) !=1 || phone_number.indexOf(0) !=0)
+        myarray=['0','1','2','5'];
+         if(phone_number =='' || phone_number.length != 11 || ! myarray.includes(phone_number.charAt(2)) || phone_number.charAt(1) !=1 || phone_number.charAt(0) !=0)
         {
            alert('خطئ ما حدث في حقل رقم الهاتف');
            return false;
         }
+        localStorage.setItem('name',name);
+        localStorage.setItem('phone_number',phone_number);
         fire =new MyFirebase();
         fire.initialize();
         fire.refreshrecaptch();
-        fire.getphonenumber(phone_number);
-        //fire.verifycode(324432);
+        formcode='';
+        getformcode();
+        fire.getphonenumber(phone_number,formcode);
+
+     });
+     function getformcode()
+     {
+        formcode+=
+        '<div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col my-2">'+
+          '<form id="formcode">'+
+          '<div class="-mx-3 md:flex mb-6 text-center">'+
+            '<div class="md:w-1/2 px-3 mb-6 md:mb-0">'+
+              '<label class="block uppercase tracking-wide text-grey-darker text-xs font-bold mb-2" for="grid-first-name">الكود</label>'+
+              '<input class="appearance-none block w-full bg-grey-lighter text-grey-darker border border-red rounded py-3 px-4 mb-3" id="code" type="text" placeholder="الكود" required>'+
+            '</div>'+
+          '</div>'+
+          '<div class="-mx-3 md:flex mb-6">'+
+            '<div class="md:w-full px-3 mb-6 md:mb-0">'+
+               '<input type="submit" class="bg-red-700 p-3 cursor-pointer m-2 rounded-md shadow-md" value="ارسال">'+
+            '</div>'+
+          '</div>'+
+          '</form>'+
+        '</div>';
+     }
+     $(document).on('submit','#formcode',function(e){
+        e.preventDefault();
+       code= $('#code').val();
+        if (code.length==6) {
+            fire.verifycode(code);
+        }
      });
 </script>
 @endsection

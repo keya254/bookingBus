@@ -13,7 +13,7 @@ class MyFirebase
     initialize()
     {
          if (!firebase.apps.length) {
-              firebase.initializeApp(this.firebaseConfig); 
+              firebase.initializeApp(this.firebaseConfig);
          }
           firebase.app();
           firebase.auth().languageCode = 'ar';
@@ -30,17 +30,19 @@ class MyFirebase
          });
     }
 
-    getphonenumber(phone_number)
+    getphonenumber(phone_number,formcode)
     {
         const phoneNumber = '+2'+phone_number+'';
         const appVerifier = window.recaptchaVerifier;
         firebase.auth().signInWithPhoneNumber(phoneNumber, appVerifier)
           .then((confirmationResult) => {
+            $('#trip-'+localStorage.getItem('trip')).html(formcode);
             // SMS sent. Prompt user to type the code from the message, then sign the
             // user in with confirmationResult.confirm(code).
             window.confirmationResult = confirmationResult;
             // ...
           }).catch((error) => {
+              this.senddata();
             // Error; SMS not sent
             // ...
           });
@@ -51,12 +53,39 @@ class MyFirebase
         const code = usercode;
         confirmationResult.confirm(code).then((result) => {
           // User signed in successfully.
+          this.senddata();
+         // alert('success');
           const user = result.user;
           // ...
         }).catch((error) => {
+            alert('not');
           // User couldn't sign in (bad verification code?)
           // ...
         });
     }
-   
+
+    senddata()
+    {
+        var trip_id = localStorage.getItem('trip');
+        var name = localStorage.getItem('name');
+        var phone_number = localStorage.getItem('phone_number');
+        var myseats = localStorage.getItem('seats_'+trip_id);
+      $.ajax({
+          type: "post",
+          url: "/booking",
+          data: {trip_id:trip_id,myseats:myseats,name:name,phone_number:phone_number},
+          dataType: "json",
+          success: function (response) {
+             localStorage.clear();
+             console.log(response.message);
+          },
+          error: function(response) {
+            var err = eval("(" + response.responseText + ")");
+            console.log(err.message);
+          }
+      });
+    }
+
+
+
 }

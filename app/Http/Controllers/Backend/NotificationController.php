@@ -17,8 +17,8 @@ class NotificationController extends Controller
     public function index(Request $request)
     {
        if ($request->ajax()) {
-        $data = auth()->user()->notifications()->latest();
-        return DataTables::of($data)
+           $data = auth()->user()->notifications()->latest();
+           return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
                        $btn='';
@@ -27,7 +27,7 @@ class NotificationController extends Controller
                 })
                 ->rawColumns(['action'])
                 ->make(true);
-       } 
+       }
        return view('backend.notification.index');
     }
 

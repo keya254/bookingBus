@@ -66,12 +66,12 @@ $(function() {
 	});
 	$(document).ready(function() {
 		$('.select2').select2({
-			placeholder: 'Choose one',
+			placeholder: 'اختار المدينة',
 			searchInputPlaceholder: 'Search'
 		});
 		$('.select2-no-search').select2({
 			minimumResultsForSearch: Infinity,
-			placeholder: 'Choose one'
+			placeholder: 'اختار المدينة'
 		});
 	});
 });
