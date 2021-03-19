@@ -15,7 +15,7 @@ class Car extends Model
 
     protected $appends=['image_path'];
 
-    protected $with=['owner','typecar','trips','cities'];
+    // protected $with=['owner','typecar','trips','cities'];
 
     /**
      * Get the owner that owns the Car

@@ -39,6 +39,8 @@ Route::group(['prefix'=>'backend','namespace'=>'Backend','middleware'=>'auth'],f
     Route::resource('owner', 'OwnerController')->only(['index','store','destroy']);
     //Driver
     Route::resource('driver', 'DriverController')->only(['index','store','destroy']);
+    //Driver
+    Route::resource('citiescar', 'CitiesCarController')->only(['index','store','destroy']);
     //Change Website Setting
     Route::resource('setting', 'SettingController')->only(['index','store']);
     //Change Profile Setting

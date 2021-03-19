@@ -11,9 +11,12 @@ class create extends Component
      *
      * @return void
      */
-    public function __construct()
+    public $cars;
+    public $governorates;
+    public function __construct($cars,$governorates)
     {
-        //
+       $this->cars=$cars;
+       $this->governorates=$governorates;
     }
 
     /**
