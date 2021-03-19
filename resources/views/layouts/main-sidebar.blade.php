@@ -77,6 +77,11 @@
 					    <a class="side-menu__item" href="{{ route('driver.index') }}"><span class="side-menu__label">السائقين</a>
                     </li>
                     @endcan
+                    @can('citiescar')
+                    <li class="slide">
+					    <a class="side-menu__item" href="{{ route('citiescar.index') }}"><span class="side-menu__label">المدن للرحلات الخاصة</a>
+                    </li>
+                    @endcan
 					@can('notifications')
 					<li class="slide">
 						<a class="side-menu__item" href="{{ route('notifications.index' ) }}"><span class="side-menu__label">الاشعارات</a>
