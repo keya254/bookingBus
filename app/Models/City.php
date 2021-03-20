@@ -15,7 +15,6 @@ class City extends Model
 
     protected $appends=[];
 
-    protected $with=['governorate'];
     /**
      * Get the governorate that owns the City
      *

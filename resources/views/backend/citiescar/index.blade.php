@@ -3,7 +3,9 @@
 المدن
 @endsection
 @section('css')
-<link rel="stylesheet" type="text/css" href="{{asset('css/datatables.css')}}">
+  <link href="{{URL::asset('assets/plugins/select2/css/select2.min.css')}}" rel="stylesheet">
+  <link rel="stylesheet" href="{{URL::asset('assets/plugins/sumoselect/sumoselect-rtl.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{asset('css/datatables.css')}}">
 @endsection
 @section('page-header')
   <!-- breadcrumb -->
@@ -39,6 +41,8 @@
 @endcan
 @endsection
 @section('js')
+<script src="{{URL::asset('assets/plugins/select2/js/select2.min.js')}}"></script>
+<script src="{{URL::asset('assets/js/select2.js')}}"></script>
 <script type="text/javascript" charset="utf8" src="{{asset('js/datatables.js')}}"></script>
 <script type="text/javascript">
     $.ajaxSetup({

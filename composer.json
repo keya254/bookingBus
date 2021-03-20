@@ -43,7 +43,8 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": ["app/Traits/AdminTrait.php","app/Traits/OwnerTrait.php","app/Traits/DriverTrait.php"]
     },
     "autoload-dev": {
         "psr-4": {

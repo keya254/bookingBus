@@ -13,6 +13,7 @@
                         </select>
                      </div>
                      <div class="form-group col-6">
+                        <label for="">المدينة</label>
                         <select name="city_id" class="select2" class="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150">
                            <option value="">المدينة</option>
                            @foreach ($governorates as $governorate)

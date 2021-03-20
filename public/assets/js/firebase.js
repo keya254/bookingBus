@@ -12,6 +12,12 @@ class MyFirebase
 
     initialize()
     {
+        if (firebase.apps.length) {
+            myNewConfig=this.firebaseConfig;
+            firebase.app().delete().then(function() {
+             firebase.initializeApp(myNewConfig);
+            });
+        }
          if (!firebase.apps.length) {
               firebase.initializeApp(this.firebaseConfig);
          }
@@ -42,7 +48,6 @@ class MyFirebase
             window.confirmationResult = confirmationResult;
             // ...
           }).catch((error) => {
-              this.senddata();
             // Error; SMS not sent
             // ...
           });
