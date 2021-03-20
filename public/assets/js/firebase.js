@@ -13,7 +13,7 @@ class MyFirebase
     initialize()
     {
         if (firebase.apps.length) {
-            myNewConfig=this.firebaseConfig;
+            var  myNewConfig=this.firebaseConfig;
             firebase.app().delete().then(function() {
              firebase.initializeApp(myNewConfig);
             });

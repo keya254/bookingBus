@@ -15,10 +15,10 @@
 <div class="row">
     @foreach ($data as $key=> $item)
       <div class="col-xl-3 col-lg-6 col-md-6 col-xm-12">
-		<div class="card overflow-hidden sales-card bg-warning">
+		<div class="card overflow-hidden sales-card bg-pink">
 			<div class="pl-3 pt-3 pr-3 pb-2">
 				<div class="">
-					<h6 class="mb-3 tx-12 text-white">{{$key}}</h6>
+					<h6 class="mb-3 tx-12 text-white">@lang('dashboard.'.$key)</h6>
 				</div>
 				<div class="pb-0 mt-0">
 					<div class="d-flex">
