@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Traits\AdminTrait;
+namespace App\Traits;
 
 use App\Models\Car;
 use App\Models\City;

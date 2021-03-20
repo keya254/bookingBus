@@ -1,6 +1,6 @@
 <?php
 
-namespace app\Traits\DriverTrait;
+namespace App\Traits;
 
 use App\Models\City;
 use App\Models\Seat;

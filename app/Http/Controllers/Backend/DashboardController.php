@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Traits\AdminTrait\Admin;
-use app\Traits\DriverTrait\Driver;
-use app\Traits\OwnerTrait\Owner;
+use App\Traits\Admin;
+use App\Traits\Driver;
+use App\Traits\Owner;
 
 class DashboardController extends Controller
 {
