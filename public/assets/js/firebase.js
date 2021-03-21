@@ -48,6 +48,7 @@ class MyFirebase
             window.confirmationResult = confirmationResult;
             // ...
           }).catch((error) => {
+            $('#trip-'+localStorage.getItem('trip')).html('<p>خطئ ما قد حدث</p>')
             // Error; SMS not sent
             // ...
           });
@@ -59,11 +60,8 @@ class MyFirebase
         confirmationResult.confirm(code).then((result) => {
           // User signed in successfully.
           this.senddata();
-         // alert('success');
-          const user = result.user;
-          // ...
         }).catch((error) => {
-            alert('not');
+            $('#messagecode').text('الكود خطئ');
           // User couldn't sign in (bad verification code?)
           // ...
         });
@@ -81,12 +79,12 @@ class MyFirebase
           data: {trip_id:trip_id,myseats:myseats,name:name,phone_number:phone_number},
           dataType: "json",
           success: function (response) {
+            $('#trip-'+localStorage.getItem('trip')).html('<p>'+response.message+'</p>');
              localStorage.clear();
-             console.log(response.message);
           },
           error: function(response) {
             var err = eval("(" + response.responseText + ")");
-            console.log(err.message);
+            $('#trip-'+localStorage.getItem('trip')).html('<p>'+err.message+'</p>')
           }
       });
     }

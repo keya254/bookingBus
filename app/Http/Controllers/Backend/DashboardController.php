@@ -6,10 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Traits\Admin;
 use App\Traits\Driver;
 use App\Traits\Owner;
+use App\Traits\TimeAdmin;
 
 class DashboardController extends Controller
 {
-    use Admin,Owner,Driver;
+    use Admin,Owner,Driver,TimeAdmin;
 
     // public function __construct()
     // {

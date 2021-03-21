@@ -104,6 +104,10 @@ trait Owner
    **/
   public function owner_all()
   {
-    return $this->auth_owner_cars()+$this->auth_owner_drivers()+$this->auth_owner_passeners()+$this->auth_owner_private_cars()+$this->auth_owner_private_cities()+$this->auth_owner_seats()+$this->auth_owner_trips();
+    return
+        $this->auth_owner_cars() + $this->auth_owner_drivers() +
+        $this->auth_owner_passeners() + $this->auth_owner_private_cars() +
+        $this->auth_owner_private_cities() + $this->auth_owner_seats() +
+        $this->auth_owner_trips();
   }
 }

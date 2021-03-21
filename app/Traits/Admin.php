@@ -152,10 +152,9 @@ trait Admin
   {
       return
       $this->roles()    + $this->permissions() +
-      $this->typecars() + $this->governorates() +
-      $this->cars()     + $this->trips() +
-      $this->seats()    + $this->owners() +
-      $this->drivers()  + $this->passengers() +
-      $this->cities();
+      $this->governorates() + $this->cities() +
+      $this->typecars() + $this->cars()     +
+      $this->trips()    + $this->seats()    +
+      $this->owners()   + $this->drivers()  + $this->passengers();
   }
 }
