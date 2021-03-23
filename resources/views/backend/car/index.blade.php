@@ -150,6 +150,7 @@
             $('#etypecar_id').val(response.car.typecar_id);
             $('input[name=public][value='+response.car.public+']').attr('checked', 'checked');
             $('input[name=private][value='+response.car.private+']').attr('checked', 'checked');
+            $('input[name=phone_number]').val(response.car.phone_number);
             $('#editcar').modal('toggle');
            }
        });

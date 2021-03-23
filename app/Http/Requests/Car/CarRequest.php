@@ -29,7 +29,8 @@ class CarRequest extends FormRequest
             'status'=>'nullable|boolean|in:0,1',
             'typecar_id'=>'required|integer',
             'private'=>'nullable|boolean|in:0,1',
-            'public'=>'nullable|boolean|in:0,1'
+            'public'=>'nullable|boolean|in:0,1',
+            'phone_number'=>'required|size:11',
         ];
     }
 }

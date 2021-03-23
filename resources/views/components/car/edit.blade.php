@@ -21,6 +21,10 @@
                         <input type="file" name="image">
                      </div>
                      <div class="form-group">
+                        <label for="">رقم الهاتف</label>
+                        <input type="text" name="phone_number" class="form-control">
+                     </div>
+                     <div class="form-group">
                         <p>يعمل عامة</p>
                         <input type="radio" name="public" value="1"> يعمل
                         <input type="radio" name="public" value="0"> لا يعمل
