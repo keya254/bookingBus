@@ -4,14 +4,32 @@
             <div class="modal-header">تعديل رحلة</div>
             <div class="modal-body">
                  <form id="etrip" class="row">
-                     <div class="form-group col-6" >
-                       <label for="">الرحلة من</label>
-                       <input type="text" name="from"  class="form-control" placeholder="الرحلة من">
-                     </div>
-                     <div class="form-group col-6">
-                        <label for="">الرحلة الي</label>
-                        <input type="text" name="to"  class="form-control" placeholder="الرحلة الي">
+                    <div class="form-group col-6" >
+                        <label for="">الرحلة من</label>
+                         <select name="from_id" class="select2 form-control">
+                             <option value="">من</option>
+                             @foreach ($governorates as $governorate)
+                               <optgroup label="{{$governorate->name}}">
+                               @foreach ($governorate->cities as $city)
+                                 <option value="{{$city->id}}">{{$city->name}}</option>
+                               @endforeach
+                             </optgroup>
+                            @endforeach
+                        </select>
                       </div>
+                      <div class="form-group col-6">
+                         <label for="">الرحلة الي</label>
+                         <select name="to_id" class="select2 form-control">
+                             <option value="">الي</option>
+                             @foreach ($governorates as $governorate)
+                               <optgroup label="{{$governorate->name}}">
+                               @foreach ($governorate->cities as $city)
+                                 <option value="{{$city->id}}">{{$city->name}}</option>
+                               @endforeach
+                             </optgroup>
+                            @endforeach
+                        </select>
+                       </div>
                       <div class="form-group col-6">
                         <label for="">يوم الرحلة</label>
                         <input type="date" name="day"  class="form-control" placeholder="يوم الرحلة">
@@ -31,6 +49,10 @@
                       <div class="form-group col-6">
                         <label for="">اكثر وقت للرحلة</label>
                         <input type="number" name="max_time"  class="form-control" placeholder="اكثر وقت للرحلة">
+                      </div>
+                      <div class="form-group col-6">
+                        <label for="">اقصي عدد من المقاعد يمكن حجزها</label>
+                        <input type="text" name="max_seats"  class="form-control">
                       </div>
                      <div class="form-group col-6">
                         <label for="">السيارة</label>

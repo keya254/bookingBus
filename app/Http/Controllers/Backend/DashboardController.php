@@ -17,10 +17,10 @@ class DashboardController extends Controller
 {
     use Admin,Owner,Driver,DatesDriver,DatesAdmin,DatesOwner;
 
-    // public function __construct()
-    // {
-    //     $this->middleware(['auth','permission:dashboard']);
-    // }
+    public function __construct()
+    {
+        $this->middleware(['auth','permission:dashboard']);
+    }
 
     public function index()
     {

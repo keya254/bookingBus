@@ -56,7 +56,7 @@ Route::group(['prefix'=>'backend','namespace'=>'Backend','middleware'=>'auth'],f
     Route::post('roles/role_permissions', 'RolesController@role_permissions')->name('role_permissions');
     Route::get('roles/role_permissions/{id}', 'RolesController@getrolepermissions')->name('getrolepermissions');
     //Notifications
-    Route::resource('notifications', 'NotificationController')->only(['index','store','destory']);
+    Route::resource('notifications', 'NotificationController')->only(['index','store','destroy']);
 });
 
 Route::prefix('')->group(function () {

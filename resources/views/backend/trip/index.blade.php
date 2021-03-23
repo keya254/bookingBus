@@ -3,6 +3,8 @@
  الرحلات
 @endsection
 @section('css')
+<link href="{{URL::asset('assets/plugins/select2/css/select2.min.css')}}" rel="stylesheet">
+<link rel="stylesheet" href="{{URL::asset('assets/plugins/sumoselect/sumoselect-rtl.css')}}">
 <link rel="stylesheet" type="text/css" href="{{asset('css/datatables.css')}}">
 @endsection
 @section('page-header')
@@ -45,14 +47,16 @@
   </div>
 </div>
 @can('create-trip')
-  <x-Trip.Create :cars="$cars" :drivers="$drivers"/>
+  <x-Trip.Create :cars="$cars" :drivers="$drivers" :governorates="$governorates" />
 @endcan
 @can('edit-trip')
-  <x-Trip.Edit :cars="$cars" :drivers="$drivers"/>
+  <x-Trip.Edit :cars="$cars" :drivers="$drivers" :governorates="$governorates" />
 @endcan
 
 @endsection
 @section('js')
+<script src="{{URL::asset('assets/plugins/select2/js/select2.min.js')}}"></script>
+<script src="{{URL::asset('assets/js/select2.js')}}"></script>
 <script type="text/javascript" charset="utf8" src="{{asset('js/datatables.js')}}"></script>
 <script type="text/javascript">
     $.ajaxSetup({
@@ -136,14 +140,15 @@
            url: "{{route('trip.index')}}/"+$(this).attr('data-id'),
            dataType: "json",
            success: function (response) {
-            $('input[name=from]').val(response.trip.from);
-            $('input[name=to]').val(response.trip.to);
+            $('input[name=from_id]').val(response.trip.from_id);
+            $('input[name=to_id]').val(response.trip.to_id);
             $('input[name=start_time]').val(response.trip.start_time);
             $('input[name=day]').val(response.trip.day);
             $('input[name=max_time]').val(response.trip.max_time);
             $('input[name=min_time]').val(response.trip.min_time);
             $('input[name=price]').val(response.trip.price);
             $('input[name=id]').val(response.trip.id);
+            $('input[name=max_seats]').val(response.trip.max_seats);
             $('#edittrip').modal('toggle');
 
            }

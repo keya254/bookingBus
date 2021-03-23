@@ -35,11 +35,11 @@ class TypeCarController extends Controller
                      })
                     ->addColumn('action', function($row){
                         $btn='';
-                        if(auth()->user()->can('تعديل قسم'))
+                        if(auth()->user()->can('edit-typecar'))
                         {
                            $btn .= '<a href="javascript:void(0);" class="edit btn btn-primary m-1 btn-sm edittypecar"  data-id="'.$row->id.'"><i class="fa fa-edit"></i></a>';
                         }
-                        if(auth()->user()->can('حذف قسم'))
+                        if(auth()->user()->can('delete-typecar'))
                         {
                            $btn .= '<a href="javascript:void(0);" class="delete btn btn-danger m-1 btn-sm" data-id="'.$row->id.'"><i class="fa fa-trash"></i></a>';
                         }

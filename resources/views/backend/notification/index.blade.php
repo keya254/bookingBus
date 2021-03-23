@@ -47,7 +47,7 @@
           serverSide: true,
           ajax: "{{ route('notifications.index') }}",
           columns: [
-              {data: 'data', name: 'data'},
+              {data: "data.content", name: 'data'},
               {data: 'action', name: 'action', orderable: false, searchable: false},
           ],
           language:

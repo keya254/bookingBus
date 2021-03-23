@@ -5,9 +5,14 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Trip\TripRequest;
 use App\Models\Car;
+use App\Models\City;
+use App\Models\Governorate;
 use App\Models\Trip;
 use App\Models\User;
+use App\Notifications\NewTripForDriverNotification;
+use App\Notifications\NewTripForOwnerNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Yajra\DataTables\Facades\DataTables;
 
 class TripController extends Controller
@@ -37,11 +42,11 @@ class TripController extends Controller
                      })
                     ->addColumn('action', function($row){
                         $btn='';
-                        if(auth()->user()->can('تعديل قسم'))
+                        if(auth()->user()->can('edit-trip'))
                         {
                            $btn .= '<a href="javascript:void(0);" class="edit btn btn-primary m-1 btn-sm edittrip"  data-id="'.$row->id.'"><i class="fa fa-edit"></i></a>';
                         }
-                        if(auth()->user()->can('حذف قسم'))
+                        if(auth()->user()->can('delete-trip'))
                         {
                            $btn .= '<a href="javascript:void(0);" class="delete btn btn-danger m-1 btn-sm" data-id="'.$row->id.'"><i class="fa fa-trash"></i></a>';
                         }
@@ -50,9 +55,10 @@ class TripController extends Controller
                     ->rawColumns(['action','status'])
                     ->make(true);
         }
-        $cars=Car::all();
-        $drivers=User::all();
-        return view('backend.trip.index',compact('cars','drivers'));
+        $cars=Car::where('owner_id',auth()->user()->id)->get();
+        $drivers=User::role('Driver')->whereIn('id',auth()->user()->drivers->pluck(['driver_id']))->get();
+        $governorates=Governorate::with('cities')->get();
+        return view('backend.trip.index',compact('cars','drivers','governorates'));
     }
 
      /**
@@ -73,7 +79,9 @@ class TripController extends Controller
      */
     public function store(TripRequest $request)
     {
-        Trip::create($request->validated());
+        $trip=Trip::create($request->validated());
+        Notification::send($trip->car->owner, new NewTripForOwnerNotification());
+        Notification::send($trip->driver, new NewTripForDriverNotification());
         return response()->json(['message'=>'success created'],200);
     }
 

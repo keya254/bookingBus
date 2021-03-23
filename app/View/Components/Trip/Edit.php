@@ -13,10 +13,12 @@ class Edit extends Component
      */
     public $cars;
     public $drivers;
-    public function __construct($cars,$drivers)
+    public $governorates;
+    public function __construct($cars,$drivers,$governorates)
     {
         $this->cars=$cars;
         $this->drivers=$drivers;
+        $this->governorates=$governorates;
     }
 
     /**

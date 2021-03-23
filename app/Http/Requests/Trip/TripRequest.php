@@ -25,7 +25,7 @@ class TripRequest extends FormRequest
     {
         return [
             'from_id'=>'required|exists:cities,id',
-            'to_id'=>'required|exists:cities,id',
+            'to_id'=>'required|exists:cities,id|different:from_id',
             'day'=>'required|date|after_or_equal:'.now(),
             'start_time'=>'required',
             'min_time'=>'required|integer|lt:max_time',
@@ -34,6 +34,7 @@ class TripRequest extends FormRequest
             'car_id'=>'required|integer',
             'driver_id'=>'required|integer',
             'price'=>'required|integer',
+            'max_seats'=>'required|integer',
         ];
     }
 }

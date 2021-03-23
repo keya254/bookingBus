@@ -18,8 +18,12 @@ class DriverController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = User::role('Driver')->select('*');
-            return DataTables::of($data)
+            $data = User::role('Driver');
+            if(auth()->user()->hasrole('Owner'))
+            {
+              $data->whereIn('id',auth()->user()->drivers->pluck(['driver_id']));
+            }
+            return DataTables::of($data->select('*'))
                     ->addIndexColumn()
                     ->addColumn('action', function($row){
                            $btn='';

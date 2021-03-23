@@ -30,8 +30,11 @@ class CarController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Car::with(['owner:id,name','typecar:id,name'])->select('*');
-            return DataTables::of($data)
+            $data = Car::with(['owner:id,name','typecar:id,name']);
+            if(auth()->user()->hasrole('Owner')){
+             $data->whereIn('id',auth()->user()->cars->pluck(['id']));
+            }
+            return DataTables::of($data->select('*'))
                     ->addIndexColumn()
                     ->addColumn('image',function($row){
                         return '<img src="'.$row->image_path.'" heigth="100px" width="100px" >';
@@ -50,11 +53,11 @@ class CarController extends Controller
                      })
                     ->addColumn('action', function($row){
                         $btn='';
-                        if(auth()->user()->can('تعديل قسم'))
+                        if(auth()->user()->can('edit-car'))
                         {
                            $btn .= '<a href="javascript:void(0);" class="edit btn btn-primary m-1 btn-sm editcar"  data-id="'.$row->id.'"><i class="fa fa-edit"></i></a>';
                         }
-                        if(auth()->user()->can('حذف قسم'))
+                        if(auth()->user()->can('delete-car'))
                         {
                            $btn .= '<a href="javascript:void(0);" class="delete btn btn-danger m-1 btn-sm" data-id="'.$row->id.'"><i class="fa fa-trash"></i></a>';
                         }
