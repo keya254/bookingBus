@@ -14,7 +14,7 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
-        $permissions=['role','permission','typecar','car','trip'];
+        $permissions=['role','permission','governorate','city','typecar','car','trip','owner','driver','passenger','citiescar'];
 
         foreach ($permissions as $key => $permission) {
             Permission::create(['name'=>$permission.'s']);
