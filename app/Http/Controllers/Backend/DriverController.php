@@ -72,7 +72,9 @@ class DriverController extends Controller
      */
     public function destroy($id)
     {
-        User::FindOrFail($id)->delete();
+        $user=User::FindOrFail($id);
+        unlink($user->image);
+        $user->delete();
         return response()->json(['message'=>'success deleted'],200);
     }
 }

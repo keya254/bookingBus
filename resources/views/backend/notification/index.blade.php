@@ -56,11 +56,23 @@
           }
       });
    };
-   $('.data-table').on('click','.delete',function(){
+   $(document).on('click','.delete',function(){
      var id=$(this).attr('data-id');
      $.ajax({
        type: "delete",
        url: "{{route('notifications.index')}}/"+id,
+       dataType: "json",
+       success: function (response) {
+        $('.data-table').DataTable().ajax.reload();
+       }
+     });
+   });
+   $(document).on('click','.read',function(){
+     var id=$(this).attr('data-id');
+     $.ajax({
+       type: "post",
+       url: "{{route('notifications.store')}}",
+       data:{id:id},
        dataType: "json",
        success: function (response) {
         $('.data-table').DataTable().ajax.reload();

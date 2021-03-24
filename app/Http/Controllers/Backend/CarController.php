@@ -8,6 +8,7 @@ use App\Models\Car;
 use App\Models\TypeCar;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use Image;
 
 class CarController extends Controller
 {
@@ -107,7 +108,11 @@ class CarController extends Controller
      */
     public function store(CarRequest $request)
     {
-        auth()->user()->cars()->create($request->validated());
+        if(is_file($request->image)){
+            $name='images/cars/'.time().rand(11111,99999).'.png';
+            Image::make($request->image)->resize(500, 500)->save($name);
+            auth()->user()->cars()->create(['image'=>$name]+$request->validated());
+        }
         return response()->json(['message'=>'success created'],200);
     }
 
@@ -131,7 +136,17 @@ class CarController extends Controller
      */
     public function update(CarRequest $request, Car $car)
     {
-        $car->update($request->validated());
+        if(!is_file($request->image))
+        {
+            $car->update($request->validated());
+        }
+        if(is_file($request->image)){
+            $name='images/cars/'.time().rand(11111,99999).'.png';
+            Image::make($request->image)->resize(500, 500)->save($name);
+            //!storage unlike old image
+            unlink($car->image);
+            $car->update(['image'=>$name]+$request->validated());
+        }
         return response()->json(['message'=>'success update'],200);
     }
 
@@ -143,6 +158,8 @@ class CarController extends Controller
      */
     public function destroy(Car $car)
     {
+        //!storage unlike old image
+        unlink($car->image);
         $car->delete();
         return response()->json(['message'=>'success deleted'],200);
     }

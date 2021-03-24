@@ -21,7 +21,13 @@ class SettingController extends Controller
 
     public function store(SettingRequest $request)
     {
-      Setting::first()->update($request->validated());
+      if(is_file($request->logo)){
+            Image::make($request->logo)->resize(500, 500)->save('images/logo/logo.png');
+            Setting::first()->update(['logo'=>'images/logo/logo.png']+$request->validated());
+      }
+      else {
+           Setting::first()->update($request->validated());
+      }
       return back();
     }
 

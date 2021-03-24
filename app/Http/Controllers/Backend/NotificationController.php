@@ -22,6 +22,9 @@ class NotificationController extends Controller
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
                        $btn='';
+                       if ($row->read_at==null) {
+                          $btn.= '<a href="javascript:void(0);" class="read btn btn-primary m-1 btn-sm" data-id="'.$row->id.'">read</a>';
+                        }
                        $btn.= '<a href="javascript:void(0);" class="delete btn btn-danger m-1 btn-sm" data-id="'.$row->id.'"><i class="fa fa-trash"></i></a>';
                         return $btn;
                 })

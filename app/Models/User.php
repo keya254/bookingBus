@@ -6,7 +6,6 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Image;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -94,15 +93,4 @@ class User extends Authenticatable
         return $this->belongsTo(OwnerDriver::class,'driver_id');
     }
 
-    public static function boot()
-    {
-        parent::boot();
-        static::updating(function ($model) {
-            if(is_file($model->image)){
-            $name='images/users/'.time().rand(11111,99999).'.png';
-            Image::make($model->image)->resize(500, 500)->save($name);
-            $model->image =$name;
-            }
-        });
-    }
 }

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Image;
+
 class Car extends Model
 {
     use HasFactory;
@@ -15,7 +15,6 @@ class Car extends Model
 
     protected $appends=['image_path'];
 
-    // protected $with=['owner','typecar','trips','cities'];
 
     /**
      * Get the owner that owns the Car
@@ -136,24 +135,4 @@ class Car extends Model
     {
         return asset($this->image);
     }
-
-    public static function boot()
-    {
-        parent::boot();
-        static::creating(function ($model) {
-            if(is_file($model->image)){
-                $name='images/cars/'.time().rand(11111,99999).'.png';
-                Image::make($model->image)->resize(500, 500)->save($name);
-                $model->image =$name;
-            }
-        });
-        static::updating(function ($model) {
-            if(is_file($model->image)){
-                $name='images/cars/'.time().rand(11111,99999).'.png';
-                Image::make($model->image)->resize(500, 500)->save($name);
-                $model->image =$name;
-            }
-        });
-    }
-
 }
