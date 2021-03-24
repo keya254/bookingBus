@@ -16,9 +16,11 @@ class NewTripForDriverNotification extends Notification
      *
      * @return void
      */
-    public function __construct()
+    public $trip;
+
+    public function __construct($trip)
     {
-        //
+       $this->trip=$trip;
     }
 
     /**
@@ -41,7 +43,7 @@ class NewTripForDriverNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'content'=>'new trip for driver',
+            'content'=>' لقد تم اضافة رحلة جديدة للسيارة '.$this->trip->car->name.' يوم '.$this->trip->day.' الساعة '.$this->trip->start_time.' من '.$this->trip->from->name.' الي '.$this->trip->to->name.' ',
         ];
     }
 }

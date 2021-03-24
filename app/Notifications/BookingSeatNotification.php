@@ -16,11 +16,12 @@ class BookingSeatNotification extends Notification
      *
      * @return void
      */
-    public function __construct()
-    {
-        //
-    }
+    public $name;
 
+    public function __construct($name)
+    {
+       $this->name=$name;
+    }
     /**
      * Get the notification's delivery channels.
      *

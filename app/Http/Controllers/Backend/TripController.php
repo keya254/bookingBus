@@ -33,8 +33,11 @@ class TripController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = Trip::with(['driver:id,name','car:id,name','to:id,name','from:id,name'])->select('*');
-            return DataTables::of($data)
+            $data = Trip::with(['driver:id,name','car:id,name','to:id,name','from:id,name']);
+            if (auth()->user()->hasrole('Owner')) {
+               $data->whereIn('car_id',auth()->user()->cars->pluck(['id']));
+            }
+            return DataTables::of($data->select('*'))
                     ->addIndexColumn()
                      ->addColumn('status',function($row){
                         $status=$row->status==1?'checked':'';
@@ -80,8 +83,8 @@ class TripController extends Controller
     public function store(TripRequest $request)
     {
         $trip=Trip::create($request->validated());
-        Notification::send($trip->car->owner, new NewTripForOwnerNotification());
-        Notification::send($trip->driver, new NewTripForDriverNotification());
+        Notification::send($trip->car->owner, new NewTripForOwnerNotification($trip));
+        Notification::send($trip->driver, new NewTripForDriverNotification($trip));
         return response()->json(['message'=>'success created'],200);
     }
 

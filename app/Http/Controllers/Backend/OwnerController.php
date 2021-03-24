@@ -5,11 +5,21 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Models\User;
+use App\Notifications\NewOwnerNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Yajra\DataTables\Facades\DataTables;
 
 class OwnerController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['auth','permission:owners'])->only('index');
+        $this->middleware(['auth','permission:create-owner'])->only('store');
+        $this->middleware(['auth','permission:delete-owner'])->only('destroy');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -35,11 +45,12 @@ class OwnerController extends Controller
 
     public function store(CreateUserRequest $request)
     {
-        User::create([
+        $owner=User::create([
         'name'=>$request->validated()['name'],
         'email'=>$request->validated()['email'],
         'password'=>bcrypt($request->validated()['password'])
         ])->assignRole('Owner');
+        Notification::Send($owner,new NewOwnerNotification($owner->name));
         return response()->json(['message'=>'success created'],201);
     }
 
