@@ -12,6 +12,12 @@ use Yajra\DataTables\Facades\DataTables;
 
 class CitiesCarController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['auth','permission:citiescars'])->only('index');
+        $this->middleware(['auth','permission:create-citiescar'])->only('store');
+        $this->middleware(['auth','permission:delete-citiescar'])->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      *

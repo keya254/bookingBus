@@ -37,7 +37,7 @@ class RolesController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-       return view('Backend.roles.index');
+       return view('backend.roles.index');
     }
 
     /**

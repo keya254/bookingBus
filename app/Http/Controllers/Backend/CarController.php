@@ -38,7 +38,7 @@ class CarController extends Controller
             return DataTables::of($data->select('*'))
                     ->addIndexColumn()
                     ->addColumn('image',function($row){
-                        return '<img src="'.$row->image_path.'" heigth="100px" width="100px" >';
+                        return '<img src="'.$row->image_path.'" heigth="50px" width="50px" >';
                      })
                      ->addColumn('status',function($row){
                         $status=$row->status==1?'checked':'';

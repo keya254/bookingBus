@@ -38,7 +38,7 @@ class PermissionsController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
         }
-       return view('Backend.permissions.index');
+       return view('backend.permissions.index');
     }
 
     /**

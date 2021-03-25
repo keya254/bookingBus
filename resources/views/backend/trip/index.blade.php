@@ -23,7 +23,6 @@
 @endsection
 @section('content')
 <div class="card">
-  <div class="card-header">الرحلات</div>
   <div class="card-body">
       <table class="table text-center data-table">
         <thead>
@@ -69,7 +68,9 @@
       var table = $('.data-table').DataTable({
           processing: true,
           serverSide: true,
-          ajax: "{{ route('trip.index') }}",
+          ajax:{
+              url: "{{ route('trip.index') }}",
+          },
           columns: [
               {data: 'id', name: 'id'},
               {data: 'from.name', name: 'from.name'},
