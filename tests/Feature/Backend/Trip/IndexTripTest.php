@@ -47,7 +47,7 @@ class IndexTripTest extends TestCase
         Car::factory()->count(10)->create();
         Role::create(['name'=>'Driver']);
         Trip::factory()->count(10)->create();
-        $this->withoutExceptionHandling(); 
+        $this->withoutExceptionHandling();
         //give permission trips to user to see page
         $this->user->givePermissionTo('trips');
          //login user visit page
@@ -56,7 +56,7 @@ class IndexTripTest extends TestCase
              ->assertStatus(200)
              ->assertViewIs('backend.trip.index')
              ->assertViewHasAll(['cars','drivers','governorates'])
-             ->assertSee(['الرحلات']);  
-        $this->assertDatabaseCount('trips',10);      
+             ->assertSee(['الرحلات']);
+        $this->assertDatabaseCount('trips',10);
     }
 }
