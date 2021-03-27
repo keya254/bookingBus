@@ -91,7 +91,7 @@ class EditCarTest extends TestCase
 
          //! type_cars => exist in the database id
          $this->actingAs($this->user)
-         ->json('PUT','/backend/car/'.$car->id,['name'=>'ca23','image'=>UploadedFile::fake()->image('1.png',500,500),'phone_number'=>'01234475548','status'=>1,'private'=>1,'public'=>1,'typecar_id'=>$typecar->id+1])
+         ->json('PUT','/backend/car/'.$car->id,['name'=>'ca23','image'=>UploadedFile::fake()->image('1.png',500,500),'phone_number'=>'01234475548','status'=>1,'private'=>1,'public'=>1,'typecar_id'=>$typecar->id+2])
          ->assertJsonValidationErrors('typecar_id')
          ->assertStatus(422);
 

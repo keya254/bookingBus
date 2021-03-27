@@ -25,17 +25,17 @@ class TripFactory extends Factory
     public function definition()
     {
         return [
-            'from_id'=>City::all()->random()->id,
-            'to_id'=>City::all()->random()->id,
-            'day'=>now()->addDay(rand(0,9)),
-            'start_time'=>now()->addMinutes(rand(0,300)),
-            'min_time'=>rand(10,500),
-            'max_time'=>rand(10,500),
+            'from_id'=>City::factory()->create()->id,
+            'to_id'=>City::factory()->create()->id,
+            'day'=>now()->addDay(rand(1,9)),
+            'start_time'=>now()->addMinutes(rand(4,300)),
+            'min_time'=>122,
+            'max_time'=>124,
             'max_seats'=>rand(1,6),
             'price'=>rand(10,500),
             'status'=>$this->faker->randomElement([0,1]),
-            'car_id'=>Car::all()->random()->id,
-            'driver_id'=>User::all()->random()->id
+            'car_id'=>Car::factory()->create()->id,
+            'driver_id'=>User::factory()->create()->id,
         ];
     }
 }
