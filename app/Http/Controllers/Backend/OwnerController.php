@@ -52,7 +52,7 @@ class OwnerController extends Controller
         'password'=>bcrypt($request->validated()['password'])
         ])->assignRole('Owner');
         Notification::Send($owner,new NewOwnerNotification($owner->name));
-        return response()->json(['message'=>'success created'],201);
+        return response()->json(['message'=>'success created'],200);
     }
 
     /**

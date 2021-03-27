@@ -24,10 +24,27 @@ class IndexOwnerTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_example()
+    public function test_guest_can_not_see_page()
     {
-        $response = $this->get('/');
+        $this->get('/backend/owner')
+             ->assertRedirect('/login');
+    }
 
-        $response->assertStatus(200);
+    public function test_user_not_have_permission_owners_can_not_see_page()
+    {
+        $this->actingAs($this->user)
+        ->get('/backend/owner')
+        ->assertStatus(403);
+    }
+
+    public function test_user_have_permission_owners_can_see_page()
+    {
+        //give the user permission owners to see owner page
+        $this->user->givePermissionTo('owners');
+        $this->actingAs($this->user)
+        ->get('/backend/owner')
+        ->assertViewIs('backend.owner.index')
+        ->assertSee(['اصحاب السيارات'])
+        ->assertStatus(200);
     }
 }
