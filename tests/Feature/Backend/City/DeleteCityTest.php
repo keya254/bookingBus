@@ -26,7 +26,7 @@ class DeleteCityTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_user_not_have_permission_delete_city_can_not_see_page()
+    public function test_user_not_have_permission_delete_city_can_not_delete_city()
     {
         //create governorate
         $governorate=Governorate::create(['name'=>'القاهرة']);
@@ -34,7 +34,7 @@ class DeleteCityTest extends TestCase
         $city=City::create(['governorate_id'=>$governorate->id,'name'=>'المطرية']);
         //login user not access this page when not have permission 'delete-city'
         $this->actingAs($this->user)
-        ->delete('/backend/city/'.$city->id,['governorate_id'=>$governorate->id,'name'=>'الهرم'])
+        ->json('delete','/backend/city/'.$city->id,['governorate_id'=>$governorate->id,'name'=>'الهرم'])
         ->assertStatus(403);
     }
 
@@ -48,7 +48,7 @@ class DeleteCityTest extends TestCase
         $city=City::create(['governorate_id'=>$governorate->id,'name'=>'المطرية']);
         //login user not access this page when not have permission 'delete-city'
         $this->actingAs($this->user)
-        ->delete('/backend/city/'.$city->id,['governorate_id'=>$governorate->id,'name'=>'الهرم'])
+        ->json('delete','/backend/city/'.$city->id,['governorate_id'=>$governorate->id,'name'=>'الهرم'])
         ->assertStatus(200);
     }
 
@@ -62,7 +62,7 @@ class DeleteCityTest extends TestCase
         $city=City::create(['governorate_id'=>$governorate->id,'name'=>'المطرية']);
         //login user not access this page when not have permission 'delete-city'
         $this->actingAs($this->user)
-        ->delete('/backend/city/'.$city->id+1,['governorate_id'=>$governorate->id,'name'=>'الهرم'])
+        ->json('delete','/backend/city/'.$city->id+1,['governorate_id'=>$governorate->id,'name'=>'الهرم'])
         ->assertStatus(404);
     }
 

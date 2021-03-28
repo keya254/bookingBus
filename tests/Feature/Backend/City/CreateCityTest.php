@@ -26,17 +26,17 @@ class CreateCityTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_user_not_have_permission_create_city_can_not_see_page()
+    public function test_user_not_have_permission_create_city_can_not_create_city()
     {
         //create governorate
         $governorate=Governorate::create(['name'=>'القاهرة']);
         //login user not access this page when not have permission 'create-city'
         $this->actingAs($this->user)
-        ->post('/backend/city',['governorate_id'=>$governorate->id,'name'=>'المطرية'])
+        ->json('post','/backend/city',['governorate_id'=>$governorate->id,'name'=>'المطرية'])
         ->assertStatus(403);
     }
 
-    public function test_user_have_permission_create_city_can_create()
+    public function test_user_have_permission_create_city_can_create_city()
     {
         //create governorate
         $governorate=Governorate::create(['name'=>'القاهرة']);
@@ -44,7 +44,7 @@ class CreateCityTest extends TestCase
         $this->user->givePermissionTo('create-city');
         //login user access this page when have permission 'citys'
         $this->actingAs($this->user)
-        ->post('/backend/city',['governorate_id'=>$governorate->id,'name'=>'المطرية'])
+        ->json('post','/backend/city',['governorate_id'=>$governorate->id,'name'=>'المطرية'])
         ->assertStatus(200);
         //check is created in database
         $this->assertDatabaseHas('cities',['governorate_id'=>$governorate->id,'name'=>'المطرية']);
@@ -59,43 +59,59 @@ class CreateCityTest extends TestCase
         $this->user->givePermissionTo('create-city');
         //login user access this page when have permission 'citys'
         $this->actingAs($this->user)
-        ->post('/backend/city',['governorate_id'=>$governorate->id,'name'=>'المطرية'])
+        ->json('post','/backend/city',['governorate_id'=>$governorate->id,'name'=>'المطرية'])
         //check if have error validation name
-        ->assertSessionHasErrors(['name'])
-        ->assertStatus(302);
+        ->assertJsonValidationErrors(['name'])
+        ->assertStatus(422);
     }
 
-    public function test_user_have_permission_create_city_can_not_create_city_governorate_id_is_null_or_string_id_not_found()
+    public function test_user_have_permission_create_city_can_not_create_city_governorate_id_is_string()
     {
         //given permission to this user
         $this->user->givePermissionTo('create-city');
         //login user access this page when have permission 'citys'
         //check  governorate_id is not string
         $this->actingAs($this->user)
-        ->post('/backend/city',['governorate_id'=>'nom','name'=>'المطرية'])
+        ->json('post','/backend/city',['governorate_id'=>'nom','name'=>'المطرية'])
         //check if have error validation governorate_id
-        ->assertSessionHasErrors(['governorate_id'])
-        ->assertStatus(302);
+        ->assertJsonValidationErrors(['governorate_id'])
+        ->assertStatus(422);
 
+    }
+
+    public function test_user_have_permission_create_city_can_not_create_city_governorate_id_is_null()
+    {
+        //given permission to this user
+        $this->user->givePermissionTo('create-city');
         //check where  governorate_id not null
         $this->actingAs($this->user)
-        ->post('/backend/city',['governorate_id'=>null,'name'=>'المطرية'])
+        ->json('post','/backend/city',['governorate_id'=>null,'name'=>'المطرية'])
         //check if have error validation governorate_id
-        ->assertSessionHasErrors(['governorate_id'])
-        ->assertStatus(302);
+        ->assertJsonValidationErrors(['governorate_id'])
+        ->assertStatus(422);
+    }
 
+    public function test_user_have_permission_create_city_can_not_create_city_governorate_id_is_not_exist_in_the_database()
+    {
+        //given permission to this user
+        $this->user->givePermissionTo('create-city');
         //check where  governorate_id not found
         $this->actingAs($this->user)
-        ->post('/backend/city',['governorate_id'=>1,'name'=>'المطرية'])
+        ->json('post','/backend/city',['governorate_id'=>1,'name'=>'المطرية'])
         //check if have error validation governorate_id
-        ->assertSessionHasErrors(['governorate_id'])
-        ->assertStatus(302);
+        ->assertJsonValidationErrors(['governorate_id'])
+        ->assertStatus(422);
+    }
 
+    public function test_user_have_permission_create_city_can_not_create_city_name_is_null()
+    {
+        //given permission to this user
+        $this->user->givePermissionTo('create-city');
         //edit by name = null
         $governorate=Governorate::create(['name'=>'القاهرة']);
         $this->actingAs($this->user)
-        ->post('/backend/city',['governorate_id'=>$governorate->id,'name'=>''])
-        ->assertSessionHasErrors(['name'])
-        ->assertStatus(302);
+        ->json('post','/backend/city',['governorate_id'=>$governorate->id,'name'=>null])
+        ->assertJsonValidationErrors(['name'])
+        ->assertStatus(422);
     }
 }

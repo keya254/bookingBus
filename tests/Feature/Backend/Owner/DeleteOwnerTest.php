@@ -38,8 +38,7 @@ class DeleteOwnerTest extends TestCase
     {
         $this->actingAs($this->user)
              ->json('DELETE','/backend/owner/'.$this->owner->id)
-             ->assertForbidden()
-             ->assertStatus(403);
+             ->assertForbidden();
     }
 
     public function test_user_have_permission_delete_owner_can_not_delete_owner_where_id_not_found()
@@ -48,8 +47,7 @@ class DeleteOwnerTest extends TestCase
         $this->user->givePermissionTo('delete-owner');
         $this->actingAs($this->user)
              ->json('DELETE','/backend/owner/'.$this->owner->id+1)
-             ->assertNotFound()
-             ->assertStatus(404);
+             ->assertNotFound();
     }
 
     public function test_user_have_permission_delete_owner_can_delete_owner_and_success_deleted()

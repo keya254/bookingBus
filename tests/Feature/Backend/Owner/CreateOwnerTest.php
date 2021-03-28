@@ -30,16 +30,14 @@ class CreateOwnerTest extends TestCase
     {
           $this
            ->json('POST','/backend/owner',$this->email)
-           ->assertUnauthorized()
-           ->assertStatus(401);
+           ->assertUnauthorized();
     }
 
     public function test_user_not_have_permission_create_owner_can_not_create_owner()
     {
           $this->actingAs($this->user)
            ->json('POST','/backend/owner',$this->email)
-           ->assertForbidden()
-           ->assertStatus(403);
+           ->assertForbidden();
     }
 
     public function test_user_have_permission_create_owner_can_create_owner()

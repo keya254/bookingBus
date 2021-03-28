@@ -24,13 +24,13 @@ class IndexDashboardTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_guest_can_not_see_page()
+    public function test_guest_can_not_see_page_dahboard()
     {
         $this->get('/backend/dashboard')
              ->assertRedirect('/login');
     }
 
-    public function test_user_not_have_permission_dashboard_can_not_see_page()
+    public function test_user_not_have_permission_dashboard_can_not_see_page_dahboard()
     {
         $this->actingAs($this->user)
              ->get('/backend/dashboard')
@@ -38,7 +38,7 @@ class IndexDashboardTest extends TestCase
              ->assertStatus(403);
     }
 
-    public function test_user_have_permission_dashboard_can_see_page()
+    public function test_user_have_permission_dashboard_can_see_page_dahboard()
     {
         $this->user->givePermissionTo('dashboard');
         $this->actingAs($this->user)

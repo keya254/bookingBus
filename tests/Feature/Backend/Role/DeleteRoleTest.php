@@ -33,7 +33,7 @@ class DeleteRoleTest extends TestCase
         $role=Role::create(['name'=>'SAdmin']);
         //login user have permissions and delete role  founded and deleted it
         $this->actingAs($this->user)
-             ->delete('/backend/roles/'.$role->id)
+             ->json('delete','/backend/roles/'.$role->id)
              ->assertStatus(200);
     }
 
@@ -45,7 +45,7 @@ class DeleteRoleTest extends TestCase
         $role=Role::create(['name'=>'SAdmin']);
         //login user have permissions and delete role not found
         $this->actingAs($this->user)
-             ->delete('/backend/roles/'.$role->id+1)
+             ->json('delete','/backend/roles/'.$role->id+1)
              ->assertStatus(500);
     }
 }

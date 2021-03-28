@@ -29,8 +29,8 @@ class CreateGovernorateTest extends TestCase
         //user not have permission
         $this->actingAs($this->user)
            //login user
-           ->post('/backend/governorate',['name'=>'القاهرة'])
-           ->assertStatus(403);
+           ->json('post','/backend/governorate',['name'=>'القاهرة'])
+           ->assertForbidden(403);
     }
 
     public function test_user_have_permission_create_governorate_can_see_page()
@@ -40,11 +40,11 @@ class CreateGovernorateTest extends TestCase
         //user not have permission
         $this->actingAs($this->user)
            //login user
-           ->post('/backend/governorate',['name'=>'القاهرة'])
-           ->assertStatus(200);
+           ->json('post','/backend/governorate',['name'=>'القاهرة'])
+           ->assertSuccessful(200);
         //check the governorates founded
         $this->assertDatabaseHas('governorates',['name'=>'القاهرة']);
     }
 
-   
+
 }

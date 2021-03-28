@@ -32,7 +32,7 @@ class EditTypeCarTest extends TestCase
          $typecar=TypeCar::create(['name'=>'car128','number_seats'=>7,'status'=>1]);
          //login user have permission edit-type
          $this->actingAs($this->user)
-         ->put('/backend/typecar/'.$typecar->id,['name'=>'car128_127','number_seats'=>9,'status'=>0])
+         ->json('put','/backend/typecar/'.$typecar->id,['name'=>'car128_127','number_seats'=>9,'status'=>0])
          ->assertStatus(200);
          // check the record before update not found in the database
          $this->assertDatabaseMissing('type_cars',['id'=> $typecar->id,'name'=>'car128','number_seats'=>7,'status'=>1]);
@@ -42,7 +42,7 @@ class EditTypeCarTest extends TestCase
         //! status=>null
         //login user have permission create-typecar
         $this->actingAs($this->user)
-        ->put('/backend/typecar/'.$typecar->id,['name'=>'car128','number_seats'=>7])
+        ->json('put','/backend/typecar/'.$typecar->id,['name'=>'car128','number_seats'=>7])
         ->assertStatus(200);
     }
 
@@ -51,12 +51,12 @@ class EditTypeCarTest extends TestCase
          $typecar=TypeCar::create(['name'=>'car128','number_seats'=>7,'status'=>1]);
          //login user have permission edit-type
          $this->actingAs($this->user)
-         ->put('/backend/typecar/'.$typecar->id,['name'=>'car128','number_seats'=>9,'status'=>1])
+         ->json('put','/backend/typecar/'.$typecar->id,['name'=>'car128','number_seats'=>9,'status'=>1])
          ->assertStatus(403);
          $this->assertDatabaseHas('type_cars',['id'=> $typecar->id,'name'=>'car128','number_seats'=>7,'status'=>1]);
     }
 
-    public function test_user_have_permission_edit_typecar_and_fail()
+    public function test_user_have_permission_edit_typecar_and_all_errors()
     {
         //give user permission
         $this->user->givePermissionTo('edit-typecar');
@@ -66,51 +66,99 @@ class EditTypeCarTest extends TestCase
 
         //login user have permission create-typecar
         $this->actingAs($this->user)
-        ->put('/backend/typecar/'.$typecar->id,['name'=>'c','number_seats'=>'','status'=>6])
-        ->assertSessionHasErrors(['name','number_seats','status'])
-        ->assertStatus(302);
+        ->json('put','/backend/typecar/'.$typecar->id,['name'=>'c','number_seats'=>'','status'=>6])
+        ->assertJsonValidationErrors(['name','number_seats','status'])
+        ->assertStatus(422);
+    }
 
+    public function test_user_have_permission_edit_typecar_and_name_required()
+    {
+        //give user permission
+        $this->user->givePermissionTo('edit-typecar');
+        $typecar=TypeCar::create(['name'=>'car128','number_seats'=>10,'status'=>1]);
         //! name=>required
         //login user have permission create-typecar
         $this->actingAs($this->user)
-        ->put('/backend/typecar/'.$typecar->id,['name'=>null,'number_seats'=>7,'status'=>1])
-        ->assertSessionHasErrors(['name'])
-        ->assertStatus(302);
+        ->json('put','/backend/typecar/'.$typecar->id,['name'=>null,'number_seats'=>7,'status'=>1])
+        ->assertJsonValidationErrors(['name'])
+        ->assertStatus(422);
+    }
 
-         //! name=>min:4
+    public function test_user_have_permission_edit_typecar_and_name_min_4()
+    {
+        //give user permission
+        $this->user->givePermissionTo('edit-typecar');
+        $typecar=TypeCar::create(['name'=>'car128','number_seats'=>10,'status'=>1]);
+        //! name=>min:4
         //login user have permission create-typecar
         $this->actingAs($this->user)
-        ->put('/backend/typecar/'.$typecar->id,['name'=>'car','number_seats'=>7,'status'=>1])
-        ->assertSessionHasErrors(['name'])
-        ->assertStatus(302);
+        ->json('put','/backend/typecar/'.$typecar->id,['name'=>'car','number_seats'=>7,'status'=>1])
+        ->assertJsonValidationErrors(['name'])
+        ->assertStatus(422);
+    }
 
-          //! name=>max:50
+    public function test_user_have_permission_edit_typecar_and_name_max_50()
+    {
+        //give user permission
+        $this->user->givePermissionTo('edit-typecar');
+        $typecar=TypeCar::create(['name'=>'car128','number_seats'=>10,'status'=>1]);
+        //! name=>max:50
         //login user have permission create-typecar
         $this->actingAs($this->user)
-        ->put('/backend/typecar/'.$typecar->id,['name'=>'carcarcarcarcarcarcarcarcarcarcarcarcarcar carcarcarcarcarcarcarcarcarcarcarcarcarcar','number_seats'=>7,'status'=>1])
-        ->assertSessionHasErrors(['name'])
-        ->assertStatus(302);
+        ->json('put','/backend/typecar/'.$typecar->id,['name'=>'carcarcarcarcarcarcarcarcarcarcarcarcarcar carcarcarcarcarcarcarcarcarcarcarcarcarcar','number_seats'=>7,'status'=>1])
+        ->assertJsonValidationErrors(['name'])
+        ->assertStatus(422);
+    }
 
-          //! number_seats=>required
+    public function test_user_have_permission_edit_typecar_and_number_seats_required()
+    {
+        //give user permission
+        $this->user->givePermissionTo('edit-typecar');
+        $typecar=TypeCar::create(['name'=>'car128','number_seats'=>10,'status'=>1]);
+        //! number_seats=>required
         //login user have permission create-typecar
         $this->actingAs($this->user)
-        ->put('/backend/typecar/'.$typecar->id,['name'=>'car1234','number_seats'=>null,'status'=>1])
-        ->assertSessionHasErrors(['number_seats'])
-        ->assertStatus(302);
+        ->json('put','/backend/typecar/'.$typecar->id,['name'=>'car1234','number_seats'=>null,'status'=>1])
+        ->assertJsonValidationErrors(['number_seats'])
+        ->assertStatus(422);
+    }
 
-         //! number_seats=>string
+    public function test_user_have_permission_edit_typecar_and_number_seats_string()
+    {
+        //give user permission
+        $this->user->givePermissionTo('edit-typecar');
+        $typecar=TypeCar::create(['name'=>'car128','number_seats'=>10,'status'=>1]);
+        //! number_seats=>string
         //login user have permission create-typecar
         $this->actingAs($this->user)
-        ->put('/backend/typecar/'.$typecar->id,['name'=>'car127','number_seats'=>'test_string','status'=>1])
-        ->assertSessionHasErrors(['number_seats'])
-        ->assertStatus(302);
+        ->json('put','/backend/typecar/'.$typecar->id,['name'=>'car127','number_seats'=>'test_string','status'=>1])
+        ->assertJsonValidationErrors(['number_seats'])
+        ->assertStatus(422);
+    }
 
-        //! status=>between 1,2
-        //login user have permission create-typecar
-        $this->actingAs($this->user)
-        ->put('/backend/typecar/'.$typecar->id,['name'=>'car128','number_seats'=>7,'status'=>6])
-        ->assertSessionHasErrors(['status'])
-        ->assertStatus(302);
+    public function test_user_have_permission_edit_typecar_and_status_in_0_1()
+    {
+        //give user permission
+         $this->user->givePermissionTo('edit-typecar');
+         $typecar=TypeCar::create(['name'=>'car128','number_seats'=>10,'status'=>1]);
+         //! status=>between 0,1
+         //login user have permission create-typecar
+         $this->actingAs($this->user)
+        ->json('put','/backend/typecar/'.$typecar->id,['name'=>'car128','number_seats'=>7,'status'=>6])
+        ->assertJsonValidationErrors(['status'])
+        ->assertStatus(422);
+    }
+
+    public function test_user_have_permission_edit_typecar_and_typecar_not_found()
+    {
+        //give user permission
+         $this->user->givePermissionTo('edit-typecar');
+         $typecar=TypeCar::create(['name'=>'car128','number_seats'=>10,'status'=>1]);
+         //! status=>between 0,1
+         //login user have permission create-typecar
+         $this->actingAs($this->user)
+        ->json('put','/backend/typecar/'.$typecar->id+7,['name'=>'car128','number_seats'=>7,'status'=>1])
+        ->assertStatus(404);
     }
 
 }

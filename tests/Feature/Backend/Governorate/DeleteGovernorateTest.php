@@ -32,8 +32,8 @@ class DeleteGovernorateTest extends TestCase
         //user not have permission
         $this->actingAs($this->user)
            //login user
-           ->delete('/backend/governorate/'.$governorate->id)
-           ->assertStatus(403);
+           ->json('delete','/backend/governorate/'.$governorate->id)
+           ->assertForbidden();
         //check the governorates not deleted
         $this->assertDatabaseHas('governorates',['id'=>$governorate->id,'name'=>'الجيزة']);
     }
@@ -47,8 +47,8 @@ class DeleteGovernorateTest extends TestCase
         //user not have permission
         $this->actingAs($this->user)
            //login user
-           ->delete('/backend/governorate/'.$governorate->id)
-           ->assertStatus(200);
+           ->json('delete','/backend/governorate/'.$governorate->id)
+           ->assertSuccessful();
         //check the governorates deleted
         $this->assertDeleted('governorates',['id'=>$governorate->id,'name'=>'الجيزة']);
     }
@@ -62,7 +62,7 @@ class DeleteGovernorateTest extends TestCase
         //user not have permission
         $this->actingAs($this->user)
            //login user
-           ->delete('/backend/governorate/'.$governorate->id+1)
-           ->assertStatus(404);
+           ->json('delete','/backend/governorate/'.$governorate->id+1)
+           ->assertNotFound();
     }
 }

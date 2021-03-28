@@ -34,7 +34,7 @@ class IndexOwnerTest extends TestCase
     {
         $this->actingAs($this->user)
         ->get('/backend/owner')
-        ->assertStatus(403);
+        ->assertForbidden();
     }
 
     public function test_user_have_permission_owners_can_see_page()
@@ -45,6 +45,6 @@ class IndexOwnerTest extends TestCase
         ->get('/backend/owner')
         ->assertViewIs('backend.owner.index')
         ->assertSee(['اصحاب السيارات'])
-        ->assertStatus(200);
+        ->assertSuccessful();
     }
 }

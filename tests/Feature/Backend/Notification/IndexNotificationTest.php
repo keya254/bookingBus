@@ -35,13 +35,13 @@ class IndexNotificationTest extends TestCase
         $this->assertDatabaseHas('notifications',['notifiable_id'=>2,'read_at'=>null]);
     }
 
-    public function test_guest_can_not_see_page()
+    public function test_guest_can_not_see_page_notifications()
     {
         $this->get('/backend/notifications')
              ->assertRedirect('/login');
     }
 
-    public function test_user_not_have_permission_notifications_can_not_see_page()
+    public function test_user_not_have_permission_notifications_can_not_see_page_notifications()
     {
         $this->actingAs($this->user1)
              ->get('/backend/notifications')
@@ -49,7 +49,7 @@ class IndexNotificationTest extends TestCase
              ->assertStatus(403);
     }
 
-    public function test_user_have_permission_notifications_can_see_page()
+    public function test_user_have_permission_notifications_can_see_page_notifications()
     {
         $this->user1->givePermissionTo('notifications');
         $this->actingAs($this->user1)

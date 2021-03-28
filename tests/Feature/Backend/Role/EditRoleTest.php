@@ -33,7 +33,7 @@ class EditRoleTest extends TestCase
         $role=Role::create(['name'=>'SAdmin']);
         //update role where not found this name in the database
         $this->actingAs($this->user)
-             ->put('/backend/roles/'.$role->id,['name'=>'min'])
+             ->json('put','/backend/roles/'.$role->id,['name'=>'min'])
              ->assertStatus(200);
     }
 
@@ -46,7 +46,7 @@ class EditRoleTest extends TestCase
         $role2=Role::create(['name'=>'Admin']);
         //update role by name found it in database chech unique
         $this->actingAs($this->user)
-             ->put('/backend/roles/'.$role->id,['name'=>'Admin'])
-             ->assertStatus(302);
+             ->json('put','/backend/roles/'.$role->id,['name'=>'Admin'])
+             ->assertStatus(422);
     }
 }

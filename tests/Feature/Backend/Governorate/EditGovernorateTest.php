@@ -25,18 +25,18 @@ class EditGovernorateTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_user_not_have_permission_edit_governorate_can_not_see_page()
+    public function test_user_not_have_permission_edit_governorate_can_not_edit_governorate()
     {
         //create governorate
         $governorate=Governorate::create(['name'=>'الجيزة']);
         //user not have permission
         $this->actingAs($this->user)
            //login user
-           ->put('/backend/governorate/'.$governorate->id,['name'=>'القاهرة'])
+           ->json('put','/backend/governorate/'.$governorate->id,['name'=>'القاهرة'])
            ->assertStatus(403);
     }
 
-    public function test_user_have_permission_edit_governorate_can_see_page()
+    public function test_user_have_permission_edit_governorate_can_edit_governorate()
     {
         //give permission to this user to edit governorate
         $this->user->givePermissionTo('edit-governorate');
@@ -45,7 +45,7 @@ class EditGovernorateTest extends TestCase
         //user not have permission
         $this->actingAs($this->user)
            //login user
-           ->put('/backend/governorate/'.$governorate->id,['name'=>'القاهرة'])
+           ->json('put','/backend/governorate/'.$governorate->id,['name'=>'القاهرة'])
            ->assertStatus(200);
         //check the governorates updated
         $this->assertDatabaseHas('governorates',['id'=>$governorate->id,'name'=>'القاهرة']);
@@ -61,8 +61,8 @@ class EditGovernorateTest extends TestCase
         //user not have permission
         $this->actingAs($this->user)
            //login user
-           ->put('/backend/governorate/'.$governorate1->id,['name'=>'القاهرة'])
-           ->assertStatus(302);
+           ->json('put','/backend/governorate/'.$governorate1->id,['name'=>'القاهرة'])
+           ->assertStatus(422);
         //check the governorates not updated
         $this->assertDatabaseHas('governorates',['id'=>$governorate1->id,'name'=>'الجيزة']);
     }

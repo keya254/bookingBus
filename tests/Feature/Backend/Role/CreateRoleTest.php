@@ -33,8 +33,8 @@ class CreateRoleTest extends TestCase
         Role::create(['name'=>'Admin']);
         //test create role with the same name
         $this->actingAs($this->user)
-        ->post('/backend/roles',['name'=>'Admin'])
-        ->assertStatus(302);
+        ->json('post','/backend/roles',['name'=>'Admin'])
+        ->assertStatus(422);
     }
 
     public function test_user_have_permission_create_role_not_found_created()
@@ -43,7 +43,7 @@ class CreateRoleTest extends TestCase
         $this->user->givePermissionTo(['create-role']);
         //create new role
         $this->actingAs($this->user)
-        ->post('/backend/roles',['name'=>'User'])
+        ->json('post','/backend/roles',['name'=>'User'])
         ->assertStatus(200);
     }
 }

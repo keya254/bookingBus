@@ -53,9 +53,24 @@ class CreatePermissionTest extends TestCase
         //create new permission
         $permission=Permission::create(['name'=>'test_create_permission']);
         //login user
+         //create permission using the same name
         $this->actingAs($this->user)
-        //create permission using the same name
-        ->post('/backend/permissions',['name'=>'test_create_permission'])
-        ->assertStatus(302);
+        ->json('post','/backend/permissions',['name'=>'test_create_permission'])
+        ->assertJsonValidationErrors(['name'])
+        ->assertStatus(422);
+    }
+
+    public function test_user_have_permission_create_permission_name_required()
+    {
+        //create user have permissions to create permissions
+        $this->user->givePermissionTo(['create-permission']);
+        //create new permission
+        $permission=Permission::create(['name'=>'test_create_permission']);
+        //login user
+         //create permission using the same name
+        $this->actingAs($this->user)
+        ->json('post','/backend/permissions',['name'=>'test_create_permission'])
+        ->assertJsonValidationErrors(['name'])
+        ->assertStatus(422);
     }
 }

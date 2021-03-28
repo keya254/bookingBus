@@ -30,7 +30,7 @@ class DeletePermissionTest extends TestCase
         //login user
         $this->actingAs($this->user)
         //create permissions
-        ->delete('/backend/permissions/'.$permission1->id)
+        ->json('delete','/backend/permissions/'.$permission1->id)
         ->assertStatus(403);
     }
 
@@ -43,7 +43,7 @@ class DeletePermissionTest extends TestCase
         //login user
         $this->actingAs($this->user)
         //create permissions
-        ->delete('/backend/permissions/'.$permission1->id)
+        ->json('delete','/backend/permissions/'.$permission1->id)
         ->assertStatus(200);
     }
 
@@ -56,7 +56,7 @@ class DeletePermissionTest extends TestCase
         //login user
         $this->actingAs($this->user)
         //create permissions
-        ->delete('/backend/permissions/'.$permission1->id+1)
+        ->json('delete','/backend/permissions/'.$permission1->id+1)
         ->assertStatus(500);
     }
 }

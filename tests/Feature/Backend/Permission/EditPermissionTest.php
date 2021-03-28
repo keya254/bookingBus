@@ -60,7 +60,21 @@ class EditPermissionTest extends TestCase
         //login user
         $this->actingAs($this->user)
         //create permissions
-        ->put('/backend/permissions/'.$permission1->id,['name'=>'test_permissions_2'])
-        ->assertStatus(302);
+        ->json('put','/backend/permissions/'.$permission1->id,['name'=>'test_permissions_2'])
+        ->assertStatus(422);
+    }
+
+    public function test_user_have_permission_update_permission_using_name_required()
+    {
+        //create user have permissions to edit permissions
+        $this->user->givePermissionTo(['edit-permission']);
+        //create new permission
+        $permission1=Permission::create(['name'=>'test_permissions']);
+        $permission2=Permission::create(['name'=>'test_permissions_2']);
+        //login user
+        $this->actingAs($this->user)
+        //create permissions
+        ->json('put','/backend/permissions/'.$permission1->id,['name'=>null])
+        ->assertStatus(422);
     }
 }

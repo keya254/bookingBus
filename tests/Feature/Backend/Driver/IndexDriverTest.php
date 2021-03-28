@@ -24,20 +24,20 @@ class IndexDriverTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_guest_can_not_see_page()
+    public function test_guest_can_not_see_page_driver()
     {
         $this->get('/backend/driver')
              ->assertRedirect('/login');
     }
 
-    public function test_user_not_have_permission_drivers_can_not_see_page()
+    public function test_user_not_have_permission_drivers_can_not_see_page_driver()
     {
         $this->actingAs($this->user)
         ->get('/backend/driver')
         ->assertStatus(403);
     }
 
-    public function test_user_have_permission_drivers_can_see_page()
+    public function test_user_have_permission_drivers_can_see_page_driver()
     {
         //give the user permission drivers to see driver page
         $this->user->givePermissionTo('drivers');

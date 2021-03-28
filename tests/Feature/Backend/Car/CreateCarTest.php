@@ -48,13 +48,10 @@ class CreateCarTest extends TestCase
         ->assertStatus(200);
     }
 
-    public function test_user_have_permission_create_car_and_fail()
+    public function test_user_have_permission_create_car_and_image_string()
     {
         //give this user permission create-car
         $this->user->givePermissionTo('create-car');
-        //make default path public
-        Storage::fake('public');
-        //typecar
         $typecar=TypeCar::create(['name'=>'car127','number_seats'=>7,'status'=>1]);
 
         //! Image => image  try string
@@ -62,37 +59,74 @@ class CreateCarTest extends TestCase
         ->json('POST','/backend/car',['name'=>'car12','image'=>'hh','phone_number'=>'01234475544','status'=>1,'private'=>1,'public'=>1,'typecar_id'=>$typecar->id])
         ->assertJsonValidationErrors('image')
         ->assertStatus(422);
+    }
 
+    public function test_user_have_permission_create_car_and_image_integer()
+    {
+        //give this user permission create-car
+        $this->user->givePermissionTo('create-car');
+        $typecar=TypeCar::create(['name'=>'car127','number_seats'=>7,'status'=>1]);
         //! Image => image  try integer
         $this->actingAs($this->user)
         ->json('POST','/backend/car',['name'=>'car12','image'=>1,'phone_number'=>'01234475544','status'=>1,'private'=>1,'public'=>1,'typecar_id'=>$typecar->id])
         ->assertJsonValidationErrors('image')
         ->assertStatus(422);
 
+    }
+
+    public function test_user_have_permission_create_car_and_name_required()
+    {
+        //give this user permission create-car
+        $this->user->givePermissionTo('create-car');
+        $typecar=TypeCar::create(['name'=>'car127','number_seats'=>7,'status'=>1]);
         //! name => required
         $this->actingAs($this->user)
         ->json('POST','/backend/car',['name'=>null,'image'=>UploadedFile::fake()->image('1.png',500,500),'phone_number'=>'01234475544','status'=>1,'private'=>1,'public'=>1,'typecar_id'=>$typecar->id])
         ->assertJsonValidationErrors('name')
         ->assertStatus(422);
+    }
 
+    public function test_user_have_permission_create_car_and_name_min_3()
+    {
+        //give this user permission create-car
+        $this->user->givePermissionTo('create-car');
+        $typecar=TypeCar::create(['name'=>'car127','number_seats'=>7,'status'=>1]);
         //! name => min:3
         $this->actingAs($this->user)
         ->json('POST','/backend/car',['name'=>'ca','image'=>UploadedFile::fake()->image('1.png',500,500),'phone_number'=>'01234475544','status'=>1,'private'=>1,'public'=>1,'typecar_id'=>$typecar->id])
         ->assertJsonValidationErrors('name')
         ->assertStatus(422);
+    }
 
+    public function test_user_have_permission_create_car_and_phone_number_size_11()
+    {
+        //give this user permission create-car
+        $this->user->givePermissionTo('create-car');
+        $typecar=TypeCar::create(['name'=>'car127','number_seats'=>7,'status'=>1]);
         //! phone_number => size:11
         $this->actingAs($this->user)
         ->json('POST','/backend/car',['name'=>'ca23','image'=>UploadedFile::fake()->image('1.png',500,500),'phone_number'=>'0123447554','status'=>1,'private'=>1,'public'=>1,'typecar_id'=>$typecar->id])
         ->assertJsonValidationErrors('phone_number')
         ->assertStatus(422);
+    }
 
+    public function test_user_have_permission_create_car_and_public_in_0_1()
+    {
+        //give this user permission create-car
+        $this->user->givePermissionTo('create-car');
+        $typecar=TypeCar::create(['name'=>'car127','number_seats'=>7,'status'=>1]);
         //! public => in:0,1
         $this->actingAs($this->user)
         ->json('POST','/backend/car',['name'=>'ca23','image'=>UploadedFile::fake()->image('1.png',500,500),'phone_number'=>'01234475548','status'=>1,'private'=>1,'public'=>2,'typecar_id'=>$typecar->id])
         ->assertJsonValidationErrors('public')
         ->assertStatus(422);
+    }
 
+    public function test_user_have_permission_create_car_and_typecar_not_exist_in_database()
+    {
+        //give this user permission create-car
+        $this->user->givePermissionTo('create-car');
+        $typecar=TypeCar::create(['name'=>'car127','number_seats'=>7,'status'=>1]);
         //! type_cars => exist in the database id
         $this->actingAs($this->user)
         ->json('POST','/backend/car',['name'=>'ca23','image'=>UploadedFile::fake()->image('1.png',500,500),'phone_number'=>'01234475548','status'=>1,'private'=>1,'public'=>1,'typecar_id'=>$typecar->id+1])
