@@ -28,7 +28,7 @@ class CarFactory extends Factory
             'image'=>'/images/cars/1.png',
             'name'=>$this->faker->name,
             'status'=>$this->faker->randomElement([0,1]),
-            'owner_id'=>1,
+            'owner_id'=>User::factory()->create()->id,
             'typecar_id'=>TypeCar::factory()->create()->id,
             'phone_number'=>$this->faker->randomElement(['010','011','012','015']).rand(00000000,99999999),
             'private'=>$this->faker->randomElement([0,1]),

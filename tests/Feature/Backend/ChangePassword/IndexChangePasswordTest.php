@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Spatie\Permission\Models\Permission;
 use Tests\TestCase;
 
-class IndexChangePassword extends TestCase
+class IndexChangePasswordTest extends TestCase
 {
     use RefreshDatabase,WithFaker;
 
@@ -52,7 +52,7 @@ class IndexChangePassword extends TestCase
     {
         $this->actingAs($this->user)
              ->json('post','/backend/change-password',['old_password'=>'12345678','password'=>'123456789','password_confirmation'=>'123456789'])
-             ->assertStatus(401);
+             ->assertStatus(403);
     }
 
     public function test_user_have_permission_change_password_can_not_change_password_and_old_password_required()

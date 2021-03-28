@@ -366,7 +366,7 @@ class EditTripTest extends TestCase
              ->json('PUT','/backend/trip/'.$this->trip->id,
              ['from_id' => 1 , 'to_id' => 2, 'day' => now(),
               'start_time' => now() , 'min_time' => 56, 'max_time' => 88 ,'status' => 1,
-              'car_id' => 1 ,'driver_id' => 3, 'max_seats' => 3 , 'price' => 45])
+              'car_id' => 1 ,'driver_id' => 7, 'max_seats' => 3 , 'price' => 45])
              ->assertJsonValidationErrors(['driver_id'])
              ->assertStatus(422);
                      //check the database table trips not change a record
