@@ -6,6 +6,7 @@ use App\Models\Car;
 use App\Models\TypeCar;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Http\UploadedFile;
 
 class CarFactory extends Factory
 {
@@ -24,11 +25,11 @@ class CarFactory extends Factory
     public function definition()
     {
         return [
-            'image'=>'images/cars/1.png',
+            'image'=>'/images/cars/1.png',
             'name'=>$this->faker->name,
             'status'=>$this->faker->randomElement([0,1]),
-            'owner_id'=>User::all()->random()->id,
-            'typecar_id'=>TypeCar::all()->random()->id,
+            'owner_id'=>User::factory()->create()->id,
+            'typecar_id'=>TypeCar::factory()->create()->id,
             'phone_number'=>$this->faker->randomElement(['010','011','012','015']).rand(00000000,99999999),
             'private'=>$this->faker->randomElement([0,1]),
             'public'=>$this->faker->randomElement([0,1])

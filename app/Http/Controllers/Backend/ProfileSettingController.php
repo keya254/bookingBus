@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Setting\ProfileSettingRequest;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Image;
 class ProfileSettingController extends Controller
@@ -20,16 +21,19 @@ class ProfileSettingController extends Controller
 
     public function store(ProfileSettingRequest $request)
     {
-        if(is_file($request->image)){
-            $name='images/users/'.time().rand(11111,99999).'.png';
-            Image::make($request->image)->resize(500, 500)->save($name);
-            //!storage unlink old image
-            unlink(auth()->user()->image);
-            auth()->user()->update(['name'=>$request->validated()['name'],'email'=>$request->validated()['email'],'image'=>$name]);
-        }
-        else {
+        if(! $request->hasFile('image'))
+        {
             auth()->user()->update($request->validated());
         }
-        return back()->with('success','change successfully');
+        if($request->hasFile('image')){
+            $name='images/users/'.time().rand(11111,99999).'.png';
+            Image::make($request->image)->resize(500, 500)->save(public_path($name));
+            //!storage unlike old image
+            if (File::exists(public_path(auth()->user()->image))) {
+                unlink(public_path(auth()->user()->image));
+            }
+            auth()->user()->update(['image'=>$name]+$request->validated());
+        }
+        return redirect()->route('profile-setting.index')->with('success','change successfully');
     }
 }

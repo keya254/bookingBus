@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Setting\SettingRequest;
 use App\Models\Setting;
+use Image;
 
 class SettingController extends Controller
 {
@@ -21,14 +22,16 @@ class SettingController extends Controller
 
     public function store(SettingRequest $request)
     {
-      if(is_file($request->logo)){
-            Image::make($request->logo)->resize(500, 500)->save('images/logo/logo.png');
-            Setting::first()->update(['logo'=>'images/logo/logo.png']+$request->validated());
-      }
-      else {
-           Setting::first()->update($request->validated());
-      }
-      return back();
+        if(! $request->hasFile('logo'))
+        {
+            Setting::first()->update($request->validated());
+        }
+        if($request->hasFile('logo')){
+            $name='images/logo/logo.png';
+            Image::make($request->logo)->resize(500, 500)->save(public_path($name));
+            Setting::first()->update(['logo'=>$name]+$request->validated());
+        }
+      return redirect()->route('setting.index');
     }
 
 }

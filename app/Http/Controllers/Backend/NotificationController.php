@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Notifications\Notification;
 use Yajra\DataTables\Facades\DataTables;
 
 class NotificationController extends Controller
@@ -36,14 +35,26 @@ class NotificationController extends Controller
 
     public function store(Request $request)
     {
-        auth()->user()->notifications()->where('id',$request->id)->update(['read_at'=>now()]);
-        return response()->json(['message'=>'success changed']);
+        $notification=auth()->user()->notifications()->where('id',$request->id)->first();
+         if ($notification) {
+             $notification->update(['read_at'=>now()]);
+             return response()->json(['message'=>'success changed'],200);
+         }
+         else {
+             return response()->json(['message'=>'unauthorized'],401);
+         }
     }
 
     public function destroy($id)
     {
-        auth()->user()->notifications()->where('id',$id)->delete();
-        return response()->json(['message'=>'success deleted']);
+        $notification=auth()->user()->notifications()->where('id',$id)->first();
+        if ($notification) {
+            $notification->delete();
+            return response()->json(['message'=>'success deleted']);
+        }
+        else{
+            return response()->json(['message'=>'unauthorized'],401);
+        }
     }
 
 }

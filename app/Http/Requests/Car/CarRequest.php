@@ -25,9 +25,9 @@ class CarRequest extends FormRequest
     {
         return [
             'image'=>'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'name'=>'required',
+            'name'=>'required|min:3',
             'status'=>'nullable|boolean|in:0,1',
-            'typecar_id'=>'required|integer',
+            'typecar_id'=>'required|integer|exists:type_cars,id',
             'private'=>'nullable|boolean|in:0,1',
             'public'=>'nullable|boolean|in:0,1',
             'phone_number'=>'required|size:11',

@@ -24,8 +24,8 @@ class CreateCityRequest extends FormRequest
     public function rules()
     {
         return [
-            'governorate_id'=>'required',
-            'name'=>'required|unique:cities,name,null,id,governorate_id,'.request('governorate_id'),
+            'governorate_id'=>'required|numeric|exists:governorates,id',
+            'name'=>'min:3|required|unique:cities,name,null,id,governorate_id,'.request('governorate_id'),
         ];
     }
 }

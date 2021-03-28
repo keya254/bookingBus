@@ -31,8 +31,8 @@ class TripRequest extends FormRequest
             'min_time'=>'required|integer|lt:max_time',
             'max_time'=>'required|integer',
             'status'=>'nullable|in:0,1',
-            'car_id'=>'required|integer',
-            'driver_id'=>'required|integer',
+            'car_id'=>'required|integer|exists:cars,id',
+            'driver_id'=>'required|integer|exists:users,id',
             'price'=>'required|integer',
             'max_seats'=>'required|integer',
         ];
