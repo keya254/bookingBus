@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Notifications\Notification;
 use Yajra\DataTables\Facades\DataTables;
 
 class NotificationController extends Controller
@@ -44,8 +43,6 @@ class NotificationController extends Controller
          else {
              return response()->json(['message'=>'unauthorized'],401);
          }
-        // auth()->user()->notifications()->where('id',$request->id)->update(['read_at'=>now()]);
-
     }
 
     public function destroy($id)
