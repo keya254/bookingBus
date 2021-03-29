@@ -2,8 +2,12 @@
 
 namespace Tests\Feature\Backend\Trip;
 
+use App\Models\Car;
+use App\Models\City;
+use App\Models\Governorate;
 use App\Models\Setting;
 use App\Models\Trip;
+use App\Models\TypeCar;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -23,6 +27,10 @@ class EditTripTest extends TestCase
         Setting::create(['name'=>'website name','description'=>'description','logo'=>'images/logo/logo.png']);
         Permission::create(['name'=>'edit-trip']);
         $this->user = User::factory()->create();
+        TypeCar::factory()->create();
+        Governorate::factory()->create();
+        City::factory()->count(3)->create();
+        Car::factory()->count(2)->create();
         $this->trip=Trip::factory()->create();
     }
 

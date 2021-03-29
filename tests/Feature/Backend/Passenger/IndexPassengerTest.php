@@ -2,10 +2,14 @@
 
 namespace Tests\Feature\Backend\Passenger;
 
+use App\Models\Car;
+use App\Models\City;
+use App\Models\Governorate;
 use App\Models\Passenger;
 use App\Models\Seat;
 use App\Models\Setting;
 use App\Models\Trip;
+use App\Models\TypeCar;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -25,8 +29,14 @@ class IndexPassengerTest extends TestCase
 
         Setting::create(['name'=>'website name','description'=>'description','logo'=>'images/logo/logo.png']);
         Permission::create(['name'=>'passengers']);
+        TypeCar::factory()->count(2)->create();
+        Governorate::factory()->create();
+        City::factory()->count(2)->create();
         Role::create(['name'=>'Owner']);
         $this->user = User::factory()->create();
+        $this->user2= User::factory()->create();
+        Car::factory()->create(['owner_id'=>$this->user->id]);
+        Car::factory()->create(['owner_id'=>$this->user2->id]);
     }
 
     public function test_guest_can_not_see_passenger_page()
@@ -53,8 +63,8 @@ class IndexPassengerTest extends TestCase
 
     public function test_user_have_permission_passegners_can_see_passengers_only_in_user_trips_with_role_owner()
     {
-        $trip1=Trip::factory()->create();
-        $trip2=Trip::factory()->create();
+        $trip1=Trip::factory()->create(['car_id'=>1]);
+        $trip2=Trip::factory()->create(['car_id'=>2]);
         $passenger1=Passenger::create(['name'=>'mohamed','phone_number'=>'01234567887']);
         $passenger2=Passenger::create(['name'=>'ahmed','phone_number'=>'01000067887']);
         $seat1=Seat::where('trip_id',$trip1->id)->where('name','1')->first();
@@ -71,8 +81,8 @@ class IndexPassengerTest extends TestCase
 
     public function test_user_have_permission_passegners_can_not_see_passengers_in_another_user_trips_with_role_owner()
     {
-        $trip1=Trip::factory()->create();
-        $trip2=Trip::factory()->create();
+        $trip1=Trip::factory()->create(['car_id'=>1]);
+        $trip2=Trip::factory()->create(['car_id'=>2]);
         $passenger1=Passenger::create(['name'=>'mohamed','phone_number'=>'01234567887']);
         $passenger2=Passenger::create(['name'=>'ahmed','phone_number'=>'01000067887']);
         $seat1=Seat::where('trip_id',$trip1->id)->where('name','1')->first();

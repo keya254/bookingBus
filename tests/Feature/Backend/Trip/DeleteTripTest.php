@@ -2,8 +2,12 @@
 
 namespace Tests\Feature\Backend\Trip;
 
+use App\Models\Car;
+use App\Models\City;
+use App\Models\Governorate;
 use App\Models\Setting;
 use App\Models\Trip;
+use App\Models\TypeCar;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -21,8 +25,12 @@ class DeleteTripTest extends TestCase
         $this->app->make(\Spatie\Permission\PermissionRegistrar::class)->registerPermissions();
 
         Setting::create(['name'=>'website name','description'=>'description','logo'=>'images/logo/logo.png']);
-        Permission::create(['name'=>'delete-trip']);
         $this->user = User::factory()->create();
+        Permission::create(['name'=>'delete-trip']);
+        TypeCar::factory()->create();
+        Governorate::factory()->create();
+        City::factory()->count(2)->create();
+        Car::factory()->create();
         $this->trip=Trip::factory()->create();
     }
 
@@ -50,7 +58,7 @@ class DeleteTripTest extends TestCase
         $this->user->givePermissionTo(['delete-trip']);
         //login user have permissions and delete trip not found
         $this->actingAs($this->user)
-             ->json('DELETE','/backend/trip/'.$this->trip->id+1)
+             ->json('DELETE','/backend/trip/'.$this->trip->id+6)
              ->assertStatus(404);
     }
 }
