@@ -12,21 +12,22 @@ class MyFirebase
 
     initialize()
     {
-        if (firebase.apps.length) {
-            var  myNewConfig=this.firebaseConfig;
-            firebase.app().delete().then(function() {
-             firebase.initializeApp(myNewConfig);
-            });
-        }
+        // if (firebase.apps.length) {
+        //     var  myNewConfig=this.firebaseConfig;
+        //     firebase.app().delete().then(function() {
+        //      firebase.initializeApp(myNewConfig);
+        //     });
+        // }
          if (!firebase.apps.length) {
               firebase.initializeApp(this.firebaseConfig);
-         }
+          }
           firebase.app();
           firebase.auth().languageCode = 'ar';
     }
 
     refreshrecaptch()
     {
+        if (! window.recaptchaVerifier){
          window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
             'size': 'invisible',
             'callback': (response) => {
@@ -34,6 +35,7 @@ class MyFirebase
               onSignInSubmit();
          }
          });
+        }
     }
 
     getphonenumber(phone_number,formcode)

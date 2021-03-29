@@ -43,7 +43,7 @@ class BookingController extends Controller
             return response()->json(['message'=>'تم الحجز بنجاح'],200);
         }else
         {
-            return response()->json(['message'=>"$trip->max_seats الحد الاقصي  لحجز عدد مقاعد هو"],422);
+            return response()->json(['message'=>"  عفواً الحد الاقصي  لحجز عدد مقاعد هو '$trip->max_seats'"],422);
         }
         return response()->json(['message'=>'حدث خطئ ما'],422);
     }

@@ -4,6 +4,7 @@
 @endsection
 @section('content')
 <div class="container px-5 py-16 mx-auto lg:px-20 lg:pt-24 pt-20">
+
     <div class="m-auto flex flex-wrap flex-col md:flex-row items-center justify-start">
       @forelse ($cars as $car)
         <div class="lg:w-1/2 md:w-1/2 sm:w-full w-full my-4 px-4 lg:max-w-full">
