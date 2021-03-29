@@ -24,7 +24,7 @@ class CityFactory extends Factory
     {
         return [
             'name'=>$this->faker->name,
-            'governorate_id'=>Governorate::factory()->create()->id,
+            'governorate_id'=>Governorate::all()->random()->id,
         ];
     }
 }
