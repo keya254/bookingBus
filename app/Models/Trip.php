@@ -11,12 +11,13 @@ class Trip extends Model
 
     protected $table='trips';
 
-    protected $fillable=['from_id','to_id','day','start_time','min_time','max_time','price','status','car_id','driver_id','max_seats'];
+    protected $fillable=['from_id','to_id','start_trip','min_time','max_time','price','status','car_id','driver_id','max_seats'];
 
-    protected $appends=['dayformat','timeformat'];
+    protected $appends=['day_trip','time_trip'];
 
-    protected $casts=['day'=>'date:Y-m-d','start_time'=>'date:h:i','status'=>'boolean','min_time'=>'integer','max_time'=>'integer','price'=>'float'];
+    protected $casts=['status'=>'boolean','min_time'=>'integer','max_time'=>'integer','price'=>'float'];
 
+    protected $dates=['start_trip'];
 
     public static function boot()
     {
@@ -93,13 +94,35 @@ class Trip extends Model
         return  $q->where('status',0);
     }
 
-    public function getDayformatAttribute()
+    /**
+    * Get Trip Before Now
+    */
+    public function ScopeBeforenow($q)
     {
-       return $this->day->format('Y-m-d');
+        return  $q->where('start_trip','>',now());
     }
 
-    public function getTimeformatAttribute()
+     /**
+    * Get Trip Before Now
+    */
+    public function ScopeAfternow($q)
     {
-       return $this->start_time->format('h:i A');
+        return  $q->where('start_trip','<',now());
+    }
+
+    /**
+    * Get Trip In Date Format
+    */
+    public function getDayTripAttribute()
+    {
+       return $this->start_trip->format('Y-m-d');
+    }
+
+    /**
+    * Get Trip In Time Format
+    */
+    public function getTimeTripAttribute()
+    {
+       return $this->start_trip->format('h:i A');
     }
 }

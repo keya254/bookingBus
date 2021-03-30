@@ -30,7 +30,6 @@
                 <th>#</th>
                 <th>الرحلة من</th>
                 <th>الرحلة الي</th>
-                <th>يوم الرحلة</th>
                 <th>بداية الرحلة</th>
                 <th>حالة الرحلة</th>
                 <th>سعر مقعد الرحلة</th>
@@ -75,8 +74,7 @@
               {data: 'id', name: 'id'},
               {data: 'from.name', name: 'from.name'},
               {data: 'to.name', name: 'to.name'},
-              {data: 'day', name: 'day'},
-              {data: 'start_time', name: 'start_time'},
+              {data: 'start_trip', name: 'start_trip'},
               {data: 'status', name: 'status',orderable: false, searchable: false},
               {data: 'price', name: 'price'},
               {data: 'min_time', name: 'min_time'},
@@ -143,8 +141,7 @@
            success: function (response) {
             $('input[name=from_id]').val(response.trip.from_id);
             $('input[name=to_id]').val(response.trip.to_id);
-            $('input[name=start_time]').val(response.trip.start_time);
-            $('input[name=day]').val(response.trip.day);
+            $('input[name=start_trip]').val(response.trip.start_trip);
             $('input[name=max_time]').val(response.trip.max_time);
             $('input[name=min_time]').val(response.trip.min_time);
             $('input[name=price]').val(response.trip.price);

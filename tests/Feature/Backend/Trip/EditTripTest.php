@@ -49,8 +49,7 @@ class EditTripTest extends TestCase
         //login user visit page
         $this->actingAs($this->user)
              ->json('PUT','/backend/trip/'.$this->trip->id,
-             ['from_id' => 1 , 'to_id' => 2, 'day' => today()->addDay(5),
-              'start_time' => now() , 'min_time' => 44, 'max_time' => 66 ,'status' => 1,
+             ['from_id' => 1 , 'to_id' => 2, 'start_trip' => now() , 'min_time' => 44, 'max_time' => 66 ,'status' => 1,
               'car_id' => 1 ,'driver_id' => 1, 'max_seats' => 3 , 'price' => 45])
              ->assertStatus(200)
              ->assertSee('success updated');
@@ -65,8 +64,7 @@ class EditTripTest extends TestCase
         //login user visit page
         $this->actingAs($this->user)
              ->json('PUT','/backend/trip/'.$this->trip->id,
-             ['from_id' => null , 'to_id' => 2, 'day' => today()->addDay(5),
-              'start_time' => now() , 'min_time' => 44, 'max_time' => 66 ,'status' => 1,
+             ['from_id' => null , 'to_id' => 2,'start_trip' => now() , 'min_time' => 44, 'max_time' => 66 ,'status' => 1,
               'car_id' => 1 ,'driver_id' => 1, 'max_seats' => 3 , 'price' => 45])
              ->assertJsonValidationErrors(['from_id'])
              ->assertStatus(422);
@@ -81,8 +79,7 @@ class EditTripTest extends TestCase
         //login user visit page
         $this->actingAs($this->user)
              ->json('PUT','/backend/trip/'.$this->trip->id,
-             ['from_id' => 4 , 'to_id' => 2, 'day' => today()->addDay(5),
-              'start_time' => now() , 'min_time' => 44, 'max_time' => 66 ,'status' => 1,
+             ['from_id' => 4 , 'to_id' => 2, 'start_trip' => now() , 'min_time' => 44, 'max_time' => 66 ,'status' => 1,
               'car_id' => 1 ,'driver_id' => 1, 'max_seats' => 3 , 'price' => 45])
              ->assertJsonValidationErrors(['from_id'])
              ->assertStatus(422);
@@ -98,8 +95,7 @@ class EditTripTest extends TestCase
         //login user visit page
         $this->actingAs($this->user)
              ->json('PUT','/backend/trip/'.$this->trip->id,
-             ['from_id' => 1 , 'to_id' => null, 'day' => today()->addDay(5),
-              'start_time' => now() , 'min_time' => 44, 'max_time' => 66 ,'status' => 1,
+             ['from_id' => 1 , 'to_id' => null, 'start_trip' => now() , 'min_time' => 44, 'max_time' => 66 ,'status' => 1,
               'car_id' => 1 ,'driver_id' => 1, 'max_seats' => 3 , 'price' => 45])
              ->assertJsonValidationErrors(['to_id'])
              ->assertStatus(422);
@@ -115,8 +111,7 @@ class EditTripTest extends TestCase
         //login user visit page
         $this->actingAs($this->user)
              ->json('PUT','/backend/trip/'.$this->trip->id,
-             ['from_id' => 1 , 'to_id' => 4, 'day' => today()->addDay(5),
-              'start_time' => now() , 'min_time' => 44, 'max_time' => 66 ,'status' => 1,
+             ['from_id' => 1 , 'to_id' => 4, 'start_trip' => now() , 'min_time' => 44, 'max_time' => 66 ,'status' => 1,
               'car_id' => 1 ,'driver_id' => 1, 'max_seats' => 3 , 'price' => 45])
              ->assertJsonValidationErrors(['to_id'])
              ->assertStatus(422);
@@ -132,8 +127,7 @@ class EditTripTest extends TestCase
         //login user visit page
         $this->actingAs($this->user)
              ->json('PUT','/backend/trip/'.$this->trip->id,
-             ['from_id' => 1 , 'to_id' => 1, 'day' => today()->addDay(5),
-              'start_time' => now() , 'min_time' => 44, 'max_time' => 66 ,'status' => 1,
+             ['from_id' => 1 , 'to_id' => 1, 'start_trip' => now() , 'min_time' => 44, 'max_time' => 66 ,'status' => 1,
               'car_id' => 1 ,'driver_id' => 1, 'max_seats' => 3 , 'price' => 45])
              ->assertJsonValidationErrors(['to_id'])
              ->assertStatus(422);
@@ -141,49 +135,46 @@ class EditTripTest extends TestCase
         $this->assertDatabaseHas('trips',['min_time'=>122]);
     }
 
-    public function test_user_have_permission_edit_trip_and_day_equal_before_today()
+    public function test_user_have_permission_edit_trip_and_start_trip_equal_before_to_start_trip()
     {
         //give permission to user edit-trip
         $this->user->givePermissionTo('edit-trip');
         //login user visit page
         $this->actingAs($this->user)
              ->json('PUT','/backend/trip/'.$this->trip->id,
-             ['from_id' => 1 , 'to_id' => 2, 'day' => now()->addDays(-1),
-              'start_time' => now() , 'min_time' => 44, 'max_time' => 66 ,'status' => 1,
+             ['from_id' => 1 , 'to_id' => 2, 'start_trip' => now()->addDay(-1) , 'min_time' => 44, 'max_time' => 66 ,'status' => 1,
               'car_id' => 1 ,'driver_id' => 1, 'max_seats' => 3 , 'price' => 45])
-             ->assertJsonValidationErrors(['day'])
+             ->assertJsonValidationErrors(['start_trip'])
              ->assertStatus(422);
                      //check the database table trips not change a record
         $this->assertDatabaseHas('trips',['min_time'=>122]);
     }
 
-    public function test_user_have_permission_edit_trip_and_day_not_date()
+    public function test_user_have_permission_edit_trip_and_start_trip_not_date_only()
     {
         //give permission to user edit-trip
         $this->user->givePermissionTo('edit-trip');
         //login user visit page
         $this->actingAs($this->user)
              ->json('PUT','/backend/trip/'.$this->trip->id,
-             ['from_id' => 1 , 'to_id' => 2, 'day' => '12',
-              'start_time' => now() , 'min_time' => 44, 'max_time' => 66 ,'status' => 1,
+             ['from_id' => 1 , 'to_id' => 2, 'start_trip' => now()->format('Y-m-d') , 'min_time' => 44, 'max_time' => 66 ,'status' => 1,
               'car_id' => 1 ,'driver_id' => 1, 'max_seats' => 3 , 'price' => 45])
-             ->assertJsonValidationErrors(['day'])
+             ->assertJsonValidationErrors(['start_trip'])
              ->assertStatus(422);
                      //check the database table trips not change a record
         $this->assertDatabaseHas('trips',['min_time'=>122]);
     }
 
-    public function test_user_have_permission_edit_trip_and_start_time_not_time()
+    public function test_user_have_permission_edit_trip_and_start_trip_not_time_only()
     {
         //give permission to user edit-trip
         $this->user->givePermissionTo('edit-trip');
         //login user visit page
         $this->actingAs($this->user)
              ->json('PUT','/backend/trip/'.$this->trip->id,
-             ['from_id' => 1 , 'to_id' => 2, 'day' => now()->addDays(1),
-              'start_time' => null , 'min_time' => 44, 'max_time' => 66 ,'status' => 1,
+             ['from_id' => 1 , 'to_id' => 2, 'start_trip' => now()->format('h:i a'), 'min_time' => 44, 'max_time' => 66 ,'status' => 1,
               'car_id' => 1 ,'driver_id' => 1, 'max_seats' => 3 , 'price' => 45])
-             ->assertJsonValidationErrors(['start_time'])
+             ->assertJsonValidationErrors(['start_trip'])
              ->assertStatus(422);
                      //check the database table trips not change a record
         $this->assertDatabaseHas('trips',['min_time'=>122]);
@@ -196,8 +187,7 @@ class EditTripTest extends TestCase
         //login user visit page
         $this->actingAs($this->user)
              ->json('PUT','/backend/trip/'.$this->trip->id,
-             ['from_id' => 1 , 'to_id' => 2, 'day' => now(),
-              'start_time' => now() , 'min_time' => 'ui', 'max_time' => 66 ,'status' => 1,
+             ['from_id' => 1 , 'to_id' => 2, 'start_trip' => now() , 'min_time' => 'ui', 'max_time' => 66 ,'status' => 1,
               'car_id' => 1 ,'driver_id' => 1, 'max_seats' => 3 , 'price' => 45])
              ->assertJsonValidationErrors(['min_time'])
              ->assertStatus(422);
@@ -212,8 +202,7 @@ class EditTripTest extends TestCase
         //login user visit page
         $this->actingAs($this->user)
              ->json('PUT','/backend/trip/'.$this->trip->id,
-             ['from_id' => 1 , 'to_id' => 2, 'day' => now(),
-              'start_time' => now() , 'min_time' => null, 'max_time' => 66 ,'status' => 1,
+             ['from_id' => 1 , 'to_id' => 2,'start_trip' => now(), 'min_time' => null, 'max_time' => 66 ,'status' => 1,
               'car_id' => 1 ,'driver_id' => 1, 'max_seats' => 3 , 'price' => 45])
              ->assertJsonValidationErrors(['min_time'])
              ->assertStatus(422);
@@ -228,8 +217,7 @@ class EditTripTest extends TestCase
         //login user visit page
         $this->actingAs($this->user)
              ->json('PUT','/backend/trip/'.$this->trip->id,
-             ['from_id' => 1 , 'to_id' => 2, 'day' => now(),
-              'start_time' => now() , 'min_time' => 74, 'max_time' => 66 ,'status' => 1,
+             ['from_id' => 1 , 'to_id' => 2, 'start_trip' => now() , 'min_time' => 74, 'max_time' => 66 ,'status' => 1,
               'car_id' => 1 ,'driver_id' => 1, 'max_seats' => 3 , 'price' => 45])
              ->assertJsonValidationErrors(['min_time'])
              ->assertStatus(422);
@@ -244,8 +232,7 @@ class EditTripTest extends TestCase
         //login user visit page
         $this->actingAs($this->user)
              ->json('PUT','/backend/trip/'.$this->trip->id,
-             ['from_id' => 1 , 'to_id' => 2, 'day' => now(),
-              'start_time' => now() , 'min_time' => 56, 'max_time' => null ,'status' => 1,
+             ['from_id' => 1 , 'to_id' => 2,'start_trip' => now() , 'min_time' => 56, 'max_time' => null ,'status' => 1,
               'car_id' => 1 ,'driver_id' => 1, 'max_seats' => 3 , 'price' => 45])
              ->assertJsonValidationErrors(['min_time','max_time'])
              ->assertStatus(422);
@@ -260,8 +247,7 @@ class EditTripTest extends TestCase
         //login user visit page
         $this->actingAs($this->user)
              ->json('PUT','/backend/trip/'.$this->trip->id,
-             ['from_id' => 1 , 'to_id' => 2, 'day' => now(),
-              'start_time' => now() , 'min_time' => 56, 'max_time' => "jg" ,'status' => 1,
+             ['from_id' => 1 , 'to_id' => 2, 'start_trip' => now() , 'min_time' => 56, 'max_time' => "jg" ,'status' => 1,
               'car_id' => 1 ,'driver_id' => 1, 'max_seats' => 3 , 'price' => 45])
              ->assertJsonValidationErrors(['min_time','max_time'])
              ->assertStatus(422);
@@ -276,8 +262,7 @@ class EditTripTest extends TestCase
         //login user visit page
         $this->actingAs($this->user)
              ->json('PUT','/backend/trip/'.$this->trip->id,
-             ['from_id' => 1 , 'to_id' => 2, 'day' => now(),
-              'start_time' => now() , 'min_time' => 56, 'max_time' => 88 ,'status' => 2,
+             ['from_id' => 1 , 'to_id' => 2,'start_trip' => now() , 'min_time' => 56, 'max_time' => 88 ,'status' => 2,
               'car_id' => 1 ,'driver_id' => 1, 'max_seats' => 3 , 'price' => 45])
              ->assertJsonValidationErrors(['status'])
              ->assertStatus(422);
@@ -292,8 +277,7 @@ class EditTripTest extends TestCase
         //login user visit page
         $this->actingAs($this->user)
              ->json('PUT','/backend/trip/'.$this->trip->id,
-             ['from_id' => 1 , 'to_id' => 2, 'day' => now(),
-              'start_time' => now() , 'min_time' => 56, 'max_time' => 88 ,'status' => 1,
+             ['from_id' => 1 , 'to_id' => 2, 'start_trip' => now() , 'min_time' => 56, 'max_time' => 88 ,'status' => 1,
               'car_id' => null ,'driver_id' => 1, 'max_seats' => 3 , 'price' => 45])
              ->assertJsonValidationErrors(['car_id'])
              ->assertStatus(422);
@@ -308,8 +292,7 @@ class EditTripTest extends TestCase
         //login user visit page
         $this->actingAs($this->user)
              ->json('PUT','/backend/trip/'.$this->trip->id,
-             ['from_id' => 1 , 'to_id' => 2, 'day' => now(),
-              'start_time' => now() , 'min_time' => 56, 'max_time' => 88 ,'status' => 1,
+             ['from_id' => 1 , 'to_id' => 2,'start_trip' => now() , 'min_time' => 56, 'max_time' => 88 ,'status' => 1,
               'car_id' => 4 ,'driver_id' => 1, 'max_seats' => 3 , 'price' => 45])
              ->assertJsonValidationErrors(['car_id'])
              ->assertStatus(422);
@@ -324,8 +307,7 @@ class EditTripTest extends TestCase
         //login user visit page
         $this->actingAs($this->user)
              ->json('PUT','/backend/trip/'.$this->trip->id,
-             ['from_id' => 1 , 'to_id' => 2, 'day' => now(),
-              'start_time' => now() , 'min_time' => 56, 'max_time' => 88 ,'status' => 1,
+             ['from_id' => 1 , 'to_id' => 2,'start_trip' => now() , 'min_time' => 56, 'max_time' => 88 ,'status' => 1,
               'car_id' => "frty" ,'driver_id' => 1, 'max_seats' => 3 , 'price' => 45])
              ->assertJsonValidationErrors(['car_id'])
              ->assertStatus(422);
@@ -340,8 +322,7 @@ class EditTripTest extends TestCase
         //login user visit page
         $this->actingAs($this->user)
              ->json('PUT','/backend/trip/'.$this->trip->id,
-             ['from_id' => 1 , 'to_id' => 2, 'day' => now(),
-              'start_time' => now() , 'min_time' => 56, 'max_time' => 88 ,'status' => 1,
+             ['from_id' => 1 , 'to_id' => 2, 'start_trip' => now() , 'min_time' => 56, 'max_time' => 88 ,'status' => 1,
               'car_id' => 1 ,'driver_id' => null, 'max_seats' => 3 , 'price' => 45])
              ->assertJsonValidationErrors(['driver_id'])
              ->assertStatus(422);
@@ -356,8 +337,7 @@ class EditTripTest extends TestCase
         //login user visit page
         $this->actingAs($this->user)
              ->json('PUT','/backend/trip/'.$this->trip->id,
-             ['from_id' => 1 , 'to_id' => 2, 'day' => now(),
-              'start_time' => now() , 'min_time' => 56, 'max_time' => 88 ,'status' => 1,
+             ['from_id' => 1 , 'to_id' => 2, 'start_trip' => now(), 'min_time' => 56, 'max_time' => 88 ,'status' => 1,
               'car_id' => 1 ,'driver_id' => "rf", 'max_seats' => 3 , 'price' => 45])
              ->assertJsonValidationErrors(['driver_id'])
              ->assertStatus(422);
@@ -372,8 +352,7 @@ class EditTripTest extends TestCase
         //login user visit page
         $this->actingAs($this->user)
              ->json('PUT','/backend/trip/'.$this->trip->id,
-             ['from_id' => 1 , 'to_id' => 2, 'day' => now(),
-              'start_time' => now() , 'min_time' => 56, 'max_time' => 88 ,'status' => 1,
+             ['from_id' => 1 , 'to_id' => 2, 'start_trip' => now() , 'min_time' => 56, 'max_time' => 88 ,'status' => 1,
               'car_id' => 1 ,'driver_id' => 7, 'max_seats' => 3 , 'price' => 45])
              ->assertJsonValidationErrors(['driver_id'])
              ->assertStatus(422);
@@ -388,8 +367,7 @@ class EditTripTest extends TestCase
         //login user visit page
         $this->actingAs($this->user)
              ->json('PUT','/backend/trip/'.$this->trip->id,
-             ['from_id' => 1 , 'to_id' => 2, 'day' => now(),
-              'start_time' => now() , 'min_time' => 56, 'max_time' => 88 ,'status' => 1,
+             ['from_id' => 1 , 'to_id' => 2,'start_trip' => now(), 'min_time' => 56, 'max_time' => 88 ,'status' => 1,
               'car_id' => 1 ,'driver_id' => 1, 'max_seats' => null , 'price' => 45])
              ->assertJsonValidationErrors(['max_seats'])
              ->assertStatus(422);
@@ -404,8 +382,7 @@ class EditTripTest extends TestCase
         //login user visit page
         $this->actingAs($this->user)
              ->json('PUT','/backend/trip/'.$this->trip->id,
-             ['from_id' => 1 , 'to_id' => 2, 'day' => now(),
-              'start_time' => now() , 'min_time' => 56, 'max_time' => 88 ,'status' => 1,
+             ['from_id' => 1 , 'to_id' => 2, 'start_trip' => now() , 'min_time' => 56, 'max_time' => 88 ,'status' => 1,
               'car_id' => 1 ,'driver_id' => 1, 'max_seats' => "g" , 'price' => 45])
              ->assertJsonValidationErrors(['max_seats'])
              ->assertStatus(422);
@@ -420,8 +397,7 @@ class EditTripTest extends TestCase
         //login user visit page
         $this->actingAs($this->user)
              ->json('PUT','/backend/trip/'.$this->trip->id,
-             ['from_id' => 1 , 'to_id' => 2, 'day' => now(),
-              'start_time' => now() , 'min_time' => 56, 'max_time' => 88 ,'status' => 1,
+             ['from_id' => 1 , 'to_id' => 2, 'start_trip' => now() , 'min_time' => 56, 'max_time' => 88 ,'status' => 1,
               'car_id' => 1 ,'driver_id' => 1, 'max_seats' => 3 , 'price' => null])
              ->assertJsonValidationErrors(['price'])
              ->assertStatus(422);
@@ -436,8 +412,7 @@ class EditTripTest extends TestCase
         //login user visit page
         $this->actingAs($this->user)
              ->json('PUT','/backend/trip/'.$this->trip->id,
-             ['from_id' => 1 , 'to_id' => 2, 'day' => now(),
-              'start_time' => now() , 'min_time' => 56, 'max_time' => 88 ,'status' => 1,
+             ['from_id' => 1 , 'to_id' => 2, 'start_trip' => now() , 'min_time' => 56, 'max_time' => 88 ,'status' => 1,
               'car_id' => 1 ,'driver_id' => 1, 'max_seats' => 5 , 'price' => "jh"])
              ->assertJsonValidationErrors(['price'])
              ->assertStatus(422);
@@ -452,8 +427,7 @@ class EditTripTest extends TestCase
         //login user visit page
         $this->actingAs($this->user)
              ->json('PUT','/backend/trip/'.$this->trip->id+1,
-             ['from_id' => 1 , 'to_id' => 2, 'day' => now(),
-              'start_time' => now() , 'min_time' => 56, 'max_time' => 88 ,'status' => 1,
+             ['from_id' => 1 , 'to_id' => 2, 'start_trip' => now() , 'min_time' => 56, 'max_time' => 88 ,'status' => 1,
               'car_id' => 1 ,'driver_id' => 1, 'max_seats' => 5 , 'price' => 43])
              ->assertStatus(404);
     }
