@@ -53,7 +53,6 @@ class IndexTripTest extends TestCase
         Car::factory()->count(10)->create();
         Role::create(['name'=>'Driver']);
         Trip::factory()->count(10)->create();
-        $this->withoutExceptionHandling();
         //give permission trips to user to see page
         $this->user->givePermissionTo('trips');
          //login user visit page
