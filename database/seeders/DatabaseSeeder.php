@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
         Setting::create(['name'=>'name of website','description'=>'description','logo'=>'/images/logo/1.png']);
         $this->call([
             GovernorateSeeder::class,
@@ -26,8 +25,8 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             UserSeeder::class,
         ]);
-        TypeCar::factory(20)->create();
-        Car::factory(300)->create();
-        Trip::factory(300)->create();
+        $typecars=TypeCar::factory(20)->create();
+        $cars=Car::factory(300)->create();
+        $trips=Trip::factory(300)->create();
     }
 }
