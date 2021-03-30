@@ -70,8 +70,12 @@ class TripController extends Controller
     public function changestatus(Request $request)
     {
         $trip=Trip::findOrFail($request->id);
-        $trip->update(['status'=>!$trip->status]);
-        return response()->json(['message'=>'change successfully'],200);
+        if ($trip->car->owner_id==auth()->user()->id) {
+            $trip->update(['status'=>!$trip->status]);
+            return response()->json(['message'=>'change successfully'],200);
+        }
+        return response()->json(['message'=>'Unauthorized'],403);
+
     }
 
     /**

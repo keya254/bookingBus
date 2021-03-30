@@ -78,8 +78,11 @@ class CarController extends Controller
     public function changestatus(Request $request)
     {
         $car=Car::findOrFail($request->id);
-        $car->update(['status'=>!$car->status]);
-        return response()->json(['message'=>'change successfully'],200);
+        if ($car->owner_id==auth()->user()->id) {
+            $car->update(['status'=>!$car->status]);
+            return response()->json(['message'=>'change successfully'],200);
+        }
+        return response()->json(['message'=>'Unauthorized'],403);
     }
 
     /**
@@ -88,8 +91,11 @@ class CarController extends Controller
     public function changepublic(Request $request)
     {
         $car=Car::findOrFail($request->id);
-        $car->update(['public'=>!$car->public]);
-        return response()->json(['message'=>'change successfully'],200);
+        if ($car->owner_id==auth()->user()->id) {
+            $car->update(['public'=>!$car->public]);
+            return response()->json(['message'=>'change successfully'],200);
+        }
+        return response()->json(['message'=>'Unauthorized'],403);
     }
 
     /**
@@ -98,8 +104,11 @@ class CarController extends Controller
     public function changeprivate(Request $request)
     {
         $car=Car::findOrFail($request->id);
-        $car->update(['private'=>!$car->private]);
-        return response()->json(['message'=>'change successfully'],200);
+        if ($car->owner_id==auth()->user()->id) {
+            $car->update(['private'=>!$car->private]);
+            return response()->json(['message'=>'change successfully'],200);
+        }
+        return response()->json(['message'=>'Unauthorized'],403);
     }
     /**
      * Store a newly created resource in storage.
