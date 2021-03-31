@@ -7,7 +7,8 @@ use App\Http\Requests\Booking\BookingSeat;
 use App\Models\Passenger;
 use App\Models\Seat;
 use App\Models\Trip;
-use Illuminate\Http\Request;
+use App\Notifications\BookingSeatNotification;
+use Illuminate\Support\Facades\Notification;
 
 class BookingController extends Controller
 {
@@ -29,6 +30,8 @@ class BookingController extends Controller
                 //booking if available
                 Seat::Where('trip_id',$request->trip_id)->Where('name',$value)->Where('passenger_id',null)->update(['status'=>1,'passenger_id'=>$passenger->id,'booking_time'=>now()]);
             }
+            Notification::send($trip->driver,new BookingSeatNotification($trip->id,$request->myseats,$request->phone_number));
+            Notification::send($trip->car->owner,new BookingSeatNotification($trip->id,$request->myseats,$request->phone_number));
             return response()->json(['message'=>'تم الحجز بنجاح'],200);
         }else
         {

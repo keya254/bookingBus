@@ -26,6 +26,7 @@ Route::group(['prefix'=>'backend','namespace'=>'Backend','middleware'=>'auth'],f
     //Trip
     Route::resource('trip', 'TripController')->except(['edit','create']);
     Route::post('/trip/changestatus', 'TripController@changestatus')->name('trip.changestatus');
+    Route::get('/trip/{trip}/seats', 'TripController@seats')->name('trip.seats');
     //TypeCar
     Route::resource('typecar', 'TypeCarController')->except(['edit','create']);
     Route::post('/typecar/changestatus', 'TypeCarController@changestatus')->name('typecar.changestatus');
@@ -53,8 +54,9 @@ Route::group(['prefix'=>'backend','namespace'=>'Backend','middleware'=>'auth'],f
     Route::resource('permissions', 'PermissionsController')->except(['edit','create']);
     //Roles
     Route::resource('roles', 'RolesController')->except(['edit','create']);
-    Route::post('roles/role_permissions', 'RolesController@role_permissions')->name('role_permissions');
-    Route::get('roles/role_permissions/{id}', 'RolesController@getrolepermissions')->name('getrolepermissions');
+    //Role Permissions
+    Route::post('/roles/role_permissions', 'RolesController@role_permissions')->name('role_permissions');
+    Route::get('/roles/role_permissions/{id}', 'RolesController@getrolepermissions')->name('getrolepermissions');
     //Notifications
     Route::resource('notifications', 'NotificationController')->only(['index','store','destroy']);
 });
@@ -69,4 +71,4 @@ Route::prefix('')->group(function () {
     Route::resource('/booking','Frontend\bookingController')->only(['store']);
 
 });
-// Route::get('/home','HomeController@index');
+Route::get('/home','HomeController@index');

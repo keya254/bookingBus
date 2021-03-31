@@ -43,7 +43,7 @@ class NewTripForDriverNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'content'=>' لقد تم اضافة رحلة جديدة للسيارة '.$this->trip->car->name.' يوم '.$this->trip->day.' الساعة '.$this->trip->start_time.' من '.$this->trip->from->name.' الي '.$this->trip->to->name.' ',
+            'content'=>' لقد تم اضافة رحلة جديدة للسيارة '.$this->trip->car->name.' يوم '.$this->trip->day_trip.' الساعة '.$this->trip->time_trip.' من '.$this->trip->from->name.' الي '.$this->trip->to->name.' ',
         ];
     }
 }

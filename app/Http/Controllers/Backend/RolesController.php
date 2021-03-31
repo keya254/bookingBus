@@ -16,7 +16,7 @@ class RolesController extends Controller
         $this->middleware(['auth','permission:roles'])->only('index');
         $this->middleware(['auth','permission:create-role'])->only('store');
         $this->middleware(['auth','permission:edit-role'])->only(['show','update']);
-        $this->middleware(['auth','permission:role-permission'])->only(['show','role_permissions']);
+        $this->middleware(['auth','permission:role-permission'])->only(['getrolepermissions','role_permissions']);
         $this->middleware(['auth','permission:delete-role'])->only('destroy');
     }
     public function index(Request $request)
@@ -72,18 +72,19 @@ class RolesController extends Controller
        $role=Role::findById($id);
        $permissions=Permission::all();
        $rolepermissions=Role::findById($id)->permissions->pluck('id')->toArray();
-       return response()->json(['role'=>$role,'permissions'=>$permissions,'rolepermissions'=>$rolepermissions]);
+       return response()->json(['role'=>$role,'permissions'=>$permissions,'rolepermissions'=>$rolepermissions],200);
     }
 
     public function role_permissions(Request $request)
     {
       $this->validate($request,[
-          'permissions'=>'required',
+          'permissions'=>'required|array',
+          'permissions.*'=>'required|integer',
           'role_id'=>'required',
       ]);
       $role=Role::findById($request->role_id);
       $role->syncPermissions($request->permissions);
-      return back()->with('success','تم تعديل صلاحيات الوظيفة بنجاح');
+      return response()->json(['success'=>'تم تعديل صلاحيات الوظيفة بنجاح']);
     }
 
     /**

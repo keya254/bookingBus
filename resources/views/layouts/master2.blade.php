@@ -34,25 +34,7 @@
           <ul class="hidden absolute top-1/2 right-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto  lg:items-center lg:w-auto lg:space-x-6">
             <li><a class="text-sm text-white font-bold hover:text-gray-300 p-1" href="/search">الرحلات المتاحة</a></li>
             <li><a class="text-sm text-white font-bold hover:text-gray-300 p-1" href="/private">سيارة مخصوص</a></li>
-         {{--  <li class="text-gray-800">
-            <svg class="w-4 h-4 current-fill" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
-            </svg>
-          </li>
-          <li><a class="text-sm text-gray-300 hover:text-white" href="#">Services</a></li>
-          <li class="text-gray-800">
-            <svg class="w-4 h-4 current-fill" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
-            </svg>
-          </li>
-          <li><a class="text-sm text-gray-300 hover:text-white" href="#">Platform</a></li>
-          <li class="text-gray-800">
-            <svg class="w-4 h-4 current-fill" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
-            </svg>
-          </li>
-          <li><a class="text-sm text-gray-300 hover:text-white" href="#">Testimonials</a></li> --}}
-        </ul>
+          </ul>
         <a class="hidden lg:block py-2 px-6 bg-pink-600 hover:bg-pink-700 text-sm text-white font-bold rounded-l-xl rounded-t-xl transition duration-200" href="{{route('login')}}">تسجيل دخول</a>
       </nav>
       <div class="hidden navbar-menu relative z-50">
@@ -67,13 +49,12 @@
             </button>
           </div>
           <div>
-            {{--  <ul>
-              <li class="mb-1"><a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-purple-50 hover:text-purple-600 rounded" href="#">Start</a></li>
-              <li class="mb-1"><a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-purple-50 hover:text-purple-600 rounded" href="#">About Us</a></li>
-              <li class="mb-1"><a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-purple-50 hover:text-purple-600 rounded" href="#">Services</a></li>
-              <li class="mb-1"><a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-purple-50 hover:text-purple-600 rounded" href="#">Platform</a></li>
-              <li class="mb-1"><a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-purple-50 hover:text-purple-600 rounded" href="#">Testimonials</a></li>
-            </ul>  --}}
+             <ul>
+              <li class="mb-1"><a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-purple-50
+                 hover:text-purple-600 rounded" href="/search">الرحلات المتاحة</a></li>
+              <li class="mb-1"><a class="block p-4 text-sm font-semibold text-gray-400 hover:bg-purple-50
+                 hover:text-purple-600 rounded" href="/private">سيارة مخصوص</a></li>
+             </ul>
           </div>
           <div class="mt-auto">
             <div class="pt-6">
