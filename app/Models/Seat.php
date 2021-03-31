@@ -24,7 +24,7 @@ class Seat extends Model
     */
     public function passenger()
     {
-        return $this->belongsTo(User::class,'passenger_id');
+        return $this->belongsTo(Passenger::class,'passenger_id');
     }
 
     /**

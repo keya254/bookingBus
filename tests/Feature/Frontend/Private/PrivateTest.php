@@ -42,7 +42,7 @@ class PrivateTest extends TestCase
         CarCities::create(['car_id'=>$car->id,'city_id'=>$this->city->id]);
         $this->get('/private')
         ->assertViewHasAll(['cars','governorates'])
-        ->assertSee(['لا يوجد رحلات من هذا الطريق']);
+        ->assertSee(['لا يوجد سيارات متاحة لهذا الطريق الان']);
     }
 
     public function test_private_page_can_load_car_status_1_car_private_0()
@@ -51,7 +51,7 @@ class PrivateTest extends TestCase
         CarCities::create(['car_id'=>$car->id,'city_id'=>$this->city->id]);
         $this->get('/private')
         ->assertViewHasAll(['cars','governorates'])
-        ->assertSee(['لا يوجد رحلات من هذا الطريق']);
+        ->assertSee(['لا يوجد سيارات متاحة لهذا الطريق الان']);
     }
 
 }

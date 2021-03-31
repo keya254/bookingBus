@@ -21,7 +21,6 @@ class CreateTripsTable extends Migration
             $table->foreignId('driver_id')->nullable();
             $table->integer('max_seats');
             $table->dateTime('start_trip');
-           // $table->time('start_time');
             $table->integer('min_time');
             $table->integer('max_time');
             $table->decimal('price');

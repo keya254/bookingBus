@@ -16,11 +16,17 @@ class BookingSeatNotification extends Notification
      *
      * @return void
      */
-    public $name;
+    public $tripid;
 
-    public function __construct($name)
+    public $myseats;
+
+    public $phone_number;
+
+    public function __construct($tripid,$myseats,$phone_number)
     {
-       $this->name=$name;
+       $this->tripid =  $tripid;
+       $this->myseats =  $myseats;
+       $this->phone_number =  $phone_number;
     }
     /**
      * Get the notification's delivery channels.
@@ -43,7 +49,7 @@ class BookingSeatNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'content'=>'',
+            'content'=>' لقد تم حجز المقاعد رقم  ' .$this->myseats. ' من الرحلة رقم ' .$this->tripid. ' للعميل  ' .$this->phone_number. '' ,
         ];
     }
 }
