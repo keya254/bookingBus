@@ -64,9 +64,9 @@ Route::prefix('')->group(function () {
     Route::get('/','Frontend\HomeController@index');
     //get only available private car
     Route::get('/private','Frontend\HomeController@private');
-    Route::resource('/search','Frontend\SearchController');
+    Route::resource('/search','Frontend\SearchController')->only(['index']);
     Route::post('/seats','Frontend\SearchController@seats')->name('seats');
-    Route::resource('/booking','Frontend\bookingController');
+    Route::resource('/booking','Frontend\bookingController')->only(['store']);
 
 });
-Route::get('/home','HomeController@index');
+// Route::get('/home','HomeController@index');

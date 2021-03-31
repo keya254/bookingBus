@@ -94,7 +94,7 @@
              <h1 class="font-bold text-2xl py-3">لا يوجد رحلات من هذا الطريق</h1>
           </div>
         @endforelse
-        {{$trips->appends(request()->query())->links()}}
+        {!!$trips->appends(request()->query())->links()!!}
       </div>
     </div>
     <div id="recaptcha-container"></div>
