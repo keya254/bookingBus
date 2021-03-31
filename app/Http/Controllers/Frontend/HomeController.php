@@ -17,7 +17,17 @@ class HomeController extends Controller
 
     public function private(Request $request)
     {
-        $cars=Car::has('cities')->with(['owner','cities'])->active()->private()->paginate(8);
+        $cars=Car::with(['owner','cities'])->active()->private();
+        if ($request->city_id) {
+            $cars->wherehas('cities',function($q) use($request)
+            {
+              $q->where('cities.id',$request->city_id);
+            });
+        }
+        else {
+            $cars->has('cities');
+        }
+        $cars=$cars->paginate(8);
         $governorates=Governorate::with('cities')->get();
         return view('frontend.private.index',compact('governorates','cars'));
     }
