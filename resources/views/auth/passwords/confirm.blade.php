@@ -12,7 +12,7 @@
             <div class="rounded-t mb-0 px-6 py-6">
               <div class="text-center mb-3">
                 <h6 class="text-gray-600 text-sm font-bold">
-                    تاكيد كلمة المرور
+                    ت اكيد كلمة المرور
                 </h6>
               </div>
               من فضلك اكد كلمة المرور قبل الاستمرار
