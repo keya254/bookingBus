@@ -24,7 +24,7 @@ class IndexRoleTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_user_not_have_permission_roles_can_not_login()
+    public function test_user_not_has_permission_roles_can_not_login()
     {
         $response=
         $this->actingAs($this->user)
@@ -32,7 +32,7 @@ class IndexRoleTest extends TestCase
         $response->assertStatus(403);
     }
 
-    public function test_user_have_permission_roles_can_login()
+    public function test_user_has_permission_roles_can_login()
     {
         $this->user->givePermissionTo(['roles']);
         $this->actingAs($this->user)

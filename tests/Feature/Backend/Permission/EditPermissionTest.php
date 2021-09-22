@@ -24,7 +24,7 @@ class EditPermissionTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_user_not_have_permission_update_permission()
+    public function test_user_not_has_permission_update_permission()
     {
         //create new permission
         $permission=Permission::create(['name'=>'test_permissions']);
@@ -35,9 +35,9 @@ class EditPermissionTest extends TestCase
         ->assertStatus(403);
     }
 
-    public function test_user_have_permission_update_permission()
+    public function test_user_has_permission_update_permission()
     {
-        //create user have permissions to edit permissions
+        //create user has permissions to edit permissions
         $this->user->givePermissionTo(['edit-permission']);
         //create new permission
         $permission=Permission::create(['name'=>'test_permissions']);
@@ -50,9 +50,9 @@ class EditPermissionTest extends TestCase
         $this->assertTrue($permission->fresh()->name=='test_permissions_2');
     }
 
-    public function test_user_have_permission_update_permission_using_name_in_database()
+    public function test_user_has_permission_update_permission_using_name_in_database()
     {
-        //create user have permissions to edit permissions
+        //create user has permissions to edit permissions
         $this->user->givePermissionTo(['edit-permission']);
         //create new permission
         $permission1=Permission::create(['name'=>'test_permissions']);
@@ -64,9 +64,9 @@ class EditPermissionTest extends TestCase
         ->assertStatus(422);
     }
 
-    public function test_user_have_permission_update_permission_using_name_required()
+    public function test_user_has_permission_update_permission_using_name_required()
     {
-        //create user have permissions to edit permissions
+        //create user has permissions to edit permissions
         $this->user->givePermissionTo(['edit-permission']);
         //create new permission
         $permission1=Permission::create(['name'=>'test_permissions']);

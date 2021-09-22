@@ -36,14 +36,14 @@ class StatusCarTest extends TestCase
              ->assertUnauthorized();
     }
 
-    public function test_user_not_have_permission_status_car_can_not_change_status()
+    public function test_user_not_has_permission_status_car_can_not_change_status()
     {
         $this->actingAs($this->user);
         $this->json('post','/backend/car/changestatus')
              ->assertForbidden();
     }
 
-    public function test_user_have_permission_status_car_can_change_status_belonge_to_this_user()
+    public function test_user_has_permission_status_car_can_change_status_belonge_to_this_user()
     {
         $car=Car::factory()->create();
         $car->owner->givePermissionTo('status-car');
@@ -53,7 +53,7 @@ class StatusCarTest extends TestCase
         $this->assertNotEquals($car->status,$car->fresh()->status);
     }
 
-    public function test_user_have_permission_status_car_can_change_status_not_belonge_to_this_user()
+    public function test_user_has_permission_status_car_can_change_status_not_belonge_to_this_user()
     {
         $car=car::factory()->create();
         $user2=User::factory()->create();

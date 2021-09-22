@@ -30,7 +30,7 @@ class IndexDashboardTest extends TestCase
              ->assertRedirect('/login');
     }
 
-    public function test_user_not_have_permission_dashboard_can_not_see_page_dahboard()
+    public function test_user_not_has_permission_dashboard_can_not_see_page_dahboard()
     {
         $this->actingAs($this->user)
              ->get('/backend/dashboard')
@@ -38,7 +38,7 @@ class IndexDashboardTest extends TestCase
              ->assertStatus(403);
     }
 
-    public function test_user_have_permission_dashboard_can_see_page_dahboard()
+    public function test_user_has_permission_dashboard_can_see_page_dahboard()
     {
         $this->user->givePermissionTo('dashboard');
         $this->actingAs($this->user)

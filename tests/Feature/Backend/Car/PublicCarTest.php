@@ -36,14 +36,14 @@ class PublicCarTest extends TestCase
              ->assertUnauthorized();
     }
 
-    public function test_user_not_have_permission_public_car_can_not_change_public()
+    public function test_user_not_has_permission_public_car_can_not_change_public()
     {
         $this->actingAs($this->user);
         $this->json('post','/backend/car/changepublic')
              ->assertForbidden();
     }
 
-    public function test_user_have_permission_public_car_can_change_public_belonge_to_this_user()
+    public function test_user_has_permission_public_car_can_change_public_belonge_to_this_user()
     {
         $car=Car::factory()->create();
         $car->owner->givePermissionTo('public-car');
@@ -53,7 +53,7 @@ class PublicCarTest extends TestCase
         $this->assertNotEquals($car->public,$car->fresh()->public);
     }
 
-    public function test_user_have_permission_public_car_can_change_public_not_belonge_to_this_user()
+    public function test_user_has_permission_public_car_can_change_public_not_belonge_to_this_user()
     {
         $car=Car::factory()->create();
         $user2=User::factory()->create();

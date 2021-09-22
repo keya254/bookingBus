@@ -25,24 +25,24 @@ class EditGovernorateTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_user_not_have_permission_edit_governorate_can_not_edit_governorate()
+    public function test_user_not_has_permission_edit_governorate_can_not_edit_governorate()
     {
         //create governorate
         $governorate=Governorate::create(['name'=>'الجيزة']);
-        //user not have permission
+        //user not has permission
         $this->actingAs($this->user)
            //login user
            ->json('put','/backend/governorate/'.$governorate->id,['name'=>'القاهرة'])
            ->assertStatus(403);
     }
 
-    public function test_user_have_permission_edit_governorate_can_edit_governorate()
+    public function test_user_has_permission_edit_governorate_can_edit_governorate()
     {
         //give permission to this user to edit governorate
         $this->user->givePermissionTo('edit-governorate');
         //create governorate
         $governorate=Governorate::create(['name'=>'الجيزة']);
-        //user not have permission
+        //user not has permission
         $this->actingAs($this->user)
            //login user
            ->json('put','/backend/governorate/'.$governorate->id,['name'=>'القاهرة'])
@@ -51,14 +51,14 @@ class EditGovernorateTest extends TestCase
         $this->assertDatabaseHas('governorates',['id'=>$governorate->id,'name'=>'القاهرة']);
     }
 
-    public function test_user_have_permission_edit_governorate_can_not_update_the_same_name_in_database()
+    public function test_user_has_permission_edit_governorate_can_not_update_the_same_name_in_database()
     {
         //give permission to this user to edit governorate
         $this->user->givePermissionTo('edit-governorate');
         //create governorate
         $governorate1=Governorate::create(['name'=>'الجيزة']);
         $governorate2=Governorate::create(['name'=>'القاهرة']);
-        //user not have permission
+        //user not has permission
         $this->actingAs($this->user)
            //login user
            ->json('put','/backend/governorate/'.$governorate1->id,['name'=>'القاهرة'])

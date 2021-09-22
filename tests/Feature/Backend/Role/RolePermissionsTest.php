@@ -31,28 +31,28 @@ class RolePermissionsTest extends TestCase
              ->assertRedirect('/login');
     }
 
-    public function test_not_have_permission_role_permission_get_permissions_to_role()
+    public function test_not_has_permission_role_permission_get_permissions_to_role()
     {
         $this->actingAs($this->user2)
              ->get(route('getrolepermissions',$this->role->id),array('HTTP_X-Requested-With' => 'XMLHttpRequest'))
              ->assertForbidden();
     }
 
-    public function test_have_permission_role_permission_get_permissions_to_role()
+    public function test_has_permission_role_permission_get_permissions_to_role()
     {
         $this->actingAs($this->user)
              ->get(route('getrolepermissions',$this->role->id),array('HTTP_X-Requested-With' => 'XMLHttpRequest'))
              ->assertSuccessful();
     }
 
-    public function test_have_permission_role_permission_get_permissions_to_role_id_is_wrong()
+    public function test_has_permission_role_permission_get_permissions_to_role_id_is_wrong()
     {
         $this->actingAs($this->user)
              ->get(route('getrolepermissions',$this->role->id+23),array('HTTP_X-Requested-With' => 'XMLHttpRequest'))
              ->assertStatus(500);
     }
 
-    public function test_have_permission_role_permission_set_permissions_to_role_success()
+    public function test_has_permission_role_permission_set_permissions_to_role_success()
     {
         $this->actingAs($this->user)
              ->json('post',route('role_permissions'),['role_id'=>1,'permissions'=>[1]])
@@ -65,28 +65,28 @@ class RolePermissionsTest extends TestCase
              ->assertUnauthorized();
     }
 
-    public function test_have_permission_role_permission_set_permissions_to_role_not_found()
+    public function test_has_permission_role_permission_set_permissions_to_role_not_found()
     {
         $this->actingAs($this->user)
              ->json('post',route('role_permissions'),['role_id'=>2,'permissions'=>[1]])
              ->assertStatus(500);
     }
 
-    public function test_have_permission_role_permission_set_permissions_to_role_permissions_not_found()
+    public function test_has_permission_role_permission_set_permissions_to_role_permissions_not_found()
     {
         $this->actingAs($this->user)
              ->json('post',route('role_permissions'),['role_id'=>2,'permissions'=>[1,2]])
              ->assertStatus(500);
     }
 
-    public function test_user_not_have_permission_role_permission_set_permissions_to_role()
+    public function test_user_not_has_permission_role_permission_set_permissions_to_role()
     {
         $this->actingAs($this->user2)
              ->json('post',route('role_permissions'),['role_id'=>1,'permissions'=>[1]])
              ->assertForbidden();
     }
 
-    public function test_user_have_permission_role_permission_set_permissions_to_role_role_id_required()
+    public function test_user_has_permission_role_permission_set_permissions_to_role_role_id_required()
     {
         $this->actingAs($this->user)
              ->json('post',route('role_permissions'),['role_id'=>'','permissions'=>[1]])
@@ -94,7 +94,7 @@ class RolePermissionsTest extends TestCase
              ->assertStatus(422);
     }
 
-    public function test_user_have_permission_role_permission_set_permissions_to_role_permissions_required()
+    public function test_user_has_permission_role_permission_set_permissions_to_role_permissions_required()
     {
         $this->actingAs($this->user)
              ->json('post',route('role_permissions'),['role_id'=>1,'permissions'=>''])
@@ -102,7 +102,7 @@ class RolePermissionsTest extends TestCase
              ->assertStatus(422);
     }
 
-    public function test_user_have_permission_role_permission_set_permissions_to_role_permissions_not_array()
+    public function test_user_has_permission_role_permission_set_permissions_to_role_permissions_not_array()
     {
         $this->actingAs($this->user)
              ->json('post',route('role_permissions'),['role_id'=>1,'permissions'=>'moh'])
@@ -110,7 +110,7 @@ class RolePermissionsTest extends TestCase
              ->assertStatus(422);
     }
 
-    public function test_user_have_permission_role_permission_set_permissions_to_role_permissions_content_integer()
+    public function test_user_has_permission_role_permission_set_permissions_to_role_permissions_content_integer()
     {
         $this->actingAs($this->user)
              ->json('post',route('role_permissions'),['role_id'=>1,'permissions'=>['mi','htgty',1]])

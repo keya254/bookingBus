@@ -34,7 +34,7 @@ class EditTripTest extends TestCase
         $this->trip=Trip::factory()->create();
     }
 
-    public function test_user_not_have_permission_edit_trip()
+    public function test_user_not_has_permission_edit_trip()
     {
         //login user visit page
         $this->actingAs($this->user)
@@ -42,7 +42,7 @@ class EditTripTest extends TestCase
              ->assertStatus(403);
     }
 
-    public function test_user_have_permission_edit_trip_suucess_created()
+    public function test_user_has_permission_edit_trip_suucess_created()
     {
         //give permission to user edit-trip
         $this->user->givePermissionTo('edit-trip');
@@ -57,7 +57,7 @@ class EditTripTest extends TestCase
             $this->assertDatabaseHas('trips',['id'=>$this->trip->id,'min_time'=>44]);
     }
 
-    public function test_user_have_permission_edit_trip_and_from_id_equal_null()
+    public function test_user_has_permission_edit_trip_and_from_id_equal_null()
     {
         //give permission to user edit-trip
         $this->user->givePermissionTo('edit-trip');
@@ -72,7 +72,7 @@ class EditTripTest extends TestCase
         $this->assertDatabaseHas('trips',['min_time'=>122]);
     }
 
-    public function test_user_have_permission_edit_trip_and_from_id_not_exist_in_database()
+    public function test_user_has_permission_edit_trip_and_from_id_not_exist_in_database()
     {
         //give permission to user edit-trip
         $this->user->givePermissionTo('edit-trip');
@@ -88,7 +88,7 @@ class EditTripTest extends TestCase
 
     }
 
-    public function test_user_have_permission_edit_trip_and_to_id_equal_null()
+    public function test_user_has_permission_edit_trip_and_to_id_equal_null()
     {
         //give permission to user edit-trip
         $this->user->givePermissionTo('edit-trip');
@@ -104,7 +104,7 @@ class EditTripTest extends TestCase
 
     }
 
-    public function test_user_have_permission_edit_trip_and_to_id_not_exist_in_database()
+    public function test_user_has_permission_edit_trip_and_to_id_not_exist_in_database()
     {
         //give permission to user edit-trip
         $this->user->givePermissionTo('edit-trip');
@@ -120,7 +120,7 @@ class EditTripTest extends TestCase
 
     }
 
-    public function test_user_have_permission_edit_trip_and_to_id_equal_from_id()
+    public function test_user_has_permission_edit_trip_and_to_id_equal_from_id()
     {
         //give permission to user edit-trip
         $this->user->givePermissionTo('edit-trip');
@@ -135,7 +135,7 @@ class EditTripTest extends TestCase
         $this->assertDatabaseHas('trips',['min_time'=>122]);
     }
 
-    public function test_user_have_permission_edit_trip_and_start_trip_equal_before_to_start_trip()
+    public function test_user_has_permission_edit_trip_and_start_trip_equal_before_to_start_trip()
     {
         //give permission to user edit-trip
         $this->user->givePermissionTo('edit-trip');
@@ -150,7 +150,7 @@ class EditTripTest extends TestCase
         $this->assertDatabaseHas('trips',['min_time'=>122]);
     }
 
-    public function test_user_have_permission_edit_trip_and_start_trip_not_date_only()
+    public function test_user_has_permission_edit_trip_and_start_trip_not_date_only()
     {
         //give permission to user edit-trip
         $this->user->givePermissionTo('edit-trip');
@@ -165,7 +165,7 @@ class EditTripTest extends TestCase
         $this->assertDatabaseHas('trips',['min_time'=>122]);
     }
 
-    public function test_user_have_permission_edit_trip_and_start_trip_not_time_only()
+    public function test_user_has_permission_edit_trip_and_start_trip_not_time_only()
     {
         //give permission to user edit-trip
         $this->user->givePermissionTo('edit-trip');
@@ -180,7 +180,7 @@ class EditTripTest extends TestCase
         $this->assertDatabaseHas('trips',['min_time'=>122]);
     }
 
-    public function test_user_have_permission_edit_trip_and_min_time_not_integer()
+    public function test_user_has_permission_edit_trip_and_min_time_not_integer()
     {
         //give permission to user edit-trip
         $this->user->givePermissionTo('edit-trip');
@@ -195,7 +195,7 @@ class EditTripTest extends TestCase
         $this->assertDatabaseHas('trips',['min_time'=>122]);
     }
 
-    public function test_user_have_permission_edit_trip_and_min_time_required()
+    public function test_user_has_permission_edit_trip_and_min_time_required()
     {
         //give permission to user edit-trip
         $this->user->givePermissionTo('edit-trip');
@@ -210,7 +210,7 @@ class EditTripTest extends TestCase
         $this->assertDatabaseHas('trips',['min_time'=>122]);
     }
 
-    public function test_user_have_permission_edit_trip_and_min_time_more_than_max_time()
+    public function test_user_has_permission_edit_trip_and_min_time_more_than_max_time()
     {
         //give permission to user edit-trip
         $this->user->givePermissionTo('edit-trip');
@@ -225,7 +225,7 @@ class EditTripTest extends TestCase
         $this->assertDatabaseHas('trips',['min_time'=>122]);
     }
 
-    public function test_user_have_permission_edit_trip_and_max_time_required()
+    public function test_user_has_permission_edit_trip_and_max_time_required()
     {
         //give permission to user edit-trip
         $this->user->givePermissionTo('edit-trip');
@@ -240,7 +240,7 @@ class EditTripTest extends TestCase
         $this->assertDatabaseHas('trips',['min_time'=>122]);
     }
 
-    public function test_user_have_permission_edit_trip_and_max_time_integer()
+    public function test_user_has_permission_edit_trip_and_max_time_integer()
     {
         //give permission to user edit-trip
         $this->user->givePermissionTo('edit-trip');
@@ -255,7 +255,7 @@ class EditTripTest extends TestCase
         $this->assertDatabaseHas('trips',['min_time'=>122]);
     }
 
-    public function test_user_have_permission_edit_trip_and_status_in_0_1()
+    public function test_user_has_permission_edit_trip_and_status_in_0_1()
     {
         //give permission to user edit-trip
         $this->user->givePermissionTo('edit-trip');
@@ -270,7 +270,7 @@ class EditTripTest extends TestCase
         $this->assertDatabaseHas('trips',['min_time'=>122]);
     }
 
-    public function test_user_have_permission_edit_trip_and_car_id_not_null()
+    public function test_user_has_permission_edit_trip_and_car_id_not_null()
     {
         //give permission to user edit-trip
         $this->user->givePermissionTo('edit-trip');
@@ -285,7 +285,7 @@ class EditTripTest extends TestCase
         $this->assertDatabaseHas('trips',['min_time'=>122]);
     }
 
-    public function test_user_have_permission_edit_trip_and_car_id_not_exist_in_database()
+    public function test_user_has_permission_edit_trip_and_car_id_not_exist_in_database()
     {
         //give permission to user edit-trip
         $this->user->givePermissionTo('edit-trip');
@@ -300,7 +300,7 @@ class EditTripTest extends TestCase
         $this->assertDatabaseHas('trips',['min_time'=>122]);
     }
 
-    public function test_user_have_permission_edit_trip_and_car_id_must_be_integer()
+    public function test_user_has_permission_edit_trip_and_car_id_must_be_integer()
     {
         //give permission to user edit-trip
         $this->user->givePermissionTo('edit-trip');
@@ -315,7 +315,7 @@ class EditTripTest extends TestCase
         $this->assertDatabaseHas('trips',['min_time'=>122]);
     }
 
-    public function test_user_have_permission_edit_trip_and_driver_id_not_be_null()
+    public function test_user_has_permission_edit_trip_and_driver_id_not_be_null()
     {
         //give permission to user edit-trip
         $this->user->givePermissionTo('edit-trip');
@@ -330,7 +330,7 @@ class EditTripTest extends TestCase
         $this->assertDatabaseHas('trips',['min_time'=>122]);
     }
 
-    public function test_user_have_permission_edit_trip_and_driver_id_must_be_integer()
+    public function test_user_has_permission_edit_trip_and_driver_id_must_be_integer()
     {
         //give permission to user edit-trip
         $this->user->givePermissionTo('edit-trip');
@@ -345,7 +345,7 @@ class EditTripTest extends TestCase
         $this->assertDatabaseHas('trips',['min_time'=>122]);
     }
 
-    public function test_user_have_permission_edit_trip_and_driver_id_not_exists_in_database()
+    public function test_user_has_permission_edit_trip_and_driver_id_not_exists_in_database()
     {
         //give permission to user edit-trip
         $this->user->givePermissionTo('edit-trip');
@@ -360,7 +360,7 @@ class EditTripTest extends TestCase
         $this->assertDatabaseHas('trips',['min_time'=>122]);
     }
 
-    public function test_user_have_permission_edit_trip_and_max_seats_not_be_null()
+    public function test_user_has_permission_edit_trip_and_max_seats_not_be_null()
     {
         //give permission to user edit-trip
         $this->user->givePermissionTo('edit-trip');
@@ -375,7 +375,7 @@ class EditTripTest extends TestCase
         $this->assertDatabaseHas('trips',['min_time'=>122]);
     }
 
-    public function test_user_have_permission_edit_trip_and_max_seats_must_be_integer()
+    public function test_user_has_permission_edit_trip_and_max_seats_must_be_integer()
     {
         //give permission to user edit-trip
         $this->user->givePermissionTo('edit-trip');
@@ -390,7 +390,7 @@ class EditTripTest extends TestCase
         $this->assertDatabaseHas('trips',['min_time'=>122]);
     }
 
-    public function test_user_have_permission_edit_trip_and_price_not_be_null()
+    public function test_user_has_permission_edit_trip_and_price_not_be_null()
     {
         //give permission to user edit-trip
         $this->user->givePermissionTo('edit-trip');
@@ -405,7 +405,7 @@ class EditTripTest extends TestCase
         $this->assertDatabaseHas('trips',['min_time'=>122]);
     }
 
-    public function test_user_have_permission_edit_trip_and_price_must_be_integer()
+    public function test_user_has_permission_edit_trip_and_price_must_be_integer()
     {
         //give permission to user edit-trip
         $this->user->givePermissionTo('edit-trip');
@@ -420,7 +420,7 @@ class EditTripTest extends TestCase
         $this->assertDatabaseHas('trips',['min_time'=>122]);
     }
 
-    public function test_user_have_permission_edit_trip_and_trip_id_not_found()
+    public function test_user_has_permission_edit_trip_and_trip_id_not_found()
     {
         //give permission to user edit-trip
         $this->user->givePermissionTo('edit-trip');

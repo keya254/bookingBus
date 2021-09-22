@@ -40,7 +40,7 @@ class IndexTripTest extends TestCase
              ->assertRedirect('/login');
     }
 
-    public function test_user_not_have_permission_trips_can_not_see_page()
+    public function test_user_not_has_permission_trips_can_not_see_page()
     {
         //login user visit page
         $this->actingAs($this->user)
@@ -48,7 +48,7 @@ class IndexTripTest extends TestCase
              ->assertStatus(403);
     }
 
-    public function test_user_have_permission_trips_can_see_page()
+    public function test_user_has_permission_trips_can_see_page()
     {
         Car::factory()->count(10)->create();
         Role::create(['name'=>'Driver']);

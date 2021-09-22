@@ -30,14 +30,14 @@ class IndexDriverTest extends TestCase
              ->assertRedirect('/login');
     }
 
-    public function test_user_not_have_permission_drivers_can_not_see_page_driver()
+    public function test_user_not_has_permission_drivers_can_not_see_page_driver()
     {
         $this->actingAs($this->user)
         ->get('/backend/driver')
         ->assertStatus(403);
     }
 
-    public function test_user_have_permission_drivers_can_see_page_driver()
+    public function test_user_has_permission_drivers_can_see_page_driver()
     {
         //give the user permission drivers to see driver page
         $this->user->givePermissionTo('drivers');

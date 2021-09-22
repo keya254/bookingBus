@@ -30,7 +30,7 @@ class IndexChangePasswordTest extends TestCase
              ->assertRedirect('/login');
     }
 
-    public function test_user_not_have_permission_change_password_can_not_see_page_change_password()
+    public function test_user_not_has_permission_change_password_can_not_see_page_change_password()
     {
         $this->actingAs($this->user)
              ->get('/backend/change-password')
@@ -38,7 +38,7 @@ class IndexChangePasswordTest extends TestCase
              ->assertStatus(403);
     }
 
-    public function test_user_have_permission_change_password_can_see_page_change_password()
+    public function test_user_has_permission_change_password_can_see_page_change_password()
     {
         $this->user->givePermissionTo('change-password');
         $this->actingAs($this->user)
@@ -48,14 +48,14 @@ class IndexChangePasswordTest extends TestCase
              ->assertStatus(200);
     }
 
-    public function test_user_not_have_permission_change_password_can_not_change_password()
+    public function test_user_not_has_permission_change_password_can_not_change_password()
     {
         $this->actingAs($this->user)
              ->json('post','/backend/change-password',['old_password'=>'12345678','password'=>'123456789','password_confirmation'=>'123456789'])
              ->assertStatus(403);
     }
 
-    public function test_user_have_permission_change_password_can_not_change_password_and_old_password_required()
+    public function test_user_has_permission_change_password_can_not_change_password_and_old_password_required()
     {
         $this->user->givePermissionTo('change-password');
         $this->actingAs($this->user)
@@ -64,7 +64,7 @@ class IndexChangePasswordTest extends TestCase
              ->assertStatus(422);
     }
 
-    public function test_user_have_permission_change_password_can_not_change_password_and_password_required()
+    public function test_user_has_permission_change_password_can_not_change_password_and_password_required()
     {
         $this->user->givePermissionTo('change-password');
         $this->actingAs($this->user)
@@ -73,7 +73,7 @@ class IndexChangePasswordTest extends TestCase
              ->assertStatus(422);
     }
 
-    public function test_user_have_permission_change_password_can_not_change_password_and_password_min_8()
+    public function test_user_has_permission_change_password_can_not_change_password_and_password_min_8()
     {
         $this->user->givePermissionTo('change-password');
         $this->actingAs($this->user)
@@ -82,7 +82,7 @@ class IndexChangePasswordTest extends TestCase
              ->assertStatus(422);
     }
 
-    public function test_user_have_permission_change_password_can_not_change_password_and_old_password_min_8()
+    public function test_user_has_permission_change_password_can_not_change_password_and_old_password_min_8()
     {
         $this->user->givePermissionTo('change-password');
         $this->actingAs($this->user)
@@ -91,7 +91,7 @@ class IndexChangePasswordTest extends TestCase
              ->assertStatus(422);
     }
 
-    public function test_user_have_permission_change_password_can_not_change_password_and_old_password_not_correct()
+    public function test_user_has_permission_change_password_can_not_change_password_and_old_password_not_correct()
     {
         $this->user->givePermissionTo('change-password');
         $this->actingAs($this->user)
@@ -100,7 +100,7 @@ class IndexChangePasswordTest extends TestCase
              ->assertStatus(422);
     }
 
-    public function test_user_have_permission_change_password_can_not_change_password_and_password_confirmation_not_correct()
+    public function test_user_has_permission_change_password_can_not_change_password_and_password_confirmation_not_correct()
     {
         $this->user->givePermissionTo('change-password');
         $this->actingAs($this->user)

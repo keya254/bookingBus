@@ -32,14 +32,14 @@ class IndexWebsiteSettingTest extends TestCase
              ->assertRedirect('/login');
     }
 
-    public function test_user_not_have_permission_website_setting_can_not_see_website_setting_page()
+    public function test_user_not_has_permission_website_setting_can_not_see_website_setting_page()
     {
         $this->actingAs($this->user)
              ->get('/backend/setting')
              ->assertForbidden();
     }
 
-    public function test_user_have_permission_website_setting_can_see_website_setting_page()
+    public function test_user_has_permission_website_setting_can_see_website_setting_page()
     {
         $this->user->givePermissionTo('website-setting');
         $this->actingAs($this->user)
@@ -48,14 +48,14 @@ class IndexWebsiteSettingTest extends TestCase
              ->assertSuccessful();
     }
 
-    public function test_user_have_not_permission_website_setting_to_change_website_setting()
+    public function test_user_has_not_permission_website_setting_to_change_website_setting()
     {
         $this->actingAs($this->user)
              ->post('/backend/setting')
              ->assertForbidden();
     }
 
-    public function test_user_have_permission_website_setting_to_change_website_setting()
+    public function test_user_has_permission_website_setting_to_change_website_setting()
     {
         $this->user->givePermissionTo('website-setting');
         $this->actingAs($this->user)
@@ -67,10 +67,10 @@ class IndexWebsiteSettingTest extends TestCase
         $this->assertDatabaseHas('settings',
         ['facebook'=>'https://www.facebook.com/','twitter'=>'https://www.twitter.com/'
         ,'youtube'=>'https://www.youtube.com/','instagram'=>'https://www.instagram.com/',
-        'name'=>'name website','description'=>'description website']);     
+        'name'=>'name website','description'=>'description website']);
     }
-    
-    public function test_user_have_permission_website_setting_to_change_website_setting_error_name_required()
+
+    public function test_user_has_permission_website_setting_to_change_website_setting_error_name_required()
     {
         $this->user->givePermissionTo('website-setting');
         $this->actingAs($this->user)
@@ -78,7 +78,7 @@ class IndexWebsiteSettingTest extends TestCase
              ->assertSessionHasErrors(['name']);
     }
 
-    public function test_user_have_permission_website_setting_to_change_website_setting_error_name_min_3()
+    public function test_user_has_permission_website_setting_to_change_website_setting_error_name_min_3()
     {
         $this->user->givePermissionTo('website-setting');
         $this->actingAs($this->user)
@@ -86,7 +86,7 @@ class IndexWebsiteSettingTest extends TestCase
              ->assertSessionHasErrors(['name']);
     }
 
-    public function test_user_have_permission_website_setting_to_change_website_setting_error_description_required()
+    public function test_user_has_permission_website_setting_to_change_website_setting_error_description_required()
     {
         $this->user->givePermissionTo('website-setting');
         $this->actingAs($this->user)
@@ -94,7 +94,7 @@ class IndexWebsiteSettingTest extends TestCase
              ->assertSessionHasErrors(['description']);
     }
 
-    public function test_user_have_permission_website_setting_to_change_website_setting_error_description_min_3()
+    public function test_user_has_permission_website_setting_to_change_website_setting_error_description_min_3()
     {
         $this->user->givePermissionTo('website-setting');
         $this->actingAs($this->user)
@@ -102,7 +102,7 @@ class IndexWebsiteSettingTest extends TestCase
              ->assertSessionHasErrors(['description']);
     }
 
-    public function test_user_have_permission_website_setting_to_change_website_setting_error_description_max_100()
+    public function test_user_has_permission_website_setting_to_change_website_setting_error_description_max_100()
     {
         $this->user->givePermissionTo('website-setting');
         $this->actingAs($this->user)
@@ -110,7 +110,7 @@ class IndexWebsiteSettingTest extends TestCase
              ->assertSessionHasErrors(['description']);
     }
 
-    public function test_user_have_permission_website_setting_to_change_website_setting_error_image_not_image()
+    public function test_user_has_permission_website_setting_to_change_website_setting_error_image_not_image()
     {
         $this->user->givePermissionTo('website-setting');
         $this->actingAs($this->user)
@@ -118,7 +118,7 @@ class IndexWebsiteSettingTest extends TestCase
              ->assertSessionHasErrors(['logo']);
     }
 
-    public function test_user_have_permission_website_setting_to_change_website_setting_error_facebook_not_url()
+    public function test_user_has_permission_website_setting_to_change_website_setting_error_facebook_not_url()
     {
         $this->user->givePermissionTo('website-setting');
         $this->actingAs($this->user)
@@ -126,7 +126,7 @@ class IndexWebsiteSettingTest extends TestCase
              ->assertSessionHasErrors(['facebook']);
     }
 
-    public function test_user_have_permission_website_setting_to_change_website_setting_error_twitter_not_url()
+    public function test_user_has_permission_website_setting_to_change_website_setting_error_twitter_not_url()
     {
         $this->user->givePermissionTo('website-setting');
         $this->actingAs($this->user)
@@ -134,7 +134,7 @@ class IndexWebsiteSettingTest extends TestCase
              ->assertSessionHasErrors(['twitter']);
     }
 
-    public function test_user_have_permission_website_setting_to_change_website_setting_error_instagram_not_url()
+    public function test_user_has_permission_website_setting_to_change_website_setting_error_instagram_not_url()
     {
         $this->user->givePermissionTo('website-setting');
         $this->actingAs($this->user)
@@ -142,7 +142,7 @@ class IndexWebsiteSettingTest extends TestCase
              ->assertSessionHasErrors(['instagram']);
     }
 
-    public function test_user_have_permission_website_setting_to_change_website_setting_error_youtube_not_url()
+    public function test_user_has_permission_website_setting_to_change_website_setting_error_youtube_not_url()
     {
         $this->user->givePermissionTo('website-setting');
         $this->actingAs($this->user)

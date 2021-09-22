@@ -3,14 +3,15 @@
 namespace Tests\Feature\Backend\Car;
 
 use App\Models\Car;
+use Tests\TestCase;
+use App\Models\User;
 use App\Models\Setting;
 use App\Models\TypeCar;
-use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Permission\Models\Permission;
-use Tests\TestCase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class EditCarTest extends TestCase
 {
@@ -27,9 +28,8 @@ class EditCarTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_user_not_have_permission_edit_car()
+    public function test_user_not_has_permission_edit_car()
     {
-        // $this->withoutExceptionHandling();
         $typecar=TypeCar::factory()->create();
         $car=Car::factory()->create();
         $this->actingAs($this->user)
@@ -37,9 +37,10 @@ class EditCarTest extends TestCase
         ->assertStatus(403);
     }
 
-    public function test_user_have_permission_edit_car()
+    public function test_user_has_permission_edit_car()
     {
         $this->user->givePermissionTo('edit-car');
+        Storage::fake('public');
         $typecar=TypeCar::factory()->create();
         $car=Car::factory()->create();
         $this->actingAs($this->user)
@@ -47,7 +48,7 @@ class EditCarTest extends TestCase
         ->assertStatus(200);
     }
 
-    public function test_user_have_permission_edit_car_and_image_not_string()
+    public function test_user_has_permission_edit_car_and_image_not_string()
     {
         $this->user->givePermissionTo('edit-car');
         $typecar=TypeCar::factory()->create();
@@ -60,7 +61,7 @@ class EditCarTest extends TestCase
          ->assertStatus(422);
     }
 
-    public function test_user_have_permission_edit_car_and_image_not_integer()
+    public function test_user_has_permission_edit_car_and_image_not_integer()
     {
         $this->user->givePermissionTo('edit-car');
         $typecar=TypeCar::factory()->create();
@@ -72,7 +73,7 @@ class EditCarTest extends TestCase
          ->assertStatus(422);
     }
 
-    public function test_user_have_permission_edit_car_and_name_required()
+    public function test_user_has_permission_edit_car_and_name_required()
     {
         $this->user->givePermissionTo('edit-car');
         $typecar=TypeCar::factory()->create();
@@ -84,7 +85,7 @@ class EditCarTest extends TestCase
          ->assertStatus(422);
     }
 
-     public function test_user_have_permission_edit_car_and_name_min_3()
+     public function test_user_has_permission_edit_car_and_name_min_3()
      {
         $this->user->givePermissionTo('edit-car');
         $typecar=TypeCar::factory()->create();
@@ -96,7 +97,7 @@ class EditCarTest extends TestCase
          ->assertStatus(422);
      }
 
-     public function test_user_have_permission_edit_car_and_phone_number_size_11()
+     public function test_user_has_permission_edit_car_and_phone_number_size_11()
      {
         $this->user->givePermissionTo('edit-car');
         $typecar=TypeCar::factory()->create();
@@ -108,7 +109,7 @@ class EditCarTest extends TestCase
          ->assertStatus(422);
      }
 
-     public function test_user_have_permission_edit_car_and_public_in_0_1()
+     public function test_user_has_permission_edit_car_and_public_in_0_1()
      {
         $this->user->givePermissionTo('edit-car');
         $typecar=TypeCar::factory()->create();
@@ -120,7 +121,7 @@ class EditCarTest extends TestCase
          ->assertStatus(422);
      }
 
-     public function test_user_have_permission_edit_car_and_typecar_not_exist_in_database()
+     public function test_user_has_permission_edit_car_and_typecar_not_exist_in_database()
      {
         $this->user->givePermissionTo('edit-car');
         $typecar=TypeCar::factory()->create();
@@ -132,7 +133,7 @@ class EditCarTest extends TestCase
          ->assertStatus(422);
      }
 
-     public function test_user_have_permission_edit_car_and_car_id_not_found_in_database()
+     public function test_user_has_permission_edit_car_and_car_id_not_found_in_database()
      {
         $this->user->givePermissionTo('edit-car');
         $typecar=TypeCar::factory()->create();

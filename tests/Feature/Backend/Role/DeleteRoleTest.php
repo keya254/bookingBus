@@ -25,25 +25,25 @@ class DeleteRoleTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_user_have_permission_delete_role_found()
+    public function test_user_has_permission_delete_role_found()
     {
-        //user have permissions delete_role
+        //user has permissions delete_role
         $this->user->givePermissionTo(['delete-role']);
         //create new role
         $role=Role::create(['name'=>'SAdmin']);
-        //login user have permissions and delete role  founded and deleted it
+        //login user has permissions and delete role  founded and deleted it
         $this->actingAs($this->user)
              ->json('delete','/backend/roles/'.$role->id)
              ->assertStatus(200);
     }
 
-    public function test_user_have_permission_delete_role_not_found()
+    public function test_user_has_permission_delete_role_not_found()
     {
-        //user have permissions delete_role
+        //user has permissions delete_role
         $this->user->givePermissionTo(['delete-role']);
         //create new role
         $role=Role::create(['name'=>'SAdmin']);
-        //login user have permissions and delete role not found
+        //login user has permissions and delete role not found
         $this->actingAs($this->user)
              ->json('delete','/backend/roles/'.$role->id+1)
              ->assertStatus(500);
