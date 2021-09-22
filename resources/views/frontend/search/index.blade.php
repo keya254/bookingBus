@@ -75,9 +75,9 @@
             <div class="lg:w-1/6 md:w-1/2 sm:w-1/2 w-1/2 py-1 mb-2 shadow-lg bg-white rounded-lg">مدة الرحلة</div>
             <div class="lg:w-1/6 md:w-1/2 sm:w-1/2 w-1/2 py-1 mb-2 ">{{$trip->min_time}} - {{$trip->max_time}} دقيقة</div>
             <div class="lg:w-1/6 md:w-1/2 sm:w-1/2 w-1/2 py-1 mb-2 shadow-lg bg-yellow-200 rounded-lg">يوم الرحلة</div>
-            <div class="lg:w-1/6 md:w-1/2 sm:w-1/2 w-1/2 py-1 mb-2">{{$trip->dayformat}}</div>
+            <div class="lg:w-1/6 md:w-1/2 sm:w-1/2 w-1/2 py-1 mb-2">{{$trip->day_trip}}</div>
             <div class="lg:w-1/6 md:w-1/2 sm:w-1/2 w-1/2 py-1 mb-2 shadow-lg bg-yellow-200 rounded-lg">ساعة الانطلاق</div>
-            <div class="lg:w-1/6 md:w-1/2 sm:w-1/2 w-1/2 py-1 mb-2 ">{{$trip->timeformat}}</div>
+            <div class="lg:w-1/6 md:w-1/2 sm:w-1/2 w-1/2 py-1 mb-2 ">{{$trip->time_trip}}</div>
             <div class="lg:w-1/6 md:w-1/2 sm:w-1/2 w-1/2 py-1 mb-2 shadow-lg bg-yellow-200 rounded-lg">سعر التذكرة</div>
             <div class="lg:w-1/6 md:w-1/2 sm:w-1/2 w-1/2 py-1 mb-2 ">{{$trip->price}} جنية</div>
             <div class="lg:w-1/4 md:w-1/2 sm:w-1/2 w-1/2 py-2 mb-2 shadow-lg bg-blue-200 rounded-lg">مالك السيارة</div>
@@ -94,7 +94,7 @@
              <h1 class="font-bold text-2xl py-3">لا يوجد رحلات من هذا الطريق</h1>
           </div>
         @endforelse
-        {{$trips->appends(request()->query())->links()}}
+        {!!$trips->appends(request()->query())->links()!!}
       </div>
     </div>
     <div id="recaptcha-container"></div>

@@ -31,12 +31,8 @@
                         </select>
                        </div>
                       <div class="form-group col-6">
-                        <label for="">يوم الرحلة</label>
-                        <input type="date" name="day"  class="form-control" placeholder="يوم الرحلة">
-                      </div>
-                      <div class="form-group col-6">
-                        <label for="">بداية الرحلة</label>
-                        <input type="time" name="start_time"  class="form-control" placeholder="بداية الرحلة">
+                        <label for="">موعد الرحلة</label>
+                        <input type="datetime-local" name="start_trip"  class="form-control" placeholder="موعد الرحلة">
                       </div>
                      <div class="form-group col-6">
                         <label for="">سعر مقعد الرحلة</label>

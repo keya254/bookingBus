@@ -21,9 +21,9 @@ class SearchController extends Controller
             $trip->where('from_id',$request->from_id);
         }
         if ($request->day) {
-            $trip->where('day',$request->day);
+            $trip->whereDate('start_trip',$request->day);
         }
-        $trips=$trip->with(['to:id,name','from:id,name','car','car.owner'])->orderby('day')->active()->paginate(3);
+        $trips=$trip->with(['to:id,name','from:id,name','car','car.owner'])->beforenow()->active()->orderby('start_trip')->paginate(3);
         $governorates=Governorate::with('cities')->get();
         return view('frontend.search.index',compact('governorates','trips'));
     }
@@ -36,6 +36,6 @@ class SearchController extends Controller
         $seats=Seat::where('trip_id',$request->id)->select(['id','name','status'])->orderby('id')->get();
         $trip=Trip::where('id',$request->id)->select(['id','max_seats'])->first();
         $trip->setAppends([]);
-        return response()->json(['trip'=>$trip,'seats'=>$seats]);
+        return response()->json(['trip'=>$trip,'seats'=>$seats],200);
     }
 }

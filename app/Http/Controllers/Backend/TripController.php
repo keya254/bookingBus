@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Trip\TripRequest;
 use App\Models\Car;
-use App\Models\City;
 use App\Models\Governorate;
 use App\Models\Trip;
 use App\Models\User;
@@ -37,6 +36,9 @@ class TripController extends Controller
             if (auth()->user()->hasrole('Owner')) {
                $data->whereIn('car_id',auth()->user()->cars->pluck(['id']));
             }
+            if (auth()->user()->hasrole('Driver')) {
+                $data->where('driver_id',auth()->user()->driver_id);
+            }
             return DataTables::of($data->select('*'))
                     ->addIndexColumn()
                      ->addColumn('status',function($row){
@@ -44,6 +46,7 @@ class TripController extends Controller
                         return '<input type="checkbox" '.$status.' class="changestatus" data-id="'.$row->id.'" data-toggle="toggle" data-on="مفعل" data-off="غير مفعل" data-onstyle="success" data-offstyle="danger" >';
                      })
                     ->addColumn('action', function($row){
+                        $routeseats=route("trip.seats",$row->id);
                         $btn='';
                         if(auth()->user()->can('edit-trip'))
                         {
@@ -52,6 +55,10 @@ class TripController extends Controller
                         if(auth()->user()->can('delete-trip'))
                         {
                            $btn .= '<a href="javascript:void(0);" class="delete btn btn-danger m-1 btn-sm" data-id="'.$row->id.'"><i class="fa fa-trash"></i></a>';
+                        }
+                        if(auth()->user()->can('seats-trip'))
+                        {
+                           $btn .= '<a href="'.$routeseats.'" class="btn btn-success m-1 btn-sm">المقاعد</a>';
                         }
                             return $btn;
                     })
@@ -70,8 +77,21 @@ class TripController extends Controller
     public function changestatus(Request $request)
     {
         $trip=Trip::findOrFail($request->id);
-        $trip->update(['status'=>!$trip->status]);
-        return response()->json(['message'=>'change successfully'],200);
+        if ($trip->car->owner_id==auth()->user()->id) {
+            $trip->update(['status'=>!$trip->status]);
+            return response()->json(['message'=>'change successfully'],200);
+        }
+        return response()->json(['message'=>'Unauthorized'],403);
+
+    }
+
+    /**
+     * get sets information for the trip
+     */
+    public function seats(Trip $trip)
+    {
+       $seats=$trip->seats()->with('passenger')->orderBy('id')->get();
+       return view('backend.trip.seats',compact('seats'));
     }
 
     /**

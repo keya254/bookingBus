@@ -7,6 +7,7 @@ use App\Http\Requests\Car\CarRequest;
 use App\Models\Car;
 use App\Models\TypeCar;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Yajra\DataTables\Facades\DataTables;
 use Image;
 
@@ -77,8 +78,11 @@ class CarController extends Controller
     public function changestatus(Request $request)
     {
         $car=Car::findOrFail($request->id);
-        $car->update(['status'=>!$car->status]);
-        return response()->json(['message'=>'change successfully'],200);
+        if ($car->owner_id==auth()->user()->id) {
+            $car->update(['status'=>!$car->status]);
+            return response()->json(['message'=>'change successfully'],200);
+        }
+        return response()->json(['message'=>'Unauthorized'],403);
     }
 
     /**
@@ -87,8 +91,11 @@ class CarController extends Controller
     public function changepublic(Request $request)
     {
         $car=Car::findOrFail($request->id);
-        $car->update(['public'=>!$car->public]);
-        return response()->json(['message'=>'change successfully'],200);
+        if ($car->owner_id==auth()->user()->id) {
+            $car->update(['public'=>!$car->public]);
+            return response()->json(['message'=>'change successfully'],200);
+        }
+        return response()->json(['message'=>'Unauthorized'],403);
     }
 
     /**
@@ -97,8 +104,11 @@ class CarController extends Controller
     public function changeprivate(Request $request)
     {
         $car=Car::findOrFail($request->id);
-        $car->update(['private'=>!$car->private]);
-        return response()->json(['message'=>'change successfully'],200);
+        if ($car->owner_id==auth()->user()->id) {
+            $car->update(['private'=>!$car->private]);
+            return response()->json(['message'=>'change successfully'],200);
+        }
+        return response()->json(['message'=>'Unauthorized'],403);
     }
     /**
      * Store a newly created resource in storage.
@@ -108,10 +118,13 @@ class CarController extends Controller
      */
     public function store(CarRequest $request)
     {
-        if(is_file($request->image)){
+        if($request->hasFile('image')){
             $name='images/cars/'.time().rand(11111,99999).'.png';
-            Image::make($request->image)->resize(500, 500)->save($name);
+            Image::make($request->validated()['image'])->resize(500, 500)->save(public_path($name));
             auth()->user()->cars()->create(['image'=>$name]+$request->validated());
+        }
+        else {
+            auth()->user()->cars()->create($request->validated());
         }
         return response()->json(['message'=>'success created'],200);
     }
@@ -136,15 +149,17 @@ class CarController extends Controller
      */
     public function update(CarRequest $request, Car $car)
     {
-        if(!is_file($request->image))
+        if(! $request->hasFile('image'))
         {
             $car->update($request->validated());
         }
-        if(is_file($request->image)){
+        if($request->hasFile('image')){
             $name='images/cars/'.time().rand(11111,99999).'.png';
-            Image::make($request->image)->resize(500, 500)->save($name);
+            Image::make($request->image)->resize(500, 500)->save(public_path($name));
             //!storage unlike old image
-            unlink($car->image);
+            if (File::exists(public_path($car->image))) {
+                unlink(public_path($car->image));
+            }
             $car->update(['image'=>$name]+$request->validated());
         }
         return response()->json(['message'=>'success update'],200);
@@ -159,7 +174,9 @@ class CarController extends Controller
     public function destroy(Car $car)
     {
         //!storage unlike old image
-        unlink($car->image);
+        if (File::exists(public_path($car->image))) {
+            unlink(public_path($car->image));
+        }
         $car->delete();
         return response()->json(['message'=>'success deleted'],200);
     }

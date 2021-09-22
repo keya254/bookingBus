@@ -9,9 +9,6 @@ use App\Traits\DatesDriver;
 use App\Traits\DatesOwner;
 use App\Traits\Driver;
 use App\Traits\Owner;
-use App\Traits\TimeAdmin;
-use App\Traits\TimeDriver;
-use App\Traits\TimeOwner;
 
 class DashboardController extends Controller
 {

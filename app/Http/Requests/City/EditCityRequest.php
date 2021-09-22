@@ -24,8 +24,8 @@ class EditCityRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'=>'required|unique:cities,name,'.request()->route('city')->id.',id,governorate_id,'.request('governorate_id'),
-            'governorate_id'=>'required',
+            'name'=>'min:3||required|unique:cities,name,'.request()->route('city')->id.',id,governorate_id,'.request('governorate_id'),
+            'governorate_id'=>'required|numeric|exists:governorates,id',
         ];
     }
 }

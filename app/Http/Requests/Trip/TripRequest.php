@@ -26,13 +26,12 @@ class TripRequest extends FormRequest
         return [
             'from_id'=>'required|exists:cities,id',
             'to_id'=>'required|exists:cities,id|different:from_id',
-            'day'=>'required|date|after_or_equal:'.now(),
-            'start_time'=>'required',
+            'start_trip'=>'required|after_or_equal:'.now(),
             'min_time'=>'required|integer|lt:max_time',
             'max_time'=>'required|integer',
             'status'=>'nullable|in:0,1',
-            'car_id'=>'required|integer',
-            'driver_id'=>'required|integer',
+            'car_id'=>'required|integer|exists:cars,id',
+            'driver_id'=>'required|integer|exists:users,id',
             'price'=>'required|integer',
             'max_seats'=>'required|integer',
         ];
