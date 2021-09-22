@@ -41,7 +41,7 @@ class IndexNotificationTest extends TestCase
              ->assertRedirect('/login');
     }
 
-    public function test_user_not_have_permission_notifications_can_not_see_page_notifications()
+    public function test_user_not_has_permission_notifications_can_not_see_page_notifications()
     {
         $this->actingAs($this->user1)
              ->get('/backend/notifications')
@@ -49,7 +49,7 @@ class IndexNotificationTest extends TestCase
              ->assertStatus(403);
     }
 
-    public function test_user_have_permission_notifications_can_see_page_notifications()
+    public function test_user_has_permission_notifications_can_see_page_notifications()
     {
         $this->user1->givePermissionTo('notifications');
         $this->actingAs($this->user1)
@@ -59,7 +59,7 @@ class IndexNotificationTest extends TestCase
              ->assertStatus(200);
     }
 
-    public function test_user_have_permission_notifications_can_make_read_notification()
+    public function test_user_has_permission_notifications_can_make_read_notification()
     {
         // id notification for user1
         $id=$this->user1->notifications()->first()->id;
@@ -74,7 +74,7 @@ class IndexNotificationTest extends TestCase
         $this->assertDatabaseHas('notifications',['notifiable_id'=>2,'read_at'=>null]);
     }
 
-    public function test_user_have_permission_notifications_can_make_read_notification_and_fail_unauthorized()
+    public function test_user_has_permission_notifications_can_make_read_notification_and_fail_unauthorized()
     {
         // id notification for user1
         $id=$this->user1->notifications()->first()->id;
@@ -92,7 +92,7 @@ class IndexNotificationTest extends TestCase
         $this->assertDatabaseHas('notifications',['notifiable_id'=>2,'read_at'=>null]);
     }
 
-    public function test_user_have_permission_notifications_can_make_delete()
+    public function test_user_has_permission_notifications_can_make_delete()
     {
          // id notification for user1
          $id=$this->user1->notifications()->first()->id;
@@ -108,7 +108,7 @@ class IndexNotificationTest extends TestCase
          $this->assertDatabaseHas('notifications',['notifiable_id'=>2,'read_at'=>null]);
     }
 
-    public function test_user_have_permission_notifications_can_make_delete_and_fail_unauthorized()
+    public function test_user_has_permission_notifications_can_make_delete_and_fail_unauthorized()
     {
          // id notification for user1
          $id=$this->user1->notifications()->first()->id;

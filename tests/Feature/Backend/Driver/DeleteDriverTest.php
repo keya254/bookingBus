@@ -36,7 +36,7 @@ class DeleteDriverTest extends TestCase
              ->assertStatus(401);
     }
 
-    public function test_user_not_have_permission_delete_driver_can_not_delete_driver()
+    public function test_user_not_has_permission_delete_driver_can_not_delete_driver()
     {
         $this->actingAs($this->user)
              ->json('DELETE','/backend/driver/'.$this->driver->id)
@@ -44,7 +44,7 @@ class DeleteDriverTest extends TestCase
              ->assertStatus(403);
     }
 
-    public function test_user_have_permission_delete_driver_can_not_delete_driver_where_id_not_found()
+    public function test_user_has_permission_delete_driver_can_not_delete_driver_where_id_not_found()
     {
         //give user permission delete-driver
         $this->user->givePermissionTo('delete-driver');
@@ -54,7 +54,7 @@ class DeleteDriverTest extends TestCase
              ->assertStatus(404);
     }
 
-    public function test_user_have_permission_delete_driver_can_delete_driver_and_success_deleted()
+    public function test_user_has_permission_delete_driver_can_delete_driver_and_success_deleted()
     {
         //give user permission delete-driver
         $this->user->givePermissionTo('delete-driver');
@@ -68,7 +68,7 @@ class DeleteDriverTest extends TestCase
         $this->assertDatabaseMissing('owner_driver',$this->driver->toArray());
     }
 
-    public function test_user_have_permission_delete_driver_can_not_delete_driver_not_belong_to_this_user()
+    public function test_user_has_permission_delete_driver_can_not_delete_driver_not_belong_to_this_user()
     {
         //give user permission delete-driver
         $this->withoutExceptionHandling();

@@ -24,9 +24,9 @@ class CreatePermissionTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_user_not_have_permission_create_permission()
+    public function test_user_not_has_permission_create_permission()
     {
-        //create user not have permissions to create permissions
+        //create user not has permissions to create permissions
         //login user
         $this->actingAs($this->user)
         //create permissions
@@ -34,9 +34,9 @@ class CreatePermissionTest extends TestCase
         ->assertStatus(403);
     }
 
-    public function test_user_have_permission_create_permission()
+    public function test_user_has_permission_create_permission()
     {
-        //create user have permissions to create permissions
+        //create user has permissions to create permissions
         $this->user->givePermissionTo(['create-permission']);
         //login user
         $this->actingAs($this->user)
@@ -46,9 +46,9 @@ class CreatePermissionTest extends TestCase
         ->assertSee('success created');
     }
 
-    public function test_user_have_permission_create_permission_same_name()
+    public function test_user_has_permission_create_permission_same_name()
     {
-        //create user have permissions to create permissions
+        //create user has permissions to create permissions
         $this->user->givePermissionTo(['create-permission']);
         //create new permission
         $permission=Permission::create(['name'=>'test_create_permission']);
@@ -60,9 +60,9 @@ class CreatePermissionTest extends TestCase
         ->assertStatus(422);
     }
 
-    public function test_user_have_permission_create_permission_name_required()
+    public function test_user_has_permission_create_permission_name_required()
     {
-        //create user have permissions to create permissions
+        //create user has permissions to create permissions
         $this->user->givePermissionTo(['create-permission']);
         //create new permission
         $permission=Permission::create(['name'=>'test_create_permission']);

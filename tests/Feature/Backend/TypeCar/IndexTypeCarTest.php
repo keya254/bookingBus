@@ -24,19 +24,19 @@ class IndexTypeCarTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_user_not_have_permission_typecars()
+    public function test_user_not_has_permission_typecars()
     {
-        //login user do not have permission typecars
+        //login user do not has permission typecars
         $this->actingAs($this->user)
         ->get('/backend/typecar')
         ->assertStatus(403);
     }
 
-    public function test_user_have_permission_typecars()
+    public function test_user_has_permission_typecars()
     {
         //give user permission
         $this->user->givePermissionTo('typecars');
-        //login user have permission typecars
+        //login user has permission typecars
         $this->actingAs($this->user)
         ->get('/backend/typecar')
         ->assertStatus(200)

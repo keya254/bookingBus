@@ -26,7 +26,7 @@ class DeleteCarTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_user_not_have_permission_delete_car()
+    public function test_user_not_has_permission_delete_car()
     {
         //create type car and car
         $typecar=TypeCar::factory()->create();
@@ -37,7 +37,7 @@ class DeleteCarTest extends TestCase
         ->assertStatus(403);
     }
 
-    public function test_user_have_permission_delete_car()
+    public function test_user_has_permission_delete_car()
     {
         //give user permission delete-car
         $this->user->givePermissionTo('delete-car');
@@ -51,7 +51,7 @@ class DeleteCarTest extends TestCase
         $this->assertDatabaseMissing('cars',$car->toArray());
     }
 
-    public function test_user_have_permission_delete_car_fail()
+    public function test_user_has_permission_delete_car_fail()
     {
         //give user permission delete-car
         $this->user->givePermissionTo('delete-car');

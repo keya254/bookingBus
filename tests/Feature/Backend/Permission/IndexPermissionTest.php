@@ -24,17 +24,17 @@ class IndexPermissionTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_user_not_have_permission_permissions_not_see_page()
+    public function test_user_not_has_permission_permissions_not_see_page()
     {
-        //create user not have permissions
+        //create user not has permissions
         $this->actingAs($this->user)
         ->get('/backend/permissions')
         ->assertStatus(403);
     }
 
-    public function test_user_have_permission_permissions_not_see_page()
+    public function test_user_has_permission_permissions_not_see_page()
     {
-        // create user have permissions
+        // create user has permissions
         $this->user->givePermissionTo(['permissions']);
         $this->actingAs($this->user)
         ->get('/backend/permissions')

@@ -25,9 +25,9 @@ class EditRoleTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_user_have_permission_update_role_not_found()
+    public function test_user_has_permission_update_role_not_found()
     {
-        //user have permissions delete_role
+        //user has permissions delete_role
         $this->user->givePermissionTo(['edit-role']);
         //create new role
         $role=Role::create(['name'=>'SAdmin']);
@@ -37,9 +37,9 @@ class EditRoleTest extends TestCase
              ->assertStatus(200);
     }
 
-    public function test_user_have_permission_update_role_found()
+    public function test_user_has_permission_update_role_found()
     {
-        //user have permissions delete_role
+        //user has permissions delete_role
         $this->user->givePermissionTo(['edit-role']);
         //create two roles
         $role=Role::create(['name'=>'2Admin']);

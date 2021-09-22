@@ -24,7 +24,7 @@ class DeletePermissionTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_user_not_have_permission_delete_permission()
+    public function test_user_not_has_permission_delete_permission()
     {
         $permission1=Permission::create(['name'=>'test_permissions']);
         //login user
@@ -34,9 +34,9 @@ class DeletePermissionTest extends TestCase
         ->assertStatus(403);
     }
 
-    public function test_user_have_permission_delete_permission()
+    public function test_user_has_permission_delete_permission()
     {
-        //create user have permissions to delete permissions
+        //create user has permissions to delete permissions
         $this->user->givePermissionTo(['delete-permission']);
         //create permissions
         $permission1=Permission::create(['name'=>'test_permissions']);
@@ -47,9 +47,9 @@ class DeletePermissionTest extends TestCase
         ->assertStatus(200);
     }
 
-    public function test_user_have_permission_delete_permission_but_permission_not_found()
+    public function test_user_has_permission_delete_permission_but_permission_not_found()
     {
-        //create user have permissions to delete permissions
+        //create user has permissions to delete permissions
         $this->user->givePermissionTo(['delete-permission']);
         //create permissions
         $permission1=Permission::create(['name'=>'test_permissions']);

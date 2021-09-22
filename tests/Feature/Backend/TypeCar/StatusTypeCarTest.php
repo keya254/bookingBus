@@ -31,14 +31,14 @@ class StatusTypeCarTest extends TestCase
              ->assertUnauthorized();
     }
 
-    public function test_user_not_have_permission_status_typecar_can_not_change_status()
+    public function test_user_not_has_permission_status_typecar_can_not_change_status()
     {
         $this->actingAs($this->user);
         $this->json('post','/backend/typecar/changestatus')
              ->assertForbidden();
     }
 
-    public function test_user_have_permission_status_typecar_can_change_status()
+    public function test_user_has_permission_status_typecar_can_change_status()
     {
         $this->user->givePermissionTo('status-typecar');
         $typecar=TypeCar::factory()->create();

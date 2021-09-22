@@ -24,14 +24,14 @@ class IndexCarTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_user_not_have_permission_cars()
+    public function test_user_not_has_permission_cars()
     {
         $this->actingAs($this->user)
         ->get('/backend/car')
         ->assertStatus(403);
     }
 
-    public function test_user_have_permission_cars()
+    public function test_user_has_permission_cars()
     {
         //give the user permission cars
         $this->user->givePermissionTo('cars');

@@ -30,14 +30,14 @@ class IndexOwnerTest extends TestCase
              ->assertRedirect('/login');
     }
 
-    public function test_user_not_have_permission_owners_can_not_see_page()
+    public function test_user_not_has_permission_owners_can_not_see_page()
     {
         $this->actingAs($this->user)
         ->get('/backend/owner')
         ->assertForbidden();
     }
 
-    public function test_user_have_permission_owners_can_see_page()
+    public function test_user_has_permission_owners_can_see_page()
     {
         //give the user permission owners to see owner page
         $this->user->givePermissionTo('owners');

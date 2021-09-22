@@ -34,14 +34,14 @@ class DeleteOwnerTest extends TestCase
              ->assertStatus(401);
     }
 
-    public function test_user_not_have_permission_delete_owner_can_not_delete_owner()
+    public function test_user_not_has_permission_delete_owner_can_not_delete_owner()
     {
         $this->actingAs($this->user)
              ->json('DELETE','/backend/owner/'.$this->owner->id)
              ->assertForbidden();
     }
 
-    public function test_user_have_permission_delete_owner_can_not_delete_owner_where_id_not_found()
+    public function test_user_has_permission_delete_owner_can_not_delete_owner_where_id_not_found()
     {
         //give user permission delete-owner
         $this->user->givePermissionTo('delete-owner');
@@ -50,7 +50,7 @@ class DeleteOwnerTest extends TestCase
              ->assertNotFound();
     }
 
-    public function test_user_have_permission_delete_owner_can_delete_owner_and_success_deleted()
+    public function test_user_has_permission_delete_owner_can_delete_owner_and_success_deleted()
     {
         //give user permission delete-owner
         $this->user->givePermissionTo('delete-owner');

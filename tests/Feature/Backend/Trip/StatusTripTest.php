@@ -38,14 +38,14 @@ class StatusTripTest extends TestCase
              ->assertUnauthorized();
     }
 
-    public function test_user_not_have_permission_status_trip_can_not_change_status()
+    public function test_user_not_has_permission_status_trip_can_not_change_status()
     {
         $this->actingAs($this->user);
         $this->json('post','/backend/trip/changestatus')
              ->assertForbidden();
     }
 
-    public function test_user_have_permission_status_trip_can_change_status_belonge_to_this_user()
+    public function test_user_has_permission_status_trip_can_change_status_belonge_to_this_user()
     {
         $trip=Trip::factory()->create();
         $trip->car->owner->givePermissionTo('status-trip');
@@ -55,7 +55,7 @@ class StatusTripTest extends TestCase
         $this->assertNotEquals($trip->status,$trip->fresh()->status);
     }
 
-    public function test_user_have_permission_status_trip_can_change_status_not_belonge_to_this_user()
+    public function test_user_has_permission_status_trip_can_change_status_not_belonge_to_this_user()
     {
         $trip=Trip::factory()->create();
         $user2=User::factory()->create();

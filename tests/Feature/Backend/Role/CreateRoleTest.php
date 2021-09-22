@@ -25,9 +25,9 @@ class CreateRoleTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_user_have_permission_create_role_found_not_created()
+    public function test_user_has_permission_create_role_found_not_created()
     {
-        //test have permissions create-role
+        //test has permissions create-role
         $this->user->givePermissionTo(['create-role']);
         //create role
         Role::create(['name'=>'Admin']);
@@ -37,9 +37,9 @@ class CreateRoleTest extends TestCase
         ->assertStatus(422);
     }
 
-    public function test_user_have_permission_create_role_not_found_created()
+    public function test_user_has_permission_create_role_not_found_created()
     {
-        //user have a permission create role where not found in the database
+        //user has a permission create role where not found in the database
         $this->user->givePermissionTo(['create-role']);
         //create new role
         $this->actingAs($this->user)

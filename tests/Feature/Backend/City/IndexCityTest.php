@@ -24,23 +24,23 @@ class IndexCityTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_user_not_have_permission_citys_can_not_see_page()
+    public function test_user_not_has_permission_citys_can_not_see_page()
     {
-        //login user not access this page when not have permission 'citys'
+        //login user not access this page when not has permission 'citys'
         $this->actingAs($this->user)
         ->get('/backend/city')
         ->assertStatus(403);
     }
 
-    public function test_user_have_permission_citys_can_see_page_see_all_cities()
+    public function test_user_has_permission_citys_can_see_page_see_all_cities()
     {
         //given permission to this user
         $this->user->givePermissionTo('citys');
-        //login user access this page when have permission 'citys'
+        //login user access this page when has permission 'citys'
         $this->actingAs($this->user)
         ->get('/backend/city')
         ->assertStatus(200)
-        //check the page have this titles
+        //check the page has this titles
         ->assertSee(['اسم المحافظة','اسم المدينة']);
     }
 

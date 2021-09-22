@@ -36,14 +36,14 @@ class PrivateCarTest extends TestCase
              ->assertUnauthorized();
     }
 
-    public function test_user_not_have_permission_private_car_can_not_change_private()
+    public function test_user_not_has_permission_private_car_can_not_change_private()
     {
         $this->actingAs($this->user);
         $this->json('post','/backend/car/changeprivate')
              ->assertForbidden();
     }
 
-    public function test_user_have_permission_private_car_can_change_private_belonge_to_this_user()
+    public function test_user_has_permission_private_car_can_change_private_belonge_to_this_user()
     {
         $car=Car::factory()->create();
         $car->owner->givePermissionTo('private-car');
@@ -53,7 +53,7 @@ class PrivateCarTest extends TestCase
         $this->assertNotEquals($car->private,$car->fresh()->private);
     }
 
-    public function test_user_have_permission_private_car_can_change_private_not_belonge_to_this_user()
+    public function test_user_has_permission_private_car_can_change_private_not_belonge_to_this_user()
     {
         $car=Car::factory()->create();
         $user2=User::factory()->create();

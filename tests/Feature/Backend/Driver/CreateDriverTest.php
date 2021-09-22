@@ -34,7 +34,7 @@ class CreateDriverTest extends TestCase
            ->assertStatus(401);
     }
 
-    public function test_user_not_have_permission_create_driver_can_not_create_driver()
+    public function test_user_not_has_permission_create_driver_can_not_create_driver()
     {
           $this->actingAs($this->user)
            ->json('POST','/backend/driver',$this->email)
@@ -42,7 +42,7 @@ class CreateDriverTest extends TestCase
            ->assertStatus(403);
     }
 
-    public function test_user_have_permission_create_driver_can_create_driver()
+    public function test_user_has_permission_create_driver_can_create_driver()
     {
           //create Role Driver
           Role::create(['name'=>'Driver']);

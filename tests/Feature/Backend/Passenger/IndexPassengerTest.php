@@ -45,14 +45,14 @@ class IndexPassengerTest extends TestCase
              ->assertRedirect('/login');
     }
 
-    public function test_user_not_have_permission_passegners_can_not_see_passenger_page()
+    public function test_user_not_has_permission_passegners_can_not_see_passenger_page()
     {
         $this->actingAs($this->user)
              ->get('/backend/passenger')
              ->assertForbidden();
     }
 
-    public function test_user_have_permission_passegners_can_see_passenger_page()
+    public function test_user_has_permission_passegners_can_see_passenger_page()
     {
         $this->user->givePermissionTo('passengers');
         $this->actingAs($this->user)
@@ -61,7 +61,7 @@ class IndexPassengerTest extends TestCase
              ->assertSuccessful();
     }
 
-    public function test_user_have_permission_passegners_can_see_passengers_only_in_user_trips_with_role_owner()
+    public function test_user_has_permission_passegners_can_see_passengers_only_in_user_trips_with_role_owner()
     {
         $trip1=Trip::factory()->create(['car_id'=>1]);
         $trip2=Trip::factory()->create(['car_id'=>2]);
@@ -79,7 +79,7 @@ class IndexPassengerTest extends TestCase
              ->assertSuccessful();
     }
 
-    public function test_user_have_permission_passegners_can_not_see_passengers_in_another_user_trips_with_role_owner()
+    public function test_user_has_permission_passegners_can_not_see_passengers_in_another_user_trips_with_role_owner()
     {
         $trip1=Trip::factory()->create(['car_id'=>1]);
         $trip2=Trip::factory()->create(['car_id'=>2]);

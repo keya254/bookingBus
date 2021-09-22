@@ -24,20 +24,20 @@ class CreateGovernorateTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_user_not_have_permission_create_governorate_can_not_see_page()
+    public function test_user_not_has_permission_create_governorate_can_not_see_page()
     {
-        //user not have permission
+        //user not has permission
         $this->actingAs($this->user)
            //login user
            ->json('post','/backend/governorate',['name'=>'القاهرة'])
            ->assertForbidden(403);
     }
 
-    public function test_user_have_permission_create_governorate_can_see_page()
+    public function test_user_has_permission_create_governorate_can_see_page()
     {
         //give permission to this user to create governorate
         $this->user->givePermissionTo('create-governorate');
-        //user not have permission
+        //user not has permission
         $this->actingAs($this->user)
            //login user
            ->json('post','/backend/governorate',['name'=>'القاهرة'])

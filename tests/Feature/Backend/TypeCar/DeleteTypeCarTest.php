@@ -25,23 +25,23 @@ class DeleteTypeCarTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_user_not_have_permission_delete_typecar()
+    public function test_user_not_has_permission_delete_typecar()
     {
         //create typecar
         $typecar=TypeCar::create(['name'=>'car128','number_seats'=>7,'status'=>1]);
-        //login user not have permission delete-typecar
+        //login user not has permission delete-typecar
         $this->actingAs($this->user)
         ->json('delete','/backend/typecar/'.$typecar->id)
         ->assertStatus(403);
     }
 
-    public function test_user_have_permission_delete_typecar()
+    public function test_user_has_permission_delete_typecar()
     {
         //give permission to user
         $this->user->givePermissionTo('delete-typecar');
         //create typecar
         $typecar=TypeCar::create(['name'=>'car128','number_seats'=>7,'status'=>1]);
-        //login user not have permission delete-typecar
+        //login user not has permission delete-typecar
         $this->actingAs($this->user)
         ->json('delete','/backend/typecar/'.$typecar->id)
         ->assertStatus(200);
@@ -49,13 +49,13 @@ class DeleteTypeCarTest extends TestCase
         $this->assertDatabaseMissing('type_cars',['id'=>$typecar->id,'name'=>'car128','number_seats'=>7,'status'=>1]);
     }
 
-    public function test_user_have_permission_delete_typecar_and_fail()
+    public function test_user_has_permission_delete_typecar_and_fail()
     {
         //give permission to user
         $this->user->givePermissionTo('delete-typecar');
         //create typecar
         $typecar=TypeCar::create(['name'=>'car128','number_seats'=>7,'status'=>1]);
-        //login user not have permission delete-typecar
+        //login user not has permission delete-typecar
         $this->actingAs($this->user)
         ->json('delete','/backend/typecar/'.$typecar->id+1)
         ->assertStatus(404);

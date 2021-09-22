@@ -34,29 +34,29 @@ class DeleteTripTest extends TestCase
         $this->trip=Trip::factory()->create();
     }
 
-    public function test_user_not_have_permission_delete_trip()
+    public function test_user_not_has_permission_delete_trip()
     {
-        //login user have permissions and delete trip  founded and deleted it
+        //login user has permissions and delete trip  founded and deleted it
         $this->actingAs($this->user)
              ->json('DELETE','/backend/trip/'.$this->trip->id)
              ->assertStatus(403);
     }
 
-    public function test_user_have_permission_delete_trip_and_success_deleted()
+    public function test_user_has_permission_delete_trip_and_success_deleted()
     {
-        //user have permissions delete_trip
+        //user has permissions delete_trip
         $this->user->givePermissionTo(['delete-trip']);
-        //login user have permissions and delete trip  founded and deleted it
+        //login user has permissions and delete trip  founded and deleted it
         $this->actingAs($this->user)
              ->json('DELETE','/backend/trip/'.$this->trip->id)
              ->assertStatus(200);
     }
 
-    public function test_user_have_permission_delete_trip_not_found()
+    public function test_user_has_permission_delete_trip_not_found()
     {
-        //user have permissions delete_trip
+        //user has permissions delete_trip
         $this->user->givePermissionTo(['delete-trip']);
-        //login user have permissions and delete trip not found
+        //login user has permissions and delete trip not found
         $this->actingAs($this->user)
              ->json('DELETE','/backend/trip/'.$this->trip->id+6)
              ->assertStatus(404);
