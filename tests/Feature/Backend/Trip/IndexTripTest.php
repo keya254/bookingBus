@@ -17,7 +17,7 @@ use Tests\TestCase;
 
 class IndexTripTest extends TestCase
 {
-    use RefreshDatabase,WithFaker;
+    use RefreshDatabase, WithFaker;
 
     public function setUp(): void
     {
@@ -25,8 +25,8 @@ class IndexTripTest extends TestCase
 
         $this->app->make(\Spatie\Permission\PermissionRegistrar::class)->registerPermissions();
 
-        Setting::create(['name'=>'website name','description'=>'description','logo'=>'images/logo/logo.png']);
-        Permission::create(['name'=>'trips']);
+        Setting::create(['name' => 'website name', 'description' => 'description', 'logo' => 'images/logo/logo.png']);
+        Permission::create(['name' => 'trips']);
         $this->user = User::factory()->create();
         TypeCar::factory()->create();
         Governorate::factory()->create();
@@ -37,31 +37,31 @@ class IndexTripTest extends TestCase
     {
         //guest visit page
         $this->get('/backend/trip')
-             ->assertRedirect('/login');
+            ->assertRedirect('/login');
     }
 
     public function test_user_not_has_permission_trips_can_not_see_page()
     {
         //login user visit page
         $this->actingAs($this->user)
-             ->get('/backend/trip')
-             ->assertStatus(403);
+            ->get('/backend/trip')
+            ->assertStatus(403);
     }
 
     public function test_user_has_permission_trips_can_see_page()
     {
         Car::factory()->count(10)->create();
-        Role::create(['name'=>'Driver']);
+        Role::create(['name' => 'Driver']);
         Trip::factory()->count(10)->create();
         //give permission trips to user to see page
         $this->user->givePermissionTo('trips');
-         //login user visit page
+        //login user visit page
         $this->actingAs($this->user)
-             ->get('/backend/trip')
-             ->assertStatus(200)
-             ->assertViewIs('backend.trip.index')
-             ->assertViewHasAll(['cars','drivers','governorates'])
-             ->assertSee(['الرحلات']);
-        $this->assertDatabaseCount('trips',10);
+            ->get('/backend/trip')
+            ->assertStatus(200)
+            ->assertViewIs('backend.trip.index')
+            ->assertViewHasAll(['cars', 'drivers', 'governorates'])
+            ->assertSee(['الرحلات']);
+        $this->assertDatabaseCount('trips', 10);
     }
 }

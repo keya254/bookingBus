@@ -16,9 +16,9 @@ class OwnerController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth','permission:owners'])->only('index');
-        $this->middleware(['auth','permission:create-owner'])->only('store');
-        $this->middleware(['auth','permission:delete-owner'])->only('destroy');
+        $this->middleware(['auth', 'permission:owners'])->only('index');
+        $this->middleware(['auth', 'permission:create-owner'])->only('store');
+        $this->middleware(['auth', 'permission:delete-owner'])->only('destroy');
     }
 
     /**
@@ -31,28 +31,26 @@ class OwnerController extends Controller
         if ($request->ajax()) {
             $data = User::role('Owner')->select('*');
             return DataTables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('action', function($row){
-                           $btn='';
-                           if(auth()->user()->can('delete-owner'))
-                           $btn.= '<a href="javascript:void(0);" class="delete btn btn-danger m-1 btn-sm" data-id="'.$row->id.'"><i class="fa fa-trash"></i></a>';
-                            return $btn;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '';
+                    if (auth()->user()->can('delete-owner')) {
+                        $btn .= '<a href="javascript:void(0);" class="delete btn btn-danger m-1 btn-sm" data-id="' . $row->id . '"><i class="fa fa-trash"></i></a>';
+                    }
+
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
         return view('backend.owner.index');
     }
 
     public function store(CreateUserRequest $request)
     {
-        $owner=User::create([
-        'name'=>$request->validated()['name'],
-        'email'=>$request->validated()['email'],
-        'password'=>bcrypt($request->validated()['password'])
-        ])->assignRole('Owner');
-        Notification::Send($owner,new NewOwnerNotification($owner->name));
-        return response()->json(['message'=>'success created'],200);
+        $owner = User::create($request->validated())->assignRole('Owner');
+        Notification::Send($owner, new NewOwnerNotification($owner->name));
+        return response()->json(['message' => 'Success Created '], 201);
     }
 
     /**
@@ -63,12 +61,14 @@ class OwnerController extends Controller
      */
     public function destroy($id)
     {
-        $user=User::FindOrFail($id);
+        //TODO refactor this code with delete image in User Model
+
+        $user = User::FindOrFail($id);
         //!storage unlike old image
         if (File::exists(public_path($user->image))) {
             unlink(public_path($user->image));
         }
         $user->delete();
-        return response()->json(['message'=>'success deleted'],200);
+        return response()->json(['message' => 'Success Deleted'], 200);
     }
 }

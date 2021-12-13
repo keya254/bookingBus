@@ -49,8 +49,8 @@ class CreateOwnerTest extends TestCase
           //login user
           $this->actingAs($this->user)
            ->json('POST','/backend/owner',$this->email)
-           ->assertSee(['success created'])
-           ->assertStatus(200);
+           ->assertSee(['Success Created'])
+           ->assertStatus(201);
           $this->assertDatabaseCount('users',2);
           $this->assertDatabaseCount('model_has_roles',1);
           $this->assertDatabaseHas('model_has_roles',['role_id'=>1,'model_id'=>2]);

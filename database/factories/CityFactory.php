@@ -23,8 +23,8 @@ class CityFactory extends Factory
     public function definition()
     {
         return [
-            'name'=>$this->faker->name,
-            'governorate_id'=>Governorate::all()->random()->id,
+            'name' => $this->faker->name,
+            'governorate_id' => Governorate::all()->random()->id,
         ];
     }
 }

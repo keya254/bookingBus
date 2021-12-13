@@ -9,11 +9,9 @@ class CarCities extends Model
 {
     use HasFactory;
 
-    protected $table='car_city';
+    protected $table = 'car_city';
 
-    protected $fillable=['car_id','city_id'];
-
-    protected $appends=[];
+    protected $fillable = ['car_id', 'city_id'];
 
     /**
      * Get the car that owns the CarCities

@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 class IndexDriverTest extends TestCase
 {
-    use RefreshDatabase,WithFaker;
+    use RefreshDatabase, WithFaker;
 
     public function setUp(): void
     {
@@ -19,22 +19,22 @@ class IndexDriverTest extends TestCase
 
         $this->app->make(\Spatie\Permission\PermissionRegistrar::class)->registerPermissions();
 
-        Setting::create(['name'=>'website name','description'=>'description','logo'=>'images/logo/logo.png']);
-        Permission::create(['name'=>'drivers']);
+        Setting::create(['name' => 'website name', 'description' => 'description', 'logo' => 'images/logo/logo.png']);
+        Permission::create(['name' => 'drivers']);
         $this->user = User::factory()->create();
     }
 
     public function test_guest_can_not_see_page_driver()
     {
         $this->get('/backend/driver')
-             ->assertRedirect('/login');
+            ->assertRedirect('/login');
     }
 
     public function test_user_not_has_permission_drivers_can_not_see_page_driver()
     {
         $this->actingAs($this->user)
-        ->get('/backend/driver')
-        ->assertStatus(403);
+            ->get('/backend/driver')
+            ->assertStatus(403);
     }
 
     public function test_user_has_permission_drivers_can_see_page_driver()
@@ -42,9 +42,9 @@ class IndexDriverTest extends TestCase
         //give the user permission drivers to see driver page
         $this->user->givePermissionTo('drivers');
         $this->actingAs($this->user)
-        ->get('/backend/driver')
-        ->assertViewIs('backend.driver.index')
-        ->assertSee(['السائقين'])
-        ->assertStatus(200);
+            ->get('/backend/driver')
+            ->assertViewIs('backend.driver.index')
+            ->assertSee(['السائقين'])
+            ->assertStatus(200);
     }
 }

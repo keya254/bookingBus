@@ -9,9 +9,7 @@ class OwnerDriver extends Model
 {
     use HasFactory;
 
-    protected $table='owner_driver';
+    protected $table = 'owner_driver';
 
-    protected $fillable=['owner_id','driver_id'];
-
-    protected $appends=[];
+    protected $fillable = ['owner_id', 'driver_id'];
 }

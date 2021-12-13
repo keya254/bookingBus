@@ -9,17 +9,17 @@ class ChangePasswordController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth','permission:change-password']);
+        $this->middleware(['auth', 'permission:change-password']);
     }
 
     public function index()
     {
-       return view('backend.setting.change-password');
+        return view('backend.setting.change-password');
     }
 
     public function store(ChangePasswordRequest $request)
     {
-        auth()->user()->update(['password'=>bcrypt($request->validated()['password'])]);
-        return back()->with('success','change successfully');
+        auth()->user()->update($request->validated());
+        return back()->with('success', 'Success Changed');
     }
 }

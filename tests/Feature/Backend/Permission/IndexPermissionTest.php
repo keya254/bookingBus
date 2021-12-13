@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 class IndexPermissionTest extends TestCase
 {
-    use RefreshDatabase,WithFaker;
+    use RefreshDatabase, WithFaker;
 
     public function setUp(): void
     {
@@ -19,8 +19,8 @@ class IndexPermissionTest extends TestCase
 
         $this->app->make(\Spatie\Permission\PermissionRegistrar::class)->registerPermissions();
 
-        Setting::create(['name'=>'website name','description'=>'description','logo'=>'images/logo/logo.png']);
-        Permission::create(['name'=>'permissions']);
+        Setting::create(['name' => 'website name', 'description' => 'description', 'logo' => 'images/logo/logo.png']);
+        Permission::create(['name' => 'permissions']);
         $this->user = User::factory()->create();
     }
 
@@ -28,8 +28,8 @@ class IndexPermissionTest extends TestCase
     {
         //create user not has permissions
         $this->actingAs($this->user)
-        ->get('/backend/permissions')
-        ->assertStatus(403);
+            ->get('/backend/permissions')
+            ->assertStatus(403);
     }
 
     public function test_user_has_permission_permissions_not_see_page()
@@ -37,11 +37,11 @@ class IndexPermissionTest extends TestCase
         // create user has permissions
         $this->user->givePermissionTo(['permissions']);
         $this->actingAs($this->user)
-        ->get('/backend/permissions')
-        ->assertStatus(200)
+            ->get('/backend/permissions')
+            ->assertStatus(200)
         //check to see permissions in the page
-        ->assertSee('permissions')
+            ->assertSee('permissions')
         //check view name
-        ->assertViewIs('backend.permissions.index');
+            ->assertViewIs('backend.permissions.index');
     }
 }

@@ -15,12 +15,10 @@ class CreateOwnerDriverTable extends Migration
     {
         Schema::create('owner_driver', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('owner_id');
-            $table->foreignId('driver_id');
+            $table->foreignId('owner_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('driver_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
-            $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('driver_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->unique(['owner_id','driver_id']);
+            $table->unique(['owner_id', 'driver_id']);
         });
     }
 

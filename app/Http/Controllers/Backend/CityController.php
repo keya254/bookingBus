@@ -14,10 +14,10 @@ class CityController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth','permission:citys'])->only('index');
-        $this->middleware(['auth','permission:create-city'])->only('store');
-        $this->middleware(['auth','permission:edit-city'])->only(['show','update']);
-        $this->middleware(['auth','permission:delete-city'])->only('destroy');
+        $this->middleware(['auth', 'permission:citys'])->only('index');
+        $this->middleware(['auth', 'permission:create-city'])->only('store');
+        $this->middleware(['auth', 'permission:edit-city'])->only(['show', 'update']);
+        $this->middleware(['auth', 'permission:delete-city'])->only('destroy');
     }
 
     /**
@@ -30,20 +30,24 @@ class CityController extends Controller
         if ($request->ajax()) {
             $data = City::with('governorate:id,name')->select('*');
             return DataTables::of($data)
-                    ->addIndexColumn()
-                    ->addColumn('action', function($row){
-                           $btn='';
-                           if(auth()->user()->can('edit-city'))
-                           $btn.= '<a href="javascript:void(0);" class="edit btn btn-primary m-1 btn-sm editcity"  data-id="'.$row->id.'"><i class="fa fa-edit"></i></a>';
-                           if(auth()->user()->can('delete-city'))
-                           $btn.= '<a href="javascript:void(0);" class="delete btn btn-danger m-1 btn-sm" data-id="'.$row->id.'"><i class="fa fa-trash"></i></a>';
-                            return $btn;
-                    })
-                    ->rawColumns(['action'])
-                    ->make(true);
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '';
+                    if (auth()->user()->can('edit-city')) {
+                        $btn .= '<a href="javascript:void(0);" class="edit btn btn-primary m-1 btn-sm editcity"  data-id="' . $row->id . '"><i class="fa fa-edit"></i></a>';
+                    }
+
+                    if (auth()->user()->can('delete-city')) {
+                        $btn .= '<a href="javascript:void(0);" class="delete btn btn-danger m-1 btn-sm" data-id="' . $row->id . '"><i class="fa fa-trash"></i></a>';
+                    }
+
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
-        $governorates=Governorate::all();
-        return view('backend.city.index',compact('governorates'));
+        $governorates = Governorate::all();
+        return view('backend.city.index', compact('governorates'));
     }
 
     /**
@@ -55,7 +59,7 @@ class CityController extends Controller
     public function store(CreateCityRequest $request)
     {
         City::create($request->validated());
-        return response()->json(['message'=>'success created']);
+        return response()->json(['message' => 'Success Created'], 201);
     }
 
     /**
@@ -66,7 +70,7 @@ class CityController extends Controller
      */
     public function show(City $city)
     {
-        return response()->json(['city'=>$city]);
+        return response()->json(['city' => $city], 200);
     }
 
     /**
@@ -78,8 +82,8 @@ class CityController extends Controller
      */
     public function update(EditCityRequest $request, City $city)
     {
-       $city->update($request->validated());
-       return response()->json(['message'=>'success updated']);
+        $city->update($request->validated());
+        return response()->json(['message' => 'Success Updated'], 200);
     }
 
     /**
@@ -91,6 +95,6 @@ class CityController extends Controller
     public function destroy(City $city)
     {
         $city->delete();
-        return response()->json(['message'=>'success deleted']);
+        return response()->json(['message' => 'Success Deleted'], 200);
     }
 }

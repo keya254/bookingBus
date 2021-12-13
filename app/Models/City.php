@@ -9,11 +9,9 @@ class City extends Model
 {
     use HasFactory;
 
-    protected $table='cities';
+    protected $table = 'cities';
 
-    protected $fillable=['id','name','governorate_id'];
-
-    protected $appends=[];
+    protected $fillable = ['id', 'name', 'governorate_id'];
 
     /**
      * Get the governorate that owns the City
@@ -36,12 +34,12 @@ class City extends Model
     }
 
     /**
-     * Get all of the Privatecars for the City
+     * Get all of the Private Cars for the City
      *
      * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
      */
-    public function privatecars()
+    public function privateCars()
     {
-        return $this->belongsToMany(Car::class,'car_city');
+        return $this->belongsToMany(Car::class, 'car_city');
     }
 }

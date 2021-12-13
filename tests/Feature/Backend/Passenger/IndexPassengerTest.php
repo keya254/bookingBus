@@ -19,7 +19,7 @@ use Tests\TestCase;
 
 class IndexPassengerTest extends TestCase
 {
-    use RefreshDatabase,WithFaker;
+    use RefreshDatabase, WithFaker;
 
     public function setUp(): void
     {
@@ -27,73 +27,73 @@ class IndexPassengerTest extends TestCase
 
         $this->app->make(\Spatie\Permission\PermissionRegistrar::class)->registerPermissions();
 
-        Setting::create(['name'=>'website name','description'=>'description','logo'=>'images/logo/logo.png']);
-        Permission::create(['name'=>'passengers']);
+        Setting::create(['name' => 'website name', 'description' => 'description', 'logo' => 'images/logo/logo.png']);
+        Permission::create(['name' => 'passengers']);
         TypeCar::factory()->count(2)->create();
         Governorate::factory()->create();
         City::factory()->count(2)->create();
-        Role::create(['name'=>'Owner']);
+        Role::create(['name' => 'Owner']);
         $this->user = User::factory()->create();
-        $this->user2= User::factory()->create();
-        Car::factory()->create(['owner_id'=>$this->user->id]);
-        Car::factory()->create(['owner_id'=>$this->user2->id]);
+        $this->user2 = User::factory()->create();
+        Car::factory()->create(['owner_id' => $this->user->id]);
+        Car::factory()->create(['owner_id' => $this->user2->id]);
     }
 
     public function test_guest_can_not_see_passenger_page()
     {
         $this->get('/backend/passenger')
-             ->assertRedirect('/login');
+            ->assertRedirect('/login');
     }
 
-    public function test_user_not_has_permission_passegners_can_not_see_passenger_page()
+    public function test_user_not_has_permission_passengers_can_not_see_passenger_page()
     {
         $this->actingAs($this->user)
-             ->get('/backend/passenger')
-             ->assertForbidden();
+            ->get('/backend/passenger')
+            ->assertForbidden();
     }
 
-    public function test_user_has_permission_passegners_can_see_passenger_page()
+    public function test_user_has_permission_passengers_can_see_passenger_page()
     {
         $this->user->givePermissionTo('passengers');
         $this->actingAs($this->user)
-             ->get('/backend/passenger')
-             ->assertSee('العملاء')
-             ->assertSuccessful();
+            ->get('/backend/passenger')
+            ->assertSee('العملاء')
+            ->assertSuccessful();
     }
 
-    public function test_user_has_permission_passegners_can_see_passengers_only_in_user_trips_with_role_owner()
+    public function test_user_has_permission_passengers_can_see_passengers_only_in_user_trips_with_role_owner()
     {
-        $trip1=Trip::factory()->create(['car_id'=>1]);
-        $trip2=Trip::factory()->create(['car_id'=>2]);
-        $passenger1=Passenger::create(['name'=>'mohamed','phone_number'=>'01234567887']);
-        $passenger2=Passenger::create(['name'=>'ahmed','phone_number'=>'01000067887']);
-        $seat1=Seat::where('trip_id',$trip1->id)->where('name','1')->first();
-        $seat1->update(['passenger_id'=>$passenger1->id]);
-        $seat2=Seat::where('trip_id',$trip2->id)->where('name','1')->first();
-        $seat2->update(['passenger_id'=>$passenger2->id]);
+        $trip1 = Trip::factory()->create(['car_id' => 1]);
+        $trip2 = Trip::factory()->create(['car_id' => 2]);
+        $passenger1 = Passenger::create(['name' => 'mohamed', 'phone_number' => '01234567887']);
+        $passenger2 = Passenger::create(['name' => 'ahmed', 'phone_number' => '01000067887']);
+        $seat1 = Seat::where('trip_id', $trip1->id)->where('name', '1')->first();
+        $seat1->update(['passenger_id' => $passenger1->id]);
+        $seat2 = Seat::where('trip_id', $trip2->id)->where('name', '1')->first();
+        $seat2->update(['passenger_id' => $passenger2->id]);
         $trip1->car->owner->assignRole('Owner');
         $trip1->car->owner->givePermissionTo('passengers');
         $this->actingAs($trip1->car->owner)
-             ->get('/backend/passenger', array('HTTP_X-Requested-With' => 'XMLHttpRequest'))
-             ->assertSee('mohamed')
-             ->assertSuccessful();
+            ->get('/backend/passenger', array('HTTP_X-Requested-With' => 'XMLHttpRequest'))
+            ->assertSee('mohamed')
+            ->assertSuccessful();
     }
 
-    public function test_user_has_permission_passegners_can_not_see_passengers_in_another_user_trips_with_role_owner()
+    public function test_user_has_permission_passengers_can_not_see_passengers_in_another_user_trips_with_role_owner()
     {
-        $trip1=Trip::factory()->create(['car_id'=>1]);
-        $trip2=Trip::factory()->create(['car_id'=>2]);
-        $passenger1=Passenger::create(['name'=>'mohamed','phone_number'=>'01234567887']);
-        $passenger2=Passenger::create(['name'=>'ahmed','phone_number'=>'01000067887']);
-        $seat1=Seat::where('trip_id',$trip1->id)->where('name','1')->first();
-        $seat1->update(['passenger_id'=>$passenger1->id]);
-        $seat2=Seat::where('trip_id',$trip2->id)->where('name','1')->first();
-        $seat2->update(['passenger_id'=>$passenger2->id]);
+        $trip1 = Trip::factory()->create(['car_id' => 1]);
+        $trip2 = Trip::factory()->create(['car_id' => 2]);
+        $passenger1 = Passenger::create(['name' => 'mohamed', 'phone_number' => '01234567887']);
+        $passenger2 = Passenger::create(['name' => 'ahmed', 'phone_number' => '01000067887']);
+        $seat1 = Seat::where('trip_id', $trip1->id)->where('name', '1')->first();
+        $seat1->update(['passenger_id' => $passenger1->id]);
+        $seat2 = Seat::where('trip_id', $trip2->id)->where('name', '1')->first();
+        $seat2->update(['passenger_id' => $passenger2->id]);
         $trip1->car->owner->assignRole('Owner');
         $trip1->car->owner->givePermissionTo('passengers');
         $this->actingAs($trip1->car->owner)
-             ->get('/backend/passenger', array('HTTP_X-Requested-With' => 'XMLHttpRequest'))
-             ->assertDontSee('ahmed')
-             ->assertSuccessful();
+            ->get('/backend/passenger', array('HTTP_X-Requested-With' => 'XMLHttpRequest'))
+            ->assertDontSee('ahmed')
+            ->assertSuccessful();
     }
 }

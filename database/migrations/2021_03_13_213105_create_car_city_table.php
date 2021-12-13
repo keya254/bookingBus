@@ -15,12 +15,10 @@ class CreateCarCityTable extends Migration
     {
         Schema::create('car_city', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('city_id');
-            $table->foreignId('car_id');
+            $table->foreignId('city_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('car_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
-            $table->foreign('city_id')->references('id')->on('cities')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('car_id')->references('id')->on('cars')->onDelete('cascade')->onUpdate('cascade');
-            $table->unique(['city_id','car_id']);
+            $table->unique(['city_id', 'car_id']);
         });
     }
 

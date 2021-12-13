@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 class CreateGovernorateTest extends TestCase
 {
-    use RefreshDatabase,WithFaker;
+    use RefreshDatabase, WithFaker;
 
     public function setUp(): void
     {
@@ -19,8 +19,8 @@ class CreateGovernorateTest extends TestCase
 
         $this->app->make(\Spatie\Permission\PermissionRegistrar::class)->registerPermissions();
 
-        Setting::create(['name'=>'website name','description'=>'description','logo'=>'images/logo/logo.png']);
-        Permission::create(['name'=>'create-governorate']);
+        Setting::create(['name' => 'website name', 'description' => 'description', 'logo' => 'images/logo/logo.png']);
+        Permission::create(['name' => 'create-governorate']);
         $this->user = User::factory()->create();
     }
 
@@ -28,9 +28,9 @@ class CreateGovernorateTest extends TestCase
     {
         //user not has permission
         $this->actingAs($this->user)
-           //login user
-           ->json('post','/backend/governorate',['name'=>'القاهرة'])
-           ->assertForbidden(403);
+        //login user
+            ->json('post', '/backend/governorate', ['name' => 'القاهرة'])
+            ->assertForbidden(403);
     }
 
     public function test_user_has_permission_create_governorate_can_see_page()
@@ -39,12 +39,11 @@ class CreateGovernorateTest extends TestCase
         $this->user->givePermissionTo('create-governorate');
         //user not has permission
         $this->actingAs($this->user)
-           //login user
-           ->json('post','/backend/governorate',['name'=>'القاهرة'])
-           ->assertSuccessful(200);
+        //login user
+            ->json('post', '/backend/governorate', ['name' => 'القاهرة'])
+            ->assertSuccessful(201);
         //check the governorates founded
-        $this->assertDatabaseHas('governorates',['name'=>'القاهرة']);
+        $this->assertDatabaseHas('governorates', ['name' => 'القاهرة']);
     }
-
 
 }

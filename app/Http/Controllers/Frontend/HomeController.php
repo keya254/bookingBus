@@ -11,24 +11,21 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $governorates=Governorate::with('cities')->get();
-        return view('frontend.home.index',compact('governorates'));
+        $governorates = Governorate::with('cities')->get();
+        return view('frontend.home.index', compact('governorates'));
     }
 
-    public function private(Request $request)
-    {
-        $cars=Car::with(['owner','cities'])->active()->private();
+    function private (Request $request) {
+        $cars = Car::with(['owner', 'cities'])->active()->private();
         if ($request->city_id) {
-            $cars->wherehas('cities',function($q) use($request)
-            {
-              $q->where('cities.id',$request->city_id);
+            $cars->whereHas('cities', function ($query) use ($request) {
+                $query->where('cities.id', $request->city_id);
             });
-        }
-        else {
+        } else {
             $cars->has('cities');
         }
-        $cars=$cars->paginate(8);
-        $governorates=Governorate::with('cities')->get();
-        return view('frontend.private.index',compact('governorates','cars'));
+        $cars = $cars->paginate(8);
+        $governorates = Governorate::with('cities')->get();
+        return view('frontend.private.index', compact('governorates', 'cars'));
     }
 }

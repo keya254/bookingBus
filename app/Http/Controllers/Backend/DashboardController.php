@@ -12,23 +12,23 @@ use App\Traits\Owner;
 
 class DashboardController extends Controller
 {
-    use Admin,Owner,Driver,DatesDriver,DatesAdmin,DatesOwner;
+    use Admin, Owner, Driver, DatesDriver, DatesAdmin, DatesOwner;
 
     public function __construct()
     {
-        $this->middleware(['auth','permission:dashboard']);
+        $this->middleware(['auth', 'permission:dashboard']);
     }
 
     public function index()
     {
-        $data=[];
-        if (auth()->user()->HasRole('Admin')  || auth()->user()->HasRole('SuperAdmin')) {
+        $data = [];
+        if (auth()->user()->HasRole('Admin') || auth()->user()->HasRole('SuperAdmin')) {
             $data += $this->admin_all();
             $data += $this->all_admin_date('date');
             $data += $this->all_admin_date('month');
             $data += $this->all_admin_date('year');
         }
-        if (auth()->user()->HasRole('Owner')  || auth()->user()->HasRole('SuperAdmin')) {
+        if (auth()->user()->HasRole('Owner') || auth()->user()->HasRole('SuperAdmin')) {
             $data += $this->owner_all();
             $data += $this->all_owner_date('date');
             $data += $this->all_owner_date('month');
@@ -40,6 +40,6 @@ class DashboardController extends Controller
             $data += $this->all_driver_date('month');
             $data += $this->all_driver_date('year');
         }
-        return view('backend.dashboard.index',compact('data'));
+        return view('backend.dashboard.index', compact('data'));
     }
 }

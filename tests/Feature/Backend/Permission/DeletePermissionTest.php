@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 class DeletePermissionTest extends TestCase
 {
-    use RefreshDatabase,WithFaker;
+    use RefreshDatabase, WithFaker;
 
     public function setUp(): void
     {
@@ -19,19 +19,19 @@ class DeletePermissionTest extends TestCase
 
         $this->app->make(\Spatie\Permission\PermissionRegistrar::class)->registerPermissions();
 
-        Setting::create(['name'=>'website name','description'=>'description','logo'=>'images/logo/logo.png']);
-        Permission::create(['name'=>'delete-permission']);
+        Setting::create(['name' => 'website name', 'description' => 'description', 'logo' => 'images/logo/logo.png']);
+        Permission::create(['name' => 'delete-permission']);
         $this->user = User::factory()->create();
     }
 
     public function test_user_not_has_permission_delete_permission()
     {
-        $permission1=Permission::create(['name'=>'test_permissions']);
+        $permission1 = Permission::create(['name' => 'test_permissions']);
         //login user
         $this->actingAs($this->user)
         //create permissions
-        ->json('delete','/backend/permissions/'.$permission1->id)
-        ->assertStatus(403);
+            ->json('delete', '/backend/permissions/' . $permission1->id)
+            ->assertStatus(403);
     }
 
     public function test_user_has_permission_delete_permission()
@@ -39,12 +39,12 @@ class DeletePermissionTest extends TestCase
         //create user has permissions to delete permissions
         $this->user->givePermissionTo(['delete-permission']);
         //create permissions
-        $permission1=Permission::create(['name'=>'test_permissions']);
+        $permission1 = Permission::create(['name' => 'test_permissions']);
         //login user
         $this->actingAs($this->user)
         //create permissions
-        ->json('delete','/backend/permissions/'.$permission1->id)
-        ->assertStatus(200);
+            ->json('delete', '/backend/permissions/' . $permission1->id)
+            ->assertStatus(200);
     }
 
     public function test_user_has_permission_delete_permission_but_permission_not_found()
@@ -52,11 +52,11 @@ class DeletePermissionTest extends TestCase
         //create user has permissions to delete permissions
         $this->user->givePermissionTo(['delete-permission']);
         //create permissions
-        $permission1=Permission::create(['name'=>'test_permissions']);
+        $permission1 = Permission::create(['name' => 'test_permissions']);
         //login user
         $this->actingAs($this->user)
         //create permissions
-        ->json('delete','/backend/permissions/'.$permission1->id+1)
-        ->assertStatus(500);
+            ->json('delete', '/backend/permissions/' . $permission1->id + 1)
+            ->assertStatus(500);
     }
 }

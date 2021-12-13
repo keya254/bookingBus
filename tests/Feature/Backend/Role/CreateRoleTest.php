@@ -12,7 +12,7 @@ use Tests\TestCase;
 
 class CreateRoleTest extends TestCase
 {
-    use RefreshDatabase,WithFaker;
+    use RefreshDatabase, WithFaker;
 
     public function setUp(): void
     {
@@ -20,8 +20,8 @@ class CreateRoleTest extends TestCase
 
         $this->app->make(\Spatie\Permission\PermissionRegistrar::class)->registerPermissions();
 
-        Setting::create(['name'=>'website name','description'=>'description','logo'=>'images/logo/logo.png']);
-        Permission::create(['name'=>'create-role']);
+        Setting::create(['name' => 'website name', 'description' => 'description', 'logo' => 'images/logo/logo.png']);
+        Permission::create(['name' => 'create-role']);
         $this->user = User::factory()->create();
     }
 
@@ -30,11 +30,11 @@ class CreateRoleTest extends TestCase
         //test has permissions create-role
         $this->user->givePermissionTo(['create-role']);
         //create role
-        Role::create(['name'=>'Admin']);
+        Role::create(['name' => 'Admin']);
         //test create role with the same name
         $this->actingAs($this->user)
-        ->json('post','/backend/roles',['name'=>'Admin'])
-        ->assertStatus(422);
+            ->json('post', '/backend/roles', ['name' => 'Admin'])
+            ->assertStatus(422);
     }
 
     public function test_user_has_permission_create_role_not_found_created()
@@ -43,7 +43,7 @@ class CreateRoleTest extends TestCase
         $this->user->givePermissionTo(['create-role']);
         //create new role
         $this->actingAs($this->user)
-        ->json('post','/backend/roles',['name'=>'User'])
-        ->assertStatus(200);
+            ->json('post', '/backend/roles', ['name' => 'User'])
+            ->assertStatus(201);
     }
 }

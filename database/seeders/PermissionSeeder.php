@@ -14,24 +14,24 @@ class PermissionSeeder extends Seeder
      */
     public function run()
     {
-        $permissions=['role','permission','governorate','city','typecar','car','trip','owner','driver','passenger','citiescar'];
+        $permissions = ['role', 'permission', 'governorate', 'city', 'typecar', 'car', 'trip', 'owner', 'driver', 'passenger', 'citiescar'];
 
         foreach ($permissions as $key => $permission) {
-            Permission::create(['name'=>$permission.'s']);
-            Permission::create(['name'=>'create-'.$permission]);
-            Permission::create(['name'=>'edit-'.$permission]);
-            Permission::create(['name'=>'delete-'.$permission]);
-            if (in_array($permission,['typecar','car','trip'])) {
-                Permission::create(['name'=>'status-'.$permission]);
+            Permission::create(['name' => $permission . 's']);
+            Permission::create(['name' => 'create-' . $permission]);
+            Permission::create(['name' => 'edit-' . $permission]);
+            Permission::create(['name' => 'delete-' . $permission]);
+            if (in_array($permission, ['typecar', 'car', 'trip'])) {
+                Permission::create(['name' => 'status-' . $permission]);
             }
-            if ($permission=='car') {
-                Permission::create(['name'=>'public-'.$permission]);
-                Permission::create(['name'=>'private-'.$permission]);
+            if ($permission == 'car') {
+                Permission::create(['name' => 'public-' . $permission]);
+                Permission::create(['name' => 'private-' . $permission]);
             }
-         }
-         $permissions2=['dashboard','website-setting','notifications','change-password','profile-setting'];
-         foreach ($permissions2 as $key => $permission) {
-            Permission::create(['name'=>$permission]);
-         }
+        }
+        $permissions2 = ['dashboard', 'website-setting', 'notifications', 'change-password', 'profile-setting'];
+        foreach ($permissions2 as $key => $permission) {
+            Permission::create(['name' => $permission]);
+        }
     }
 }

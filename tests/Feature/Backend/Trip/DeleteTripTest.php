@@ -16,7 +16,7 @@ use Tests\TestCase;
 
 class DeleteTripTest extends TestCase
 {
-    use RefreshDatabase,WithFaker;
+    use RefreshDatabase, WithFaker;
 
     public function setUp(): void
     {
@@ -24,22 +24,22 @@ class DeleteTripTest extends TestCase
 
         $this->app->make(\Spatie\Permission\PermissionRegistrar::class)->registerPermissions();
 
-        Setting::create(['name'=>'website name','description'=>'description','logo'=>'images/logo/logo.png']);
+        Setting::create(['name' => 'website name', 'description' => 'description', 'logo' => 'images/logo/logo.png']);
         $this->user = User::factory()->create();
-        Permission::create(['name'=>'delete-trip']);
+        Permission::create(['name' => 'delete-trip']);
         TypeCar::factory()->create();
         Governorate::factory()->create();
         City::factory()->count(2)->create();
         Car::factory()->create();
-        $this->trip=Trip::factory()->create();
+        $this->trip = Trip::factory()->create();
     }
 
     public function test_user_not_has_permission_delete_trip()
     {
         //login user has permissions and delete trip  founded and deleted it
         $this->actingAs($this->user)
-             ->json('DELETE','/backend/trip/'.$this->trip->id)
-             ->assertStatus(403);
+            ->json('DELETE', '/backend/trip/' . $this->trip->id)
+            ->assertStatus(403);
     }
 
     public function test_user_has_permission_delete_trip_and_success_deleted()
@@ -48,8 +48,8 @@ class DeleteTripTest extends TestCase
         $this->user->givePermissionTo(['delete-trip']);
         //login user has permissions and delete trip  founded and deleted it
         $this->actingAs($this->user)
-             ->json('DELETE','/backend/trip/'.$this->trip->id)
-             ->assertStatus(200);
+            ->json('DELETE', '/backend/trip/' . $this->trip->id)
+            ->assertStatus(200);
     }
 
     public function test_user_has_permission_delete_trip_not_found()
@@ -58,7 +58,7 @@ class DeleteTripTest extends TestCase
         $this->user->givePermissionTo(['delete-trip']);
         //login user has permissions and delete trip not found
         $this->actingAs($this->user)
-             ->json('DELETE','/backend/trip/'.$this->trip->id+6)
-             ->assertStatus(404);
+            ->json('DELETE', '/backend/trip/' . $this->trip->id + 6)
+            ->assertStatus(404);
     }
 }

@@ -12,7 +12,7 @@ use Tests\TestCase;
 
 class DeleteGovernorateTest extends TestCase
 {
-    use RefreshDatabase,WithFaker;
+    use RefreshDatabase, WithFaker;
 
     public function setUp(): void
     {
@@ -20,22 +20,22 @@ class DeleteGovernorateTest extends TestCase
 
         $this->app->make(\Spatie\Permission\PermissionRegistrar::class)->registerPermissions();
 
-        Setting::create(['name'=>'website name','description'=>'description','logo'=>'images/logo/logo.png']);
-        Permission::create(['name'=>'delete-governorate']);
+        Setting::create(['name' => 'website name', 'description' => 'description', 'logo' => 'images/logo/logo.png']);
+        Permission::create(['name' => 'delete-governorate']);
         $this->user = User::factory()->create();
     }
 
     public function test_user_not_has_permission_delete_governorate_can_not_delete()
     {
         //create governorate
-        $governorate=Governorate::create(['name'=>'الجيزة']);
+        $governorate = Governorate::create(['name' => 'الجيزة']);
         //user not has permission
         $this->actingAs($this->user)
-           //login user
-           ->json('delete','/backend/governorate/'.$governorate->id)
-           ->assertForbidden();
+        //login user
+            ->json('delete', '/backend/governorate/' . $governorate->id)
+            ->assertForbidden();
         //check the governorates not deleted
-        $this->assertDatabaseHas('governorates',['id'=>$governorate->id,'name'=>'الجيزة']);
+        $this->assertDatabaseHas('governorates', ['id' => $governorate->id, 'name' => 'الجيزة']);
     }
 
     public function test_user_not_has_permission_delete_governorate_can_delete()
@@ -43,14 +43,14 @@ class DeleteGovernorateTest extends TestCase
         //give permission to this user to delete governorate
         $this->user->givePermissionTo('delete-governorate');
         //create governorate
-        $governorate=Governorate::create(['name'=>'الجيزة']);
+        $governorate = Governorate::create(['name' => 'الجيزة']);
         //user not has permission
         $this->actingAs($this->user)
-           //login user
-           ->json('delete','/backend/governorate/'.$governorate->id)
-           ->assertSuccessful();
+        //login user
+            ->json('delete', '/backend/governorate/' . $governorate->id)
+            ->assertSuccessful();
         //check the governorates deleted
-        $this->assertDeleted('governorates',['id'=>$governorate->id,'name'=>'الجيزة']);
+        $this->assertDeleted('governorates', ['id' => $governorate->id, 'name' => 'الجيزة']);
     }
 
     public function test_user_not_has_permission_delete_governorate_delete_record_not_found()
@@ -58,11 +58,11 @@ class DeleteGovernorateTest extends TestCase
         //give permission to this user to delete governorate
         $this->user->givePermissionTo('delete-governorate');
         //create governorate
-        $governorate=Governorate::create(['name'=>'الجيزة']);
+        $governorate = Governorate::create(['name' => 'الجيزة']);
         //user not has permission
         $this->actingAs($this->user)
-           //login user
-           ->json('delete','/backend/governorate/'.$governorate->id+1)
-           ->assertNotFound();
+        //login user
+            ->json('delete', '/backend/governorate/' . $governorate->id + 1)
+            ->assertNotFound();
     }
 }

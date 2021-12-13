@@ -145,7 +145,7 @@ trait Admin
   }
 
   /**
-   * Get All Infomrmation To Admin
+   * Get All Information To Admin
    *
    **/
   public function admin_all():array

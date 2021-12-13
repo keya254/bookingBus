@@ -12,7 +12,7 @@ use Tests\TestCase;
 
 class EditRoleTest extends TestCase
 {
-    use RefreshDatabase,WithFaker;
+    use RefreshDatabase, WithFaker;
 
     public function setUp(): void
     {
@@ -20,8 +20,8 @@ class EditRoleTest extends TestCase
 
         $this->app->make(\Spatie\Permission\PermissionRegistrar::class)->registerPermissions();
 
-        Setting::create(['name'=>'website name','description'=>'description','logo'=>'images/logo/logo.png']);
-        Permission::create(['name'=>'edit-role']);
+        Setting::create(['name' => 'website name', 'description' => 'description', 'logo' => 'images/logo/logo.png']);
+        Permission::create(['name' => 'edit-role']);
         $this->user = User::factory()->create();
     }
 
@@ -30,11 +30,11 @@ class EditRoleTest extends TestCase
         //user has permissions delete_role
         $this->user->givePermissionTo(['edit-role']);
         //create new role
-        $role=Role::create(['name'=>'SAdmin']);
+        $role = Role::create(['name' => 'SAdmin']);
         //update role where not found this name in the database
         $this->actingAs($this->user)
-             ->json('put','/backend/roles/'.$role->id,['name'=>'min'])
-             ->assertStatus(200);
+            ->json('put', '/backend/roles/' . $role->id, ['name' => 'min'])
+            ->assertStatus(200);
     }
 
     public function test_user_has_permission_update_role_found()
@@ -42,11 +42,11 @@ class EditRoleTest extends TestCase
         //user has permissions delete_role
         $this->user->givePermissionTo(['edit-role']);
         //create two roles
-        $role=Role::create(['name'=>'2Admin']);
-        $role2=Role::create(['name'=>'Admin']);
-        //update role by name found it in database chech unique
+        $role = Role::create(['name' => '2Admin']);
+        $role2 = Role::create(['name' => 'Admin']);
+        //update role by name found it in database check unique
         $this->actingAs($this->user)
-             ->json('put','/backend/roles/'.$role->id,['name'=>'Admin'])
-             ->assertStatus(422);
+            ->json('put', '/backend/roles/' . $role->id, ['name' => 'Admin'])
+            ->assertStatus(422);
     }
 }

@@ -14,10 +14,10 @@ class GovernorateController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['auth','permission:governorates'])->only('index');
-        $this->middleware(['auth','permission:create-governorate'])->only('store');
-        $this->middleware(['auth','permission:edit-governorate'])->only(['show','update']);
-        $this->middleware(['auth','permission:delete-governorate'])->only('destroy');
+        $this->middleware(['auth', 'permission:governorates'])->only('index');
+        $this->middleware(['auth', 'permission:create-governorate'])->only('store');
+        $this->middleware(['auth', 'permission:edit-governorate'])->only(['show', 'update']);
+        $this->middleware(['auth', 'permission:delete-governorate'])->only('destroy');
     }
 
     /**
@@ -27,18 +27,21 @@ class GovernorateController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->ajax())
-        {
-             $data = Governorate::select('*');
-             return DataTables::of($data)
+        if ($request->ajax()) {
+            $data = Governorate::select('*');
+            return DataTables::of($data)
                 ->addIndexColumn()
-                ->addColumn('action', function($row){
-                       $btn='';
-                       if(auth()->user()->can('edit-governorate'))
-                       $btn.= '<a href="javascript:void(0);" class="edit btn btn-primary m-1 btn-sm editgovernorate"  data-id="'.$row->id.'"><i class="fa fa-edit"></i></a>';
-                       if(auth()->user()->can('delete-governorate'))
-                       $btn.= '<a href="javascript:void(0);" class="delete btn btn-danger m-1 btn-sm" data-id="'.$row->id.'"><i class="fa fa-trash"></i></a>';
-                        return $btn;
+                ->addColumn('action', function ($row) {
+                    $btn = '';
+                    if (auth()->user()->can('edit-governorate')) {
+                        $btn .= '<a href="javascript:void(0);" class="edit btn btn-primary m-1 btn-sm editgovernorate"  data-id="' . $row->id . '"><i class="fa fa-edit"></i></a>';
+                    }
+
+                    if (auth()->user()->can('delete-governorate')) {
+                        $btn .= '<a href="javascript:void(0);" class="delete btn btn-danger m-1 btn-sm" data-id="' . $row->id . '"><i class="fa fa-trash"></i></a>';
+                    }
+
+                    return $btn;
                 })
                 ->rawColumns(['action'])
                 ->make(true);
@@ -55,7 +58,7 @@ class GovernorateController extends Controller
     public function store(CreateGovernorateRequest $request)
     {
         Governorate::create($request->validated());
-        return response()->json(['message'=>'success created']);
+        return response()->json(['message' => 'Success Created'],201);
     }
 
     /**
@@ -66,7 +69,7 @@ class GovernorateController extends Controller
      */
     public function show(Governorate $governorate)
     {
-        return response()->json(['governorate'=>$governorate]);
+        return response()->json(['governorate' => $governorate],200);
     }
 
     /**
@@ -79,7 +82,7 @@ class GovernorateController extends Controller
     public function update(EditGovernorateRequest $request, Governorate $governorate)
     {
         $governorate->update($request->validated());
-        return response()->json(['message'=>'success updated']);
+        return response()->json(['message' => 'Success Updated'],200);
     }
 
     /**
@@ -91,6 +94,6 @@ class GovernorateController extends Controller
     public function destroy(Governorate $governorate)
     {
         $governorate->delete();
-        return response()->json(['message'=>'success deleted']);
+        return response()->json(['message' => 'Success Deleted'],200);
     }
 }

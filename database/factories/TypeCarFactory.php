@@ -22,9 +22,9 @@ class TypeCarFactory extends Factory
     public function definition()
     {
         return [
-            'name'=>$this->faker->name,
-            'number_seats'=>$this->faker->randomElement([7,11,43]),
-            'status'=>$this->faker->randomElement([0,1])
+            'name' => $this->faker->name,
+            'number_seats' => $this->faker->randomElement([7, 11, 43]),
+            'status' => $this->faker->randomElement([0, 1]),
         ];
     }
 }

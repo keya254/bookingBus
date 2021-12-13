@@ -11,27 +11,27 @@ class SettingController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth','permission:website-setting']);
+        $this->middleware(['auth', 'permission:website-setting']);
     }
 
     public function index()
     {
-       $setting=Setting::first();
-       return view('backend.setting.index',compact('setting'));
+        $setting = Setting::first();
+        return view('backend.setting.index', compact('setting'));
     }
 
     public function store(SettingRequest $request)
     {
-        if(! $request->hasFile('logo'))
-        {
+        //TODO refactor this code with delete image in Setting Model
+        if (!$request->hasFile('logo')) {
             Setting::first()->update($request->validated());
         }
-        if($request->hasFile('logo')){
-            $name='images/logo/logo.png';
+        if ($request->hasFile('logo')) {
+            $name = 'images/logo/logo.png';
             Image::make($request->logo)->resize(500, 500)->save(public_path($name));
-            Setting::first()->update(['logo'=>$name]+$request->validated());
+            Setting::first()->update(['logo' => $name] + $request->validated());
         }
-      return redirect()->route('setting.index');
+        return redirect()->route('setting.index');
     }
 
 }

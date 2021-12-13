@@ -9,11 +9,9 @@ class Governorate extends Model
 {
     use HasFactory;
 
-    protected $table='governorates';
+    protected $table = 'governorates';
 
-    protected $fillable=['id','name'];
-
-    protected $appends=[];
+    protected $fillable = ['id', 'name'];
 
     /**
      * Get all of the cities for the Governorate

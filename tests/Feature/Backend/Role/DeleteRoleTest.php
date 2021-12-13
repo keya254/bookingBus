@@ -12,7 +12,7 @@ use Tests\TestCase;
 
 class DeleteRoleTest extends TestCase
 {
-    use RefreshDatabase,WithFaker;
+    use RefreshDatabase, WithFaker;
 
     public function setUp(): void
     {
@@ -20,8 +20,8 @@ class DeleteRoleTest extends TestCase
 
         $this->app->make(\Spatie\Permission\PermissionRegistrar::class)->registerPermissions();
 
-        Setting::create(['name'=>'website name','description'=>'description','logo'=>'images/logo/logo.png']);
-        Permission::create(['name'=>'delete-role']);
+        Setting::create(['name' => 'website name', 'description' => 'description', 'logo' => 'images/logo/logo.png']);
+        Permission::create(['name' => 'delete-role']);
         $this->user = User::factory()->create();
     }
 
@@ -30,11 +30,11 @@ class DeleteRoleTest extends TestCase
         //user has permissions delete_role
         $this->user->givePermissionTo(['delete-role']);
         //create new role
-        $role=Role::create(['name'=>'SAdmin']);
+        $role = Role::create(['name' => 'SAdmin']);
         //login user has permissions and delete role  founded and deleted it
         $this->actingAs($this->user)
-             ->json('delete','/backend/roles/'.$role->id)
-             ->assertStatus(200);
+            ->json('delete', '/backend/roles/' . $role->id)
+            ->assertStatus(200);
     }
 
     public function test_user_has_permission_delete_role_not_found()
@@ -42,10 +42,10 @@ class DeleteRoleTest extends TestCase
         //user has permissions delete_role
         $this->user->givePermissionTo(['delete-role']);
         //create new role
-        $role=Role::create(['name'=>'SAdmin']);
+        $role = Role::create(['name' => 'SAdmin']);
         //login user has permissions and delete role not found
         $this->actingAs($this->user)
-             ->json('delete','/backend/roles/'.$role->id+1)
-             ->assertStatus(500);
+            ->json('delete', '/backend/roles/' . $role->id + 1)
+            ->assertStatus(500);
     }
 }

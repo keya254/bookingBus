@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 class IndexTypeCarTest extends TestCase
 {
-    use RefreshDatabase,WithFaker;
+    use RefreshDatabase, WithFaker;
 
     public function setUp(): void
     {
@@ -19,8 +19,8 @@ class IndexTypeCarTest extends TestCase
 
         $this->app->make(\Spatie\Permission\PermissionRegistrar::class)->registerPermissions();
 
-        Setting::create(['name'=>'website name','description'=>'description','logo'=>'images/logo/logo.png']);
-        Permission::create(['name'=>'typecars']);
+        Setting::create(['name' => 'website name', 'description' => 'description', 'logo' => 'images/logo/logo.png']);
+        Permission::create(['name' => 'typecars']);
         $this->user = User::factory()->create();
     }
 
@@ -28,8 +28,8 @@ class IndexTypeCarTest extends TestCase
     {
         //login user do not has permission typecars
         $this->actingAs($this->user)
-        ->get('/backend/typecar')
-        ->assertStatus(403);
+            ->get('/backend/typecar')
+            ->assertStatus(403);
     }
 
     public function test_user_has_permission_typecars()
@@ -38,9 +38,9 @@ class IndexTypeCarTest extends TestCase
         $this->user->givePermissionTo('typecars');
         //login user has permission typecars
         $this->actingAs($this->user)
-        ->get('/backend/typecar')
-        ->assertStatus(200)
-        ->assertSee(['انواع السيارات']);
+            ->get('/backend/typecar')
+            ->assertStatus(200)
+            ->assertSee(['انواع السيارات']);
     }
 
 }

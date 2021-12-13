@@ -15,28 +15,28 @@ class BookingController extends Controller
     public function store(BookingSeat $request)
     {
         //get the trip to get max seats of trip
-        $trip=Trip::Where('id',$request->trip_id)->beforenow()->firstOrfail();
+        $trip = Trip::Where('id', $request->trip_id)->beforeNow()->firstOrFail();
         //create or update the passenger  to check max seats in this trip
-        $passenger=Passenger::UpdateOrCreate(['phone_number'=>$request->phone_number],['name'=>$request->name,'phone_number'=>$request->phone_number]);
+        $passenger = Passenger::UpdateOrCreate(['phone_number' => $request->phone_number], ['name' => $request->name, 'phone_number' => $request->phone_number]);
         //get count seats this passenger in this trip
-        $oldseatscount=Seat::Where('trip_id',$request->trip_id)->Where('passenger_id',$passenger->id)->count();
+        $old_seats_count = Seat::Where('trip_id', $request->trip_id)->Where('passenger_id', $passenger->id)->count();
         //get count seats available in this trip
-        $availableseats=Seat::Where('trip_id',$request->trip_id)->Where('passenger_id',null)->count();
+        $available_seats = Seat::Where('trip_id', $request->trip_id)->Where('passenger_id', null)->count();
         //get count seats in booking request convert string to array
-        $myseatscount=explode(',',$request->myseats);
+        $my_seats_count = explode(',', $request->myseats);
         //check max seats in the trip
-        if ($trip->max_seats >= ($oldseatscount+count($myseatscount)) &&  $availableseats >= ($oldseatscount+count($myseatscount))) {
-            foreach ($myseatscount as $key => $value) {
+        if ($trip->max_seats >= ($old_seats_count + count($my_seats_count)) && $available_seats >= ($old_seats_count + count($my_seats_count))) {
+            foreach ($my_seats_count as $key => $value) {
                 //booking if available
-                Seat::Where('trip_id',$request->trip_id)->Where('name',$value)->Where('passenger_id',null)->update(['status'=>1,'passenger_id'=>$passenger->id,'booking_time'=>now()]);
+                Seat::Where('trip_id', $request->trip_id)->Where('name', $value)->Where('passenger_id', null)->update(
+                    ['status' => 1, 'passenger_id' => $passenger->id, 'booking_time' => now()]);
             }
-            Notification::send($trip->driver,new BookingSeatNotification($trip->id,$request->myseats,$request->phone_number));
-            Notification::send($trip->car->owner,new BookingSeatNotification($trip->id,$request->myseats,$request->phone_number));
-            return response()->json(['message'=>'تم الحجز بنجاح'],200);
-        }else
-        {
-            return response()->json(['message'=>"  عفواً الحد الاقصي  لحجز عدد مقاعد هو '$trip->max_seats'"],422);
+            Notification::send($trip->driver, new BookingSeatNotification($trip->id, $request->myseats, $request->phone_number));
+            Notification::send($trip->car->owner, new BookingSeatNotification($trip->id, $request->myseats, $request->phone_number));
+            return response()->json(['message' => 'تم الحجز بنجاح'], 200);
+        } else {
+            return response()->json(['message' => "  عفواً الحد الاقصي  لحجز عدد مقاعد هو '$trip->max_seats'"], 422);
         }
-        return response()->json(['message'=>'حدث خطئ ما'],422);
+        return response()->json(['message' => 'حدث خطئ ما'], 422);
     }
 }

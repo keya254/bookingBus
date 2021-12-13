@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 class IndexRoleTest extends TestCase
 {
-    use RefreshDatabase,WithFaker;
+    use RefreshDatabase, WithFaker;
 
     public function setUp(): void
     {
@@ -19,16 +19,16 @@ class IndexRoleTest extends TestCase
 
         $this->app->make(\Spatie\Permission\PermissionRegistrar::class)->registerPermissions();
 
-        Setting::create(['name'=>'website name','description'=>'description','logo'=>'images/logo/logo.png']);
-        Permission::create(['name'=>'roles']);
+        Setting::create(['name' => 'website name', 'description' => 'description', 'logo' => 'images/logo/logo.png']);
+        Permission::create(['name' => 'roles']);
         $this->user = User::factory()->create();
     }
 
     public function test_user_not_has_permission_roles_can_not_login()
     {
-        $response=
+        $response =
         $this->actingAs($this->user)
-        ->get('/backend/roles');
+            ->get('/backend/roles');
         $response->assertStatus(403);
     }
 
@@ -36,7 +36,7 @@ class IndexRoleTest extends TestCase
     {
         $this->user->givePermissionTo(['roles']);
         $this->actingAs($this->user)
-        ->get('/backend/roles')
-        ->assertStatus(200);
+            ->get('/backend/roles')
+            ->assertStatus(200);
     }
 }

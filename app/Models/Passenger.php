@@ -9,11 +9,9 @@ class Passenger extends Model
 {
     use HasFactory;
 
-    protected $table='passengers';
+    protected $table = 'passengers';
 
-    protected $fillable=['name','phone_number'];
-
-    protected $appends=[];
+    protected $fillable = ['name', 'phone_number'];
 
     /**
      * Get all of the seats for the Passenger

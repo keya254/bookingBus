@@ -11,7 +11,7 @@ use Tests\TestCase;
 
 class IndexCityTest extends TestCase
 {
-    use RefreshDatabase,WithFaker;
+    use RefreshDatabase, WithFaker;
 
     public function setUp(): void
     {
@@ -19,8 +19,8 @@ class IndexCityTest extends TestCase
 
         $this->app->make(\Spatie\Permission\PermissionRegistrar::class)->registerPermissions();
 
-        Setting::create(['name'=>'website name','description'=>'description','logo'=>'images/logo/logo.png']);
-        Permission::create(['name'=>'citys']);
+        Setting::create(['name' => 'website name', 'description' => 'description', 'logo' => 'images/logo/logo.png']);
+        Permission::create(['name' => 'citys']);
         $this->user = User::factory()->create();
     }
 
@@ -28,8 +28,8 @@ class IndexCityTest extends TestCase
     {
         //login user not access this page when not has permission 'citys'
         $this->actingAs($this->user)
-        ->get('/backend/city')
-        ->assertStatus(403);
+            ->get('/backend/city')
+            ->assertStatus(403);
     }
 
     public function test_user_has_permission_citys_can_see_page_see_all_cities()
@@ -38,10 +38,10 @@ class IndexCityTest extends TestCase
         $this->user->givePermissionTo('citys');
         //login user access this page when has permission 'citys'
         $this->actingAs($this->user)
-        ->get('/backend/city')
-        ->assertStatus(200)
+            ->get('/backend/city')
+            ->assertStatus(200)
         //check the page has this titles
-        ->assertSee(['اسم المحافظة','اسم المدينة']);
+            ->assertSee(['اسم المحافظة', 'اسم المدينة']);
     }
 
 }

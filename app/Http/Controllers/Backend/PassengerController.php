@@ -13,23 +13,23 @@ class PassengerController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth','permission:passengers']);
+        $this->middleware(['auth', 'permission:passengers']);
     }
 
     public function index(Request $request)
     {
         if ($request->ajax()) {
-           $data = Passenger::query();
-           if(auth()->user()->hasrole('Owner')){
+            $data = Passenger::query();
+            if (auth()->user()->hasrole('Owner')) {
 
-             $trips  = Trip::where('car_id',auth()->user()->cars->pluck(['id']))->pluck('id');
-             $passegners = array_unique(Seat::whereIn('trip_id',$trips)->where('passenger_id','!=',null)->pluck('passenger_id')->toArray());
-             $data->whereIn('id',$passegners);
+                $trips = Trip::where('car_id', auth()->user()->cars->pluck(['id']))->pluck('id');
+                $passengers = array_unique(Seat::whereIn('trip_id', $trips)->where('passenger_id', '!=', null)->pluck('passenger_id')->toArray());
+                $data->whereIn('id', $passengers);
 
-           }
-           return DataTables::of($data->select('*'))
-                   ->make(true);
+            }
+            return DataTables::of($data->select('*'))
+                ->make(true);
         }
-       return view('backend.passenger.index');
+        return view('backend.passenger.index');
     }
 }

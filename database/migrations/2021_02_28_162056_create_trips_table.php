@@ -15,10 +15,10 @@ class CreateTripsTable extends Migration
     {
         Schema::create('trips', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('from_id')->nullable();
-            $table->foreignId('to_id')->nullable();
-            $table->foreignId('car_id')->nullable();
-            $table->foreignId('driver_id')->nullable();
+            $table->foreignId('from_id')->constrained('cities')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('to_id')->constrained('cities')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('car_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('driver_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('max_seats');
             $table->dateTime('start_trip');
             $table->integer('min_time');
@@ -26,10 +26,6 @@ class CreateTripsTable extends Migration
             $table->decimal('price');
             $table->boolean('status')->default(0);
             $table->timestamps();
-            $table->foreign('car_id')->references('id')->on('cars')->onDelete('set null')->onUpdate('cascade');
-            $table->foreign('driver_id')->references('id')->on('users')->onDelete('set null')->onUpdate('cascade');
-            $table->foreign('from_id')->references('id')->on('cities')->onDelete('set null')->onUpdate('cascade');
-            $table->foreign('to_id')->references('id')->on('cities')->onDelete('set null')->onUpdate('cascade');
         });
     }
 

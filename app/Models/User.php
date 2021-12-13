@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -21,7 +20,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'image'
+        'image',
     ];
 
     /**
@@ -50,7 +49,7 @@ class User extends Authenticatable
      */
     public function cars()
     {
-        return $this->hasMany(Car::class,'owner_id');
+        return $this->hasMany(Car::class, 'owner_id');
     }
 
     /**
@@ -80,7 +79,7 @@ class User extends Authenticatable
      */
     public function drivers()
     {
-        return $this->hasMany(OwnerDriver::class,'owner_id');
+        return $this->hasMany(OwnerDriver::class, 'owner_id');
     }
 
     /**
@@ -90,7 +89,12 @@ class User extends Authenticatable
      */
     public function owner()
     {
-        return $this->belongsTo(OwnerDriver::class,'driver_id');
+        return $this->belongsTo(OwnerDriver::class, 'driver_id');
+    }
+
+    public function setPasswordAttribute($value)
+    {
+        $this->attributes['password'] = bcrypt($value);
     }
 
 }
