@@ -27,14 +27,14 @@ class StatusTypeCarTest extends TestCase
 
     public function test_guest_can_not_change_status()
     {
-        $this->json('post', '/backend/typecar/changestatus')
+        $this->json('post', '/backend/type-car/change-status')
             ->assertUnauthorized();
     }
 
     public function test_user_not_has_permission_status_typecar_can_not_change_status()
     {
         $this->actingAs($this->user);
-        $this->json('post', '/backend/typecar/changestatus')
+        $this->json('post', '/backend/type-car/change-status')
             ->assertForbidden();
     }
 
@@ -43,7 +43,7 @@ class StatusTypeCarTest extends TestCase
         $this->user->givePermissionTo('status-typecar');
         $typecar = TypeCar::factory()->create();
         $this->actingAs($this->user);
-        $this->json('post', '/backend/typecar/changestatus', ['id' => $typecar->id])
+        $this->json('post', '/backend/type-car/change-status', ['id' => $typecar->id])
             ->assertSuccessful();
         $this->assertNotEquals($typecar->status, $typecar->fresh()->status);
     }

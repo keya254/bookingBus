@@ -58,7 +58,7 @@
       var table = $('.data-table').DataTable({
           processing: true,
           serverSide: true,
-          ajax: "{{ route('typecar.index') }}",
+          ajax: "{{ route('type-car.index') }}",
           columns: [
               {data: 'id', name: 'id'},
               {data: 'name', name: 'name'},
@@ -80,7 +80,7 @@
        var data=$('#ctypecar').serialize();
       $.ajax({
           type: "post",
-          url: "{{route('typecar.store')}}",
+          url: "{{route('type-car.store')}}",
           data: data,
           dataType: "json",
           success: function (response) {
@@ -95,7 +95,7 @@
       var id=$('#eid').val();
       $.ajax({
           type: "put",
-          url: "{{route('typecar.index')}}/"+id,
+          url: "{{route('type-car.index')}}/"+id,
           data: data,
           dataType: "json",
           success: function (response) {
@@ -108,7 +108,7 @@
      var id=$(this).attr('data-id');
      $.ajax({
        type: "delete",
-       url: "{{route('typecar.index')}}/"+id,
+       url: "{{route('type-car.index')}}/"+id,
        dataType: "json",
        success: function (response) {
         $('.data-table').DataTable().ajax.reload();
@@ -119,7 +119,7 @@
    {
        $.ajax({
            type: "get",
-           url: "{{route('typecar.index')}}/"+$(this).attr('data-id'),
+           url: "{{route('type-car.index')}}/"+$(this).attr('data-id'),
            dataType: "json",
            success: function (response) {
             $('#ename').val(response.typecar.name);
@@ -133,7 +133,7 @@
    {
        $.ajax({
            type: "post",
-           url: "{{route('typecar.changestatus')}}",
+           url: "{{route('type-car.change-status')}}",
            dataType: "json",
            data:{id:$(this).attr('data-id')},
            success: function (response) {

@@ -24,6 +24,7 @@ class ChangeCarController extends Controller
         if ($car->owner_id != auth()->user()->id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
+
         $car->update(['status' => !$car->status]);
         return response()->json(['message' => 'Success Changed'], 200);
     }
@@ -37,6 +38,7 @@ class ChangeCarController extends Controller
         if ($car->owner_id != auth()->user()->id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
+
         $car->update(['public' => !$car->public]);
         return response()->json(['message' => 'Success Changed'], 200);
     }
@@ -50,6 +52,7 @@ class ChangeCarController extends Controller
         if ($car->owner_id != auth()->user()->id) {
             return response()->json(['message' => 'Unauthorized'], 403);
         }
+
         $car->update(['private' => !$car->private]);
         return response()->json(['message' => 'Success Changed'], 200);
     }

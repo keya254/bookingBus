@@ -22,7 +22,7 @@ class TripController extends Controller
         $this->middleware(['auth', 'permission:create-trip'])->only('store');
         $this->middleware(['auth', 'permission:edit-trip'])->only(['show', 'update']);
         $this->middleware(['auth', 'permission:delete-trip'])->only('destroy');
-        $this->middleware(['auth', 'permission:status-trip'])->only('changestatus');
+        $this->middleware(['auth', 'permission:status-trip'])->only('changeStatus');
     }
     /**
      * Display a listing of the resource.
@@ -66,29 +66,6 @@ class TripController extends Controller
         $drivers = User::role('Driver')->whereIn('id', auth()->user()->drivers->pluck(['driver_id']))->get();
         $governorates = Governorate::with('cities')->get();
         return view('backend.trip.index', compact('cars', 'drivers', 'governorates'));
-    }
-
-    /**
-     * Change The Status Of Trip.
-     */
-    public function changestatus(Request $request)
-    {
-        $trip = Trip::findOrFail($request->id);
-        if ($trip->car->owner_id == auth()->user()->id) {
-            $trip->update(['status' => !$trip->status]);
-            return response()->json(['message' => 'Success Changed'], 200);
-        }
-        return response()->json(['message' => 'Unauthorized'], 403);
-
-    }
-
-    /**
-     * get sets information for the trip
-     */
-    public function seats(Trip $trip)
-    {
-        $seats = $trip->seats()->with('passenger')->orderBy('id')->get();
-        return view('backend.trip.seats', compact('seats'));
     }
 
     /**
@@ -140,4 +117,27 @@ class TripController extends Controller
         $trip->delete();
         return response()->json(['message' => 'Success Deleted'], 200);
     }
+
+    /**
+     * Change The Status Of Trip.
+     */
+    public function changeStatus(Request $request)
+    {
+        $trip = Trip::findOrFail($request->id);
+        if ($trip->car->owner_id != auth()->user()->id) {
+            return response()->json(['message' => 'Unauthorized'], 403);
+        }
+        $trip->update(['status' => !$trip->status]);
+        return response()->json(['message' => 'Success Changed'], 200);
+    }
+
+    /**
+     * get sets information for the trip
+     */
+    public function seats(Trip $trip)
+    {
+        $seats = $trip->seats()->with('passenger')->orderBy('id')->get();
+        return view('backend.trip.seats', compact('seats'));
+    }
+
 }

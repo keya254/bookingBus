@@ -31,7 +31,7 @@ class DeleteTypeCarTest extends TestCase
         $typecar = TypeCar::create(['name' => 'car128', 'number_seats' => 7, 'status' => 1]);
         //login user not has permission delete-typecar
         $this->actingAs($this->user)
-            ->json('delete', '/backend/typecar/' . $typecar->id)
+            ->json('delete', '/backend/type-car/' . $typecar->id)
             ->assertStatus(403);
     }
 
@@ -43,7 +43,7 @@ class DeleteTypeCarTest extends TestCase
         $typecar = TypeCar::create(['name' => 'car128', 'number_seats' => 7, 'status' => 1]);
         //login user not has permission delete-typecar
         $this->actingAs($this->user)
-            ->json('delete', '/backend/typecar/' . $typecar->id)
+            ->json('delete', '/backend/type-car/' . $typecar->id)
             ->assertStatus(200);
         //check the record does not exist in the database.
         $this->assertDatabaseMissing('type_cars', ['id' => $typecar->id, 'name' => 'car128', 'number_seats' => 7, 'status' => 1]);
@@ -57,7 +57,7 @@ class DeleteTypeCarTest extends TestCase
         $typecar = TypeCar::create(['name' => 'car128', 'number_seats' => 7, 'status' => 1]);
         //login user not has permission delete-typecar
         $this->actingAs($this->user)
-            ->json('delete', '/backend/typecar/' . $typecar->id + 1)
+            ->json('delete', '/backend/type-car/' . $typecar->id + 1)
             ->assertStatus(404);
         //check the record exist in the database. not deleted
         $this->assertDatabaseHas('type_cars', ['id' => $typecar->id, 'name' => 'car128', 'number_seats' => 7, 'status' => 1]);

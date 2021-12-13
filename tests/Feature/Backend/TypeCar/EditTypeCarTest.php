@@ -32,7 +32,7 @@ class EditTypeCarTest extends TestCase
         $typecar = TypeCar::create(['name' => 'car128', 'number_seats' => 7, 'status' => 1]);
         //login user has permission edit-type
         $this->actingAs($this->user)
-            ->json('put', '/backend/typecar/' . $typecar->id, ['name' => 'car128_127', 'number_seats' => 9, 'status' => 0])
+            ->json('put', '/backend/type-car/' . $typecar->id, ['name' => 'car128_127', 'number_seats' => 9, 'status' => 0])
             ->assertStatus(200);
         // check the record before update not found in the database
         $this->assertDatabaseMissing('type_cars', ['id' => $typecar->id, 'name' => 'car128', 'number_seats' => 7, 'status' => 1]);
@@ -42,7 +42,7 @@ class EditTypeCarTest extends TestCase
         //! status=>null
         //login user has permission create-typecar
         $this->actingAs($this->user)
-            ->json('put', '/backend/typecar/' . $typecar->id, ['name' => 'car128', 'number_seats' => 7])
+            ->json('put', '/backend/type-car/' . $typecar->id, ['name' => 'car128', 'number_seats' => 7])
             ->assertStatus(200);
     }
 
@@ -51,7 +51,7 @@ class EditTypeCarTest extends TestCase
         $typecar = TypeCar::create(['name' => 'car128', 'number_seats' => 7, 'status' => 1]);
         //login user has permission edit-type
         $this->actingAs($this->user)
-            ->json('put', '/backend/typecar/' . $typecar->id, ['name' => 'car128', 'number_seats' => 9, 'status' => 1])
+            ->json('put', '/backend/type-car/' . $typecar->id, ['name' => 'car128', 'number_seats' => 9, 'status' => 1])
             ->assertStatus(403);
         $this->assertDatabaseHas('type_cars', ['id' => $typecar->id, 'name' => 'car128', 'number_seats' => 7, 'status' => 1]);
     }
@@ -66,7 +66,7 @@ class EditTypeCarTest extends TestCase
 
         //login user has permission create-typecar
         $this->actingAs($this->user)
-            ->json('put', '/backend/typecar/' . $typecar->id, ['name' => 'c', 'number_seats' => '', 'status' => 6])
+            ->json('put', '/backend/type-car/' . $typecar->id, ['name' => 'c', 'number_seats' => '', 'status' => 6])
             ->assertJsonValidationErrors(['name', 'number_seats', 'status'])
             ->assertStatus(422);
     }
@@ -79,7 +79,7 @@ class EditTypeCarTest extends TestCase
         //! name=>required
         //login user has permission create-typecar
         $this->actingAs($this->user)
-            ->json('put', '/backend/typecar/' . $typecar->id, ['name' => null, 'number_seats' => 7, 'status' => 1])
+            ->json('put', '/backend/type-car/' . $typecar->id, ['name' => null, 'number_seats' => 7, 'status' => 1])
             ->assertJsonValidationErrors(['name'])
             ->assertStatus(422);
     }
@@ -92,7 +92,7 @@ class EditTypeCarTest extends TestCase
         //! name=>min:4
         //login user has permission create-typecar
         $this->actingAs($this->user)
-            ->json('put', '/backend/typecar/' . $typecar->id, ['name' => 'car', 'number_seats' => 7, 'status' => 1])
+            ->json('put', '/backend/type-car/' . $typecar->id, ['name' => 'car', 'number_seats' => 7, 'status' => 1])
             ->assertJsonValidationErrors(['name'])
             ->assertStatus(422);
     }
@@ -105,7 +105,7 @@ class EditTypeCarTest extends TestCase
         //! name=>max:50
         //login user has permission create-typecar
         $this->actingAs($this->user)
-            ->json('put', '/backend/typecar/' . $typecar->id, ['name' => 'carcarcarcarcarcarcarcarcarcarcarcarcarcar carcarcarcarcarcarcarcarcarcarcarcarcarcar', 'number_seats' => 7, 'status' => 1])
+            ->json('put', '/backend/type-car/' . $typecar->id, ['name' => 'carcarcarcarcarcarcarcarcarcarcarcarcarcar carcarcarcarcarcarcarcarcarcarcarcarcarcar', 'number_seats' => 7, 'status' => 1])
             ->assertJsonValidationErrors(['name'])
             ->assertStatus(422);
     }
@@ -118,7 +118,7 @@ class EditTypeCarTest extends TestCase
         //! number_seats=>required
         //login user has permission create-typecar
         $this->actingAs($this->user)
-            ->json('put', '/backend/typecar/' . $typecar->id, ['name' => 'car1234', 'number_seats' => null, 'status' => 1])
+            ->json('put', '/backend/type-car/' . $typecar->id, ['name' => 'car1234', 'number_seats' => null, 'status' => 1])
             ->assertJsonValidationErrors(['number_seats'])
             ->assertStatus(422);
     }
@@ -131,7 +131,7 @@ class EditTypeCarTest extends TestCase
         //! number_seats=>string
         //login user has permission create-typecar
         $this->actingAs($this->user)
-            ->json('put', '/backend/typecar/' . $typecar->id, ['name' => 'car127', 'number_seats' => 'test_string', 'status' => 1])
+            ->json('put', '/backend/type-car/' . $typecar->id, ['name' => 'car127', 'number_seats' => 'test_string', 'status' => 1])
             ->assertJsonValidationErrors(['number_seats'])
             ->assertStatus(422);
     }
@@ -144,7 +144,7 @@ class EditTypeCarTest extends TestCase
         //! status=>between 0,1
         //login user has permission create-typecar
         $this->actingAs($this->user)
-            ->json('put', '/backend/typecar/' . $typecar->id, ['name' => 'car128', 'number_seats' => 7, 'status' => 6])
+            ->json('put', '/backend/type-car/' . $typecar->id, ['name' => 'car128', 'number_seats' => 7, 'status' => 6])
             ->assertJsonValidationErrors(['status'])
             ->assertStatus(422);
     }
@@ -157,7 +157,7 @@ class EditTypeCarTest extends TestCase
         //! status=>between 0,1
         //login user has permission create-typecar
         $this->actingAs($this->user)
-            ->json('put', '/backend/typecar/' . $typecar->id + 7, ['name' => 'car128', 'number_seats' => 7, 'status' => 1])
+            ->json('put', '/backend/type-car/' . $typecar->id + 7, ['name' => 'car128', 'number_seats' => 7, 'status' => 1])
             ->assertStatus(404);
     }
 

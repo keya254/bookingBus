@@ -125,7 +125,7 @@
        var id=$(this).attr('data-id');
     $.ajax({
            type: "get",
-           url: "{{route('role_permissions')}}/"+id,
+           url: "{{route('role-permissions')}}/"+id,
            dataType: "json",
            success: function (response) {
             $('#rolename').val(response.role.name);
@@ -133,7 +133,7 @@
              permission='';
              response.permissions.forEach(element => {
                  checked='';
-                 if (response.rolepermissions.includes(element.id)) {
+                 if (response.role_permissions.includes(element.id)) {
                     checked='checked';
                  }
                 permission+=
@@ -150,7 +150,7 @@
       var data=$('#permissionrole').serialize();
       $.ajax({
           type: "post",
-          url: "{{route('role_permissions')}}",
+          url: "{{route('role-permissions')}}",
           data: data,
           dataType: "json",
           success: function (response) {

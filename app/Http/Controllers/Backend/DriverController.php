@@ -7,7 +7,6 @@ use App\Http\Requests\User\CreateUserRequest;
 use App\Models\User;
 use App\Notifications\NewDriverNotification;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Notification;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -70,20 +69,11 @@ class DriverController extends Controller
      */
     public function destroy($id)
     {
-        //TODO refactor this code with delete image in User Model
-
         $user = User::FindOrFail($id);
-
-        if (auth()->user()->drivers()->where('driver_id', $id)->first()) {
-            //!storage unlike old image
-            if (File::exists(public_path($user->image))) {
-                unlink(public_path($user->image));
-            }
-            $user->delete();
-            return response()->json(['message' => 'Success Deleted'], 200);
-        } else {
+        if (!auth()->user()->drivers()->where('driver_id', $id)->first()) {
             return response()->json(['message' => 'Unauthorized'], 401);
         }
-
+        $user->delete();
+        return response()->json(['message' => 'Success Deleted'], 200);
     }
 }

@@ -32,34 +32,34 @@ class PrivateCarTest extends TestCase
 
     public function test_guest_can_not_change_private()
     {
-        $this->json('post', '/backend/car/changeprivate')
+        $this->json('post', '/backend/car/change-private')
             ->assertUnauthorized();
     }
 
     public function test_user_not_has_permission_private_car_can_not_change_private()
     {
         $this->actingAs($this->user);
-        $this->json('post', '/backend/car/changeprivate')
+        $this->json('post', '/backend/car/change-private')
             ->assertForbidden();
     }
 
-    public function test_user_has_permission_private_car_can_change_private_belonge_to_this_user()
+    public function test_user_has_permission_private_car_can_change_private_belong_to_this_user()
     {
         $car = Car::factory()->create();
         $car->owner->givePermissionTo('private-car');
         $this->actingAs($car->owner);
-        $this->json('post', '/backend/car/changeprivate', ['id' => $car->id])
+        $this->json('post', '/backend/car/change-private', ['id' => $car->id])
             ->assertSuccessful();
         $this->assertNotEquals($car->private, $car->fresh()->private);
     }
 
-    public function test_user_has_permission_private_car_can_change_private_not_belonge_to_this_user()
+    public function test_user_has_permission_private_car_can_change_private_not_belong_to_this_user()
     {
         $car = Car::factory()->create();
         $user2 = User::factory()->create();
         $user2->givePermissionTo('private-car');
         $this->actingAs($user2);
-        $this->json('post', '/backend/car/changeprivate', ['id' => $car->id])
+        $this->json('post', '/backend/car/change-private', ['id' => $car->id])
             ->assertForbidden();
         $this->assertEquals($car->private, $car->fresh()->private);
     }

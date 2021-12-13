@@ -7,8 +7,6 @@ use App\Http\Requests\Car\CarRequest;
 use App\Models\Car;
 use App\Models\TypeCar;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
-use Image;
 use Yajra\DataTables\Facades\DataTables;
 
 class CarController extends Controller
@@ -75,14 +73,7 @@ class CarController extends Controller
      */
     public function store(CarRequest $request)
     {
-        //TODO add upload image in model car
-        if ($request->hasFile('image')) {
-            $name = 'images/cars/' . time() . rand(11111, 99999) . '.png';
-            Image::make($request->validated()['image'])->resize(500, 500)->save(public_path($name));
-            auth()->user()->cars()->create(['image' => $name] + $request->validated());
-        } else {
-            auth()->user()->cars()->create($request->validated());
-        }
+        auth()->user()->cars()->create($request->validated());
         return response()->json(['message' => 'Success Created'], 201);
     }
 
@@ -106,19 +97,7 @@ class CarController extends Controller
      */
     public function update(CarRequest $request, Car $car)
     {
-        //TODO add image file in model car
-        if (!$request->hasFile('image')) {
-            $car->update($request->validated());
-        }
-        if ($request->hasFile('image')) {
-            $name = 'images/cars/' . time() . rand(11111, 99999) . '.png';
-            Image::make($request->image)->resize(500, 500)->save(public_path($name));
-            //!storage unlike old image
-            if (File::exists(public_path($car->image))) {
-                unlink(public_path($car->image));
-            }
-            $car->update(['image' => $name] + $request->validated());
-        }
+        $car->update($request->validated());
         return response()->json(['message' => 'Success Updated'], 200);
     }
 
@@ -130,11 +109,6 @@ class CarController extends Controller
      */
     public function destroy(Car $car)
     {
-        //TODO add delete image in model car
-        //!storage unlike old image
-        if (File::exists(public_path($car->image))) {
-            unlink(public_path($car->image));
-        }
         $car->delete();
         return response()->json(['message' => 'Success Deleted'], 200);
     }

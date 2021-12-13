@@ -28,7 +28,7 @@ class IndexTypeCarTest extends TestCase
     {
         //login user do not has permission typecars
         $this->actingAs($this->user)
-            ->get('/backend/typecar')
+            ->get('/backend/type-car/')
             ->assertStatus(403);
     }
 
@@ -38,7 +38,7 @@ class IndexTypeCarTest extends TestCase
         $this->user->givePermissionTo('typecars');
         //login user has permission typecars
         $this->actingAs($this->user)
-            ->get('/backend/typecar')
+            ->get('/backend/type-car/')
             ->assertStatus(200)
             ->assertSee(['انواع السيارات']);
     }

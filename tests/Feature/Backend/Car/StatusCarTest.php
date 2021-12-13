@@ -32,34 +32,34 @@ class StatusCarTest extends TestCase
 
     public function test_guest_can_not_change_status()
     {
-        $this->json('post', '/backend/car/changestatus')
+        $this->json('post', '/backend/car/change-status')
             ->assertUnauthorized();
     }
 
     public function test_user_not_has_permission_status_car_can_not_change_status()
     {
         $this->actingAs($this->user);
-        $this->json('post', '/backend/car/changestatus')
+        $this->json('post', '/backend/car/change-status')
             ->assertForbidden();
     }
 
-    public function test_user_has_permission_status_car_can_change_status_belonge_to_this_user()
+    public function test_user_has_permission_status_car_can_change_status_belong_to_this_user()
     {
         $car = Car::factory()->create();
         $car->owner->givePermissionTo('status-car');
         $this->actingAs($car->owner);
-        $this->json('post', '/backend/car/changestatus', ['id' => $car->id])
+        $this->json('post', '/backend/car/change-status', ['id' => $car->id])
             ->assertSuccessful();
         $this->assertNotEquals($car->status, $car->fresh()->status);
     }
 
-    public function test_user_has_permission_status_car_can_change_status_not_belonge_to_this_user()
+    public function test_user_has_permission_status_car_can_change_status_not_belong_to_this_user()
     {
         $car = car::factory()->create();
         $user2 = User::factory()->create();
         $user2->givePermissionTo('status-car');
         $this->actingAs($user2);
-        $this->json('post', '/backend/car/changestatus', ['id' => $car->id])
+        $this->json('post', '/backend/car/change-status', ['id' => $car->id])
             ->assertForbidden();
         $this->assertEquals($car->status, $car->fresh()->status);
     }

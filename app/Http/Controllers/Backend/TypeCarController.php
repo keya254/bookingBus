@@ -16,7 +16,7 @@ class TypeCarController extends Controller
         $this->middleware(['auth', 'permission:create-typecar'])->only('store');
         $this->middleware(['auth', 'permission:edit-typecar'])->only(['show', 'update']);
         $this->middleware(['auth', 'permission:delete-typecar'])->only('destroy');
-        $this->middleware(['auth', 'permission:status-typecar'])->only('changestatus');
+        $this->middleware(['auth', 'permission:status-typecar'])->only('changeStatus');
     }
     /**
      * Display a listing of the resource.
@@ -50,15 +50,6 @@ class TypeCarController extends Controller
         return view('backend.typecar.index');
     }
 
-    /**
-     * Change The Status Of TypeCar.
-     */
-    public function changestatus(Request $request)
-    {
-        $typecar = TypeCar::findOrFail($request->id);
-        $typecar->update(['status' => !$typecar->status]);
-        return response()->json(['message' => 'Success Changed'], 200);
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -108,4 +99,15 @@ class TypeCarController extends Controller
         TypeCar::findOrFail($id)->delete();
         return response()->json(['message' => 'Success Deleted'], 200);
     }
+
+        /**
+     * Change The Status Of TypeCar.
+     */
+    public function changeStatus(Request $request)
+    {
+        $typecar = TypeCar::findOrFail($request->id);
+        $typecar->update(['status' => !$typecar->status]);
+        return response()->json(['message' => 'Success Changed'], 200);
+    }
+
 }

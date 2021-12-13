@@ -156,7 +156,7 @@
    {
        $.ajax({
            type: "post",
-           url: "{{route('trip.changestatus')}}",
+           url: "{{route('trip.change-status')}}",
            dataType: "json",
            data:{id:$(this).attr('data-id')},
            success: function (response) {

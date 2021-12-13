@@ -51,7 +51,7 @@ class NotificationController extends Controller
             return response()->json(['message' => 'Unauthorized'], 401);
         }
         $notification->delete();
-        return response()->json(['message' => 'Success Deleted'],200);
+        return response()->json(['message' => 'Success Deleted'], 200);
     }
 
 }

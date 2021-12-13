@@ -34,14 +34,14 @@ class StatusTripTest extends TestCase
 
     public function test_guest_can_not_change_status()
     {
-        $this->json('post', '/backend/trip/changestatus')
+        $this->json('post', '/backend/trip/change-status')
             ->assertUnauthorized();
     }
 
     public function test_user_not_has_permission_status_trip_can_not_change_status()
     {
         $this->actingAs($this->user);
-        $this->json('post', '/backend/trip/changestatus')
+        $this->json('post', '/backend/trip/change-status')
             ->assertForbidden();
     }
 
@@ -50,7 +50,7 @@ class StatusTripTest extends TestCase
         $trip = Trip::factory()->create();
         $trip->car->owner->givePermissionTo('status-trip');
         $this->actingAs($trip->car->owner);
-        $this->json('post', '/backend/trip/changestatus', ['id' => $trip->id])
+        $this->json('post', '/backend/trip/change-status', ['id' => $trip->id])
             ->assertSuccessful();
         $this->assertNotEquals($trip->status, $trip->fresh()->status);
     }
@@ -61,7 +61,7 @@ class StatusTripTest extends TestCase
         $user2 = User::factory()->create();
         $user2->givePermissionTo('status-trip');
         $this->actingAs($user2);
-        $this->json('post', '/backend/trip/changestatus', ['id' => $trip->id])
+        $this->json('post', '/backend/trip/change-status', ['id' => $trip->id])
             ->assertForbidden();
         $this->assertEquals($trip->status, $trip->fresh()->status);
     }

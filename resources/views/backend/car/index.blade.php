@@ -68,7 +68,7 @@
               {data: 'name', name: 'name'},
               {data: 'image', name: 'image'},
               {data: 'owner.name', name: 'owner_id'},
-              {data: 'typecar.name', name: 'typecar_id'},
+              {data: 'typeCar.name', name: 'typecar_id'},
               {data: 'status', name: 'status',orderable: false, searchable: false},
               {data: 'public', name: 'public',orderable: false, searchable: false},
               {data: 'private', name: 'private',orderable: false, searchable: false},
@@ -159,7 +159,7 @@
    {
        $.ajax({
            type: "post",
-           url: "{{route('car.changestatus')}}",
+           url: "{{route('car.change-status')}}",
            dataType: "json",
            data:{id:$(this).attr('data-id')},
            success: function (response) {
@@ -172,7 +172,7 @@
    {
        $.ajax({
            type: "post",
-           url: "{{route('car.changepublic')}}",
+           url: "{{route('car.change-public')}}",
            dataType: "json",
            data:{id:$(this).attr('data-id')},
            success: function (response) {
@@ -185,7 +185,7 @@
    {
        $.ajax({
            type: "post",
-           url: "{{route('car.changeprivate')}}",
+           url: "{{route('car.change-private')}}",
            dataType: "json",
            data:{id:$(this).attr('data-id')},
            success: function (response) {

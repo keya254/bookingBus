@@ -49,7 +49,7 @@
                     @endcan
                     @can('typecars')
                     <li class="slide">
-					    <a class="side-menu__item" href="{{ route('typecar.index') }}"><span class="side-menu__label">انواع السيارات</a>
+					    <a class="side-menu__item" href="{{ route('type-car.index') }}"><span class="side-menu__label">انواع السيارات</a>
                     </li>
                     @endcan
                     @can('cars')
