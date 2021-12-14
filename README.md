@@ -3,27 +3,27 @@
 
 ## Roles
 
-    - Admin
-    - Owner
-    - Driver
-    - Passenger
+ - Admin
+ - Owner
+ - Driver
+ - Passenger
 
 ## Admin 
 
-    - can block owner 
-    - can type cars
-    - can add governorate and cities
+ - can block owner 
+ - can type cars
+ - can add governorate and cities
  
 ## Owner 
 
-    - can add/delete car
-    - can add/delete trip
-    - can add/delete driver
+  - can add/delete car
+  - can add/delete trip
+  - can add/delete driver
 
 ## Driver 
 
-   - check booking seats by code
+  - check booking seats by code
 
 ## Passenger 
 
-   - can booking seats in bus
+  - can booking seats in bus
