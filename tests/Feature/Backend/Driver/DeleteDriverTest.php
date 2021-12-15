@@ -75,7 +75,7 @@ class DeleteDriverTest extends TestCase
         $this->user2->givePermissionTo('delete-driver');
         $this->actingAs($this->user2)
             ->json('DELETE', '/backend/driver/' . $this->driver->id)
-            ->assertUnauthorized()
-            ->assertStatus(401);
+            ->assertForbidden()
+            ->assertStatus(403);
     }
 }

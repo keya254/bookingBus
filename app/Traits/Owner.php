@@ -88,25 +88,25 @@ trait Owner
    * Get Count All Passengers Booking Seats By Phone Number
    *
    **/
-  public function auth_owner_passeners():array
+  public function auth_owner_passengers():array
   {
     $trips                 = Trip::whereIn('car_id',auth()->user()->cars->pluck(['id']))->pluck('id');
-    $auth_owner_passeners  = count(array_unique(Seat::whereIn('trip_id',$trips)->where('passenger_id','!=',null)->pluck('passenger_id')->toArray()));
+    $auth_owner_passengers  = count(array_unique(Seat::whereIn('trip_id',$trips)->where('passenger_id','!=',null)->pluck('passenger_id')->toArray()));
 
-    return compact('auth_owner_passeners');
+    return compact('auth_owner_passengers');
   }
 
   /**
    * Get All Information To Auth User Owner
    *
-   * Combin All Previous Data
+   * Combine All Previous Data
    *
    **/
   public function owner_all()
   {
     return
         $this->auth_owner_cars() + $this->auth_owner_drivers() +
-        $this->auth_owner_passeners() + $this->auth_owner_private_cars() +
+        $this->auth_owner_passengers() + $this->auth_owner_private_cars() +
         $this->auth_owner_private_cities() + $this->auth_owner_seats() +
         $this->auth_owner_trips();
   }

@@ -71,7 +71,7 @@ class DriverController extends Controller
     {
         $user = User::FindOrFail($id);
         if (!auth()->user()->drivers()->where('driver_id', $id)->first()) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            return response()->json(['message' => 'Unauthorized'], 403);
         }
         $user->delete();
         return response()->json(['message' => 'Success Deleted'], 200);

@@ -37,7 +37,7 @@ class NotificationController extends Controller
     {
         $notification = auth()->user()->notifications()->where('id', $request->id)->first();
         if (!$notification) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            return response()->json(['message' => 'Unauthorized'], 403);
         }
         $notification->update(['read_at' => now()]);
         return response()->json(['message' => 'Success Changed'], 200);
@@ -48,7 +48,7 @@ class NotificationController extends Controller
     {
         $notification = auth()->user()->notifications()->where('id', $id)->first();
         if (!$notification) {
-            return response()->json(['message' => 'Unauthorized'], 401);
+            return response()->json(['message' => 'Unauthorized'], 403);
         }
         $notification->delete();
         return response()->json(['message' => 'Success Deleted'], 200);

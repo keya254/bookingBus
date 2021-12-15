@@ -65,7 +65,7 @@ trait Driver
     /**
      * Get All Information To Auth User Driver
      *
-     * Combin All Previous Data
+     * Combine All Previous Data
      **/
     public function driver_all():array
     {

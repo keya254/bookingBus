@@ -85,8 +85,8 @@ class IndexNotificationTest extends TestCase
         //login user 2 can not  make read notification
         $this->actingAs($this->user2)
             ->json('POST', '/backend/notifications', ['id' => $id])
-            ->assertUnauthorized()
-            ->assertStatus(401);
+            ->assertForbidden()
+            ->assertStatus(403);
 
         $this->assertDatabaseHas('notifications', ['notifiable_id' => 1, 'read_at' => null]);
         $this->assertDatabaseHas('notifications', ['notifiable_id' => 2, 'read_at' => null]);
@@ -117,7 +117,7 @@ class IndexNotificationTest extends TestCase
 
         $this->actingAs($this->user2)
             ->json('DELETE', '/backend/notifications/' . $id)
-            ->assertStatus(401);
+            ->assertStatus(403);
 
         $this->assertDatabaseCount('notifications', 2);
         $this->assertDatabaseHas('notifications', ['id' => $id, 'notifiable_id' => 1]);

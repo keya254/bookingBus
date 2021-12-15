@@ -119,16 +119,16 @@ trait Admin
   }
 
   /**
-   * Get Count All Typecars
+   * Get Count All Type Cars
    *
    **/
-  public function typecars():array
+  public function type_cars():array
   {
-    $typecars           = TypeCar::count();
-    $active_typecars    = TypeCar::active()->count();
-    $inactive_typecars  = TypeCar::inactive()->count();
+    $type_cars           = TypeCar::count();
+    $active_type_cars    = TypeCar::active()->count();
+    $inactive_type_cars  = TypeCar::inactive()->count();
 
-    return compact('typecars' , 'active_typecars' , 'inactive_typecars');
+    return compact('type_cars' , 'active_type_cars' , 'inactive_type_cars');
   }
 
    /**
@@ -153,7 +153,7 @@ trait Admin
       return
       $this->roles()    + $this->permissions() +
       $this->governorates() + $this->cities() +
-      $this->typecars() + $this->cars()     +
+      $this->type_cars() + $this->cars()     +
       $this->trips()    + $this->seats()    +
       $this->owners()   + $this->drivers()  + $this->passengers();
   }
