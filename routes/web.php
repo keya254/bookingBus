@@ -62,8 +62,8 @@ Route::group(['prefix' => 'backend', 'namespace' => 'Backend', 'middleware' => '
 
 Route::namespace ('Frontend')->group(function () {
     Route::get('/', 'HomeController');
-    Route::get('/private', 'PrivateController');
-    Route::get('/search', 'SearchController');
-    Route::post('/seats', 'SeatController')->name('seats');
-    Route::post('/booking', 'bookingController');
+    Route::get('private', 'PrivateController');
+    Route::get('search', 'SearchController');
+    Route::post('seats', 'SeatController')->name('seats');
+    Route::post('booking', 'bookingController');
 });
