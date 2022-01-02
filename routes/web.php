@@ -65,5 +65,5 @@ Route::namespace ('Frontend')->group(function () {
     Route::get('private', 'PrivateController');
     Route::get('search', 'SearchController');
     Route::post('seats', 'SeatController')->name('seats');
-    Route::post('booking', 'bookingController');
+    Route::post('booking', 'BookingController');
 });
